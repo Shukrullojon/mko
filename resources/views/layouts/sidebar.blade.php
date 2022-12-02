@@ -45,6 +45,16 @@
                 </ul>
             </li>
         @endcanany
+
+
+        <li class="nav-item">
+            <a href="{{ route('accountIndex') }}" class="nav-link {{ Request::is('account*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>Счета</p>
+            </a>
+        </li>
+
         @can('api-user.view')
             <li class="nav-item">
                 <a href="{{ route('api-userIndex') }}" class="nav-link {{ Request::is('api-users*') ? "active":'' }}">

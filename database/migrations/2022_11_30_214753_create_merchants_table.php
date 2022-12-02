@@ -19,6 +19,7 @@ class CreateMerchantsTable extends Migration
             $table->string("name",200);
             $table->unsignedBigInteger("account_id")->index();
             $table->string("key")->index();
+
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->timestamps();

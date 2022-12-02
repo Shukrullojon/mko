@@ -22,6 +22,7 @@ class CreateAccountsTable extends Migration
             $table->string('filial',10);
             $table->unsignedBigInteger('card_id')->nullable()->index();
             $table->float('percentage')->nullable();
+
             $table->foreign('card_id')->references('id')->on('cards');
             $table->timestamps();
         });
