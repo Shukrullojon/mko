@@ -34,13 +34,15 @@ Route::group(['middleware' => 'auth'],function (){
 
     //accounts
     Route::group(['prefix'=>'account', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
-        Route::get('/index', 'AccountController@index')->name('accountIndex');
-        Route::get('/create', 'AccountController@create')->name('accountCreate');
+        Route::get('/accounts', 'AccountController@index')->name('accountIndex');
+        Route::get('/account/add', 'AccountController@add')->name('accountAdd');
+        Route::post('/account/store', 'AccountController@store')->name('accountStore');
         Route::get('/show/{id}', 'AccountController@show')->name('accountShow');
-        Route::post('/store', 'AccountController@store')->name('accountStore');
         Route::get('/edit/{id}', 'AccountController@edit')->name('accountEdit');
         Route::post('/update/{id}', 'AccountController@update')->name('accountUpdate');
         Route::delete('/delete/{id}', 'AccountController@destroy')->name('accountDestroy');
+
+
     });
 
     // Users

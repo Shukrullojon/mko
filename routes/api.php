@@ -30,3 +30,5 @@ Route::group(['middleware' => 'ajax.check'],function (){
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/account/createAccCard', 'AccountController@createAccCard')->name('createAccCard');
