@@ -1,6 +1,17 @@
 <?php
 
 return [
+    'search' => "Поиск",
+    'account' => [
+        'account' => 'Счета',
+        'type' => 'Тип',
+        'number' => 'Номер',
+        'inn' => 'Инн',
+        'name' => 'Название',
+        'filial' => 'Филиал',
+        'percentage' => 'Процент',
+        'card' => 'Кошелек',
+    ],
     'userManagement' => [
         'title'          => 'Управление пользователями',
         'title_singular' => 'Управление',

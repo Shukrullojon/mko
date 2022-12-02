@@ -1,6 +1,17 @@
 <?php
 
 return [
+    'search' => "Qidiruv",
+    'account' => [
+        'account' => 'Hisob raqam',
+        'type' => 'Turi',
+        'number' => 'Raqami',
+        'inn' => 'Inn',
+        'name' => 'Nomi',
+        'filial' => 'Filial',
+        'percentage' => 'Foiz',
+        'card' => 'Hamyon',
+    ],
     'userManagement' => [
         'title'          => 'Foydalanuvchini boshqarish',
         'title_singular' => 'Boshqarish',
