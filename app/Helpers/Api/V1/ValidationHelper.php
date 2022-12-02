@@ -23,15 +23,32 @@ class ValidationHelper
                 "params.last_name" => "required",
                 "params.middle_name" => "required",
             ];
-        }else if($params['method'] == "brand.get"){
-            return [];
+        }else if($params['method'] == "merchant.period"){
+            return [
+                "params.key" => "required|exists:merchants,key",
+            ];
+        }else if($params['method'] == "merchant.schedule"){
+            return [
+                "params.period_id" => "required|exists:merchant_periods,id",
+                "params.amount" => "required",
+            ];
+        }else if($params['method'] == "payment.confirm"){
+            return [
+                "params.token" => "required|exists:cards,token",
+                "params.key" => "required|exists:merchants,key",
+                "params.period_id" => "required|exists:merchant_periods,id",
+                "params.amount" => "required",
+            ];
         }else{
             return [
                 "method" => [
                     "required",
                     "in:login.login,
                     client.create,
-                    brand.get,",
+                    brand.get,
+                    merchant.period,
+                    merchant.schedule,
+                    payment.confirm,",
                 ],
             ];
         }
