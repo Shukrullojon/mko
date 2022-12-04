@@ -74,7 +74,7 @@
                                 </div>
                             </div>
 
-                            <a href="/accounts" class="btn btn-secondary btn-sm"><i class="fa fa-redo-alt"></i> @lang('global.clear')</a>
+                            <a href="{{ route('accountIndex') }}" class="btn btn-secondary btn-sm"><i class="fa fa-redo-alt"></i> @lang('global.clear')</a>
                         </div>
                     </div>
                     <!-- /.card-header -->
