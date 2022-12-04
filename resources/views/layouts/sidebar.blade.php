@@ -51,7 +51,7 @@
             <a href="{{ route('accountIndex') }}" class="nav-link {{ Request::is('account*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>
                 <sub><i class="fas fa-child"></i></sub>
-                <p>Счета</p>
+                <p>@lang('cruds.account.account')</p>
             </a>
         </li>
 

@@ -9,7 +9,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $table = 'cards';
+    protected $table = 'accounts';
 
     protected $guarded = [];
 

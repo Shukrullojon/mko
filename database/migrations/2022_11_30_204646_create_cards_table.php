@@ -21,9 +21,9 @@ class CreateCardsTable extends Migration
             $table->string('owner',100);
             $table->bigInteger('balance')->default(0);
             $table->bigInteger('hold_amount')->default(0);
-            $table->string('phone',13);
+            $table->string('phone',13)->nullable();
             $table->string('token',100);
-            $table->tinyInteger('status')->comment("0 -> new create 1 -> limit get -1 -> canceled");
+            $table->tinyInteger('status')->comment("0 -> new create 1 -> active");
             $table->timestamps();
         });
     }
