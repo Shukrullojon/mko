@@ -39,6 +39,10 @@ class ValidationHelper
                 "params.period_id" => "required|exists:merchant_periods,id",
                 "params.amount" => "required",
             ];
+        }else if($params['method'] == "card.info"){
+            return [
+                "params.token" => "required|exists:cards,token"
+            ];
         }else{
             return [
                 "method" => [
@@ -48,7 +52,8 @@ class ValidationHelper
                     brand.get,
                     merchant.period,
                     merchant.schedule,
-                    payment.confirm,",
+                    payment.confirm,
+                    card.info,",
                 ],
             ];
         }
