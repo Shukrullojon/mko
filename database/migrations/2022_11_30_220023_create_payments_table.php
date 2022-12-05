@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('client_id')->index();
             $table->unsignedBigInteger('merchant_id')->index();
             $table->integer('period');
-            $table->integer('persentage');
+            $table->integer('percentage');
             $table->string('sender_card',100)->index();
             $table->bigInteger('cost');
             $table->bigInteger('amount');

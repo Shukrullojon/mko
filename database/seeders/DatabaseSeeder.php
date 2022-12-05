@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             MerchantSeeder::class,
             MerchantPeriodSeeder::class,
-
+            PaymentSeeder::class,
             UserSeeder::class,
         ]);
     }
