@@ -8,7 +8,7 @@ class MobileService
 {
     public static function partners(){
         return MobileGateway::fire([
-            "method": "get.partners"
+            "method"=>"get.partners"
         ]);
     }
 
