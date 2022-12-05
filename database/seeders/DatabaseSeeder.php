@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pages\Account;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,9 +15,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            CardSeeder::class,
+            ClientSeeder::class,
+            AccountSeeder::class,
             BrandSeeder::class,
             MerchantSeeder::class,
             MerchantPeriodSeeder::class,
+
             UserSeeder::class,
         ]);
     }

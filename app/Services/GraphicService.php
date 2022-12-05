@@ -30,7 +30,8 @@ class GraphicService
             //add data to graphic list
             $graphic[] = [
                 'days' => $days,
-                'amount' => price_format($sum),
+                //'amount' => price_format($sum),
+                'amount' => $sum,
                 'month' => date('Y-M',strtotime($startDate))
             ];
             //update initial params for the next cycle
@@ -39,8 +40,8 @@ class GraphicService
             $endDate = date('Y-m-01',strtotime($startDate.' first day of +1 month'));
         }
         return [
-            'amount' => price_format($amount),
-            'cost' => price_format($cost),
+            'amount' => $amount,
+            'cost' => $cost,
             'graphic' => $graphic,
         ];
     }
