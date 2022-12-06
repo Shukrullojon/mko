@@ -12,6 +12,14 @@ return [
         'percentage' => 'Процент',
         'card' => 'Кошелек',
     ],
+    'merchant' => [
+        'merchants' => 'Tорговцы',
+        'brand_id' => 'Ид Бренда',
+        'name' => 'Название',
+        'account_id' => 'Ид Аккаунта',
+        'key' => 'Ключ',
+        'card' => 'Кошелек',
+    ],
     'userManagement' => [
         'title'          => 'Управление пользователями',
         'title_singular' => 'Управление',

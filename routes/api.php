@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Blade\ApiUserController;
+use App\Http\Controllers\Pages\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/account/createAccCard', 'AccountController@createAccCard')->name('createAccCard');
+//Route::post('/account/createAccCard', 'AccountController@createAccCard')->name('createAccCard');
+Route::post('/getBrand', 'App\Http\Controllers\Pages\BrandController@getBrand')->name('getBrand');

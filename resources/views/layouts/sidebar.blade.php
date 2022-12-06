@@ -1,24 +1,28 @@
 {{--Left sidebar--}}
 <nav class="mt-2">
 
-    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
+        data-accordion="false">
         @canany([
           'permission.show',
           'roles.show',
           'user.show'
        ])
             <li class="nav-item has-treeview">
-                <a href="#" class="nav-link {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'active':''}}">
+                <a href="#"
+                   class="nav-link {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'active':''}}">
                     <i class="fas fa-users-cog"></i>
                     <p>
                         @lang('cruds.userManagement.title')
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'block':'none'}};">
+                <ul class="nav nav-treeview"
+                    style="display: {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'block':'none'}};">
                     @can('permission.show')
                         <li class="nav-item">
-                            <a href="{{ route('permissionIndex') }}" class="nav-link {{ Request::is('permission*') ? "active":'' }}">
+                            <a href="{{ route('permissionIndex') }}"
+                               class="nav-link {{ Request::is('permission*') ? "active":'' }}">
                                 <i class="fas fa-key"></i>
                                 <p> @lang('cruds.permission.title_singular')</p>
                             </a>
@@ -27,7 +31,8 @@
 
                     @can('roles.show')
                         <li class="nav-item">
-                            <a href="{{ route('roleIndex') }}" class="nav-link {{ Request::is('role*') ? "active":'' }}">
+                            <a href="{{ route('roleIndex') }}"
+                               class="nav-link {{ Request::is('role*') ? "active":'' }}">
                                 <i class="fas fa-user-lock"></i>
                                 <p> @lang('cruds.role.fields.roles')</p>
                             </a>
@@ -36,7 +41,8 @@
 
                     @can('user.show')
                         <li class="nav-item">
-                            <a href="{{ route('userIndex') }}" class="nav-link {{ Request::is('user*') ? "active":'' }}">
+                            <a href="{{ route('userIndex') }}"
+                               class="nav-link {{ Request::is('user*') ? "active":'' }}">
                                 <i class="fas fa-user-friends"></i>
                                 <p> @lang('cruds.user.title')</p>
                             </a>
@@ -54,6 +60,13 @@
                 <p>@lang('cruds.account.account')</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>@lang('cruds.merchant.merchants')</p>
+            </a>
+        </li>
 
         @can('api-user.view')
             <li class="nav-item">
@@ -69,12 +82,12 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview">
             <a href="" class="nav-link">
-            <i class="fas fa-palette"></i>
-            <p>
-                @lang('global.theme')
-                <i class="right fas fa-angle-left"></i>
-            </p>
-        </a>
+                <i class="fas fa-palette"></i>
+                <p>
+                    @lang('global.theme')
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
             <ul class="nav nav-treeview" style="display: none">
                 <li class="nav-item">
                     <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'default']) }}" class="nav-link">
@@ -97,7 +110,7 @@
             </ul>
         </li>
     </ul>
-{{--    @can('card.main')--}}
+    {{--    @can('card.main')--}}
 
-{{--    @endcan--}}
+    {{--    @endcan--}}
 </nav>

@@ -26,7 +26,7 @@ class AccountController extends Controller
                 $accounts = $accounts->where('percentage','LIKE','%'.$request->percentage.'%');
             if($request->filled('filial'))
                 $accounts = $accounts->where('filial','LIKE','%'.$request->filial.'%');
-            $accounts = $accounts->latest()->paginate(20);
+            $accounts = $accounts->latest()->paginate(2);
             return view('pages.account.index', compact('accounts'));
         }catch(\Exception $exception){
             return back()->with('error',$exception->getMessage());
