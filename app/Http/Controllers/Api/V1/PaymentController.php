@@ -31,8 +31,8 @@ class PaymentController extends Controller
             'client_id' => $client->id,
             'merchant_id' => $merchant->id,
             'period' => $period->period,
-            'persentage' => $period->percentage,
-            'sender_card' => $card->number,
+            'percentage' => $period->percentage,
+            'sender_card' => $card->token,
             'cost' => $params['params']['amount'],
             'amount' => $params['params']['amount'] + $params['params']['amount']*($period->percentage/100),
             'date' => date("Y-m-d"),
@@ -42,7 +42,7 @@ class PaymentController extends Controller
         ]);
 
         try {
-            $hold = CardService::hold([
+            $hold = CardService::holdCredit([
                 'token' => $card->token,
                 'expire' => $card->expire,
                 'amount' => $params['params']['amount'] + $params['params']['amount'] * ($period->percentage / 100),

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CardSeeder::class,
             ClientSeeder::class,
             AccountSeeder::class,
+            AccountPartnerSeeder::class,
             BrandSeeder::class,
             MerchantSeeder::class,
             MerchantPeriodSeeder::class,

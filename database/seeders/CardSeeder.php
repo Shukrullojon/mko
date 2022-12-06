@@ -16,7 +16,7 @@ class CardSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i < 100; $i++){
+        for($i = 0; $i < 20; $i++){
             $luhn = new Luhn();
             $luhn = $luhn->run();
             Card::create([
