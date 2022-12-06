@@ -13,7 +13,19 @@ class MerchantController extends Controller
     public function period($params){
         $merchant = Merchant::where('key',$params['params']['key'])->first();
         return [
-            'periods' => $merchant->periods
+            'periods' => $merchant->periods,
+            'merchant' => [
+                'key' => $merchant->key,
+                'name' => $merchant->name,
+                'filial' => $merchant->filial,
+                'address' => $merchant->address,
+                'uzcard_merchant_id' => $merchant->uzcard_merchant_id,
+                'uzcard_terminal_id' => $merchant->uzcard_terminal_id,
+                'humo_merchant_id' => $merchant->humo_merchant_id,
+                'humo_terminal_id' => $merchant->humo_terminal_id,
+                'is_register_humo' => $merchant->is_register_humo,
+                'is_register_uzcard' => $merchant->is_register_uzcard,
+            ],
         ];
     }
 
