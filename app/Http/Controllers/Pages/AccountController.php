@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\DB;
 class AccountController extends Controller
 {
     public function index(Request $request){
-        $service = TransactionService::transaction();
-        dd($service);
+        
         try{
             $accounts = new Account();
             if($request->filled('number'))
