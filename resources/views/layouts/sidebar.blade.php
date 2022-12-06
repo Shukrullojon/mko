@@ -59,14 +59,7 @@
                 <sub><i class="fas fa-child"></i></sub>
                 <p>@lang('cruds.brand.brands')</p>
             </a>
-        </li>
-            <li class="nav-item">
-            <a href="{{ route('accountIndex') }}" class="nav-link {{ Request::is('account*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
-                <p>@lang('cruds.account.account')</p>
-            </a>
-        </li>
+
         <li class="nav-item">
             <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>

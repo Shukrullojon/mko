@@ -7,8 +7,10 @@ use App\Models\Pages\Account;
 use App\Models\Pages\Card;
 use App\Models\Pages\Merchant;
 use App\Services\Luhn;
+use BaconQrCode\Encoder\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MerchantController extends Controller

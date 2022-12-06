@@ -13,7 +13,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
                         <li class="breadcrumb-item active">@lang('cruds.merchant.merchants')</li>
-                        <li class="breadcrumb-item active">@lang('global.edit')</li>
+                        <li class="breadcrumb-item active">@lang('global.show')</li>
                     </ol>
                 </div>
             </div>
@@ -23,71 +23,89 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">@lang('global.edit')</h3>
+                        <h3 class="card-title">@lang('global.show')</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-
-                        <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="">
-                            <thead>
-                            <tr>
-                                <th>Ид</th>
-                                <td>{{ $merchant->merchant_id }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.name')</th>
-                                <td>{{ $merchant->name }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.filial')</th>
-                                <td>{{ $merchant->filial }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.key')</th>
-                                <td>
-                                    <img style="display: block; margin-right: auto;"
-                                         src="data:image/png;base64, {!! base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(200)->generate($merchant->key)) !!} ">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.address')</th>
-                                <td>{{ $merchant->address }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.uzcard_merchant_id')</th>
-                                <td>{{ $merchant->uzcard_merchant_id }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.uzcard_terminal_id')</th>
-                                <td>{{ $merchant->uzcard_terminal_id }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.humo_merchant_id')</th>
-                                <td>{{ $merchant->humo_merchant_id }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.humo_terminal_id')</th>
-                                <td>{{ $merchant->humo_terminal_id }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.is_register_uzcard')</th>
-                                <td>{{ $merchant->is_register_uzcard }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.is_register_humo')</th>
-                                <td>{{ $merchant->is_register_humo }}</td>
-                            </tr>
-                            <tr>
-                                <th>@lang('cruds.merchant.account_id')</th>
-                                <td>{{ $merchant->account_id }}</td>
-                            </tr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                       aria-describedby="">
+                                    <thead>
 
 
-                            </thead>
-                        </table>
+                                    <tr>
+                                        <th>Ид</th>
+                                        <td>{{ $merchant->id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.name')</th>
+                                        <td>{{ $merchant->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.filial')</th>
+                                        <td>{{ $merchant->filial }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.key')</th>
+                                        <td>
+                                            {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(100)->generate($merchant->key); !!}
+                                            {{--                                    <img style="display: block; margin-right: auto;"--}}
+                                            {{--                                         src="data:image/png;base64, {!! base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')--}}
+                                            {{--                                            ->size(200)->generate($merchant->key)) !!} ">--}}
+                                            <a href="{{ response()->download(public_path('C:\Users\User\Downloads\photo_2022-06-28_14-36-31.jpg')) }}"
+                                               style="float: right" target="_blank" download class="btn btn-success ion-android-download">Download</a>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.address')</th>
+                                        <td>{{ $merchant->address }}</td>
+                                    </tr>
+
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                       aria-describedby="">
+                                    <thead>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.uzcard_merchant_id')</th>
+                                        <td>{{ $merchant->uzcard_merchant_id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.uzcard_terminal_id')</th>
+                                        <td>{{ $merchant->uzcard_terminal_id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.humo_merchant_id')</th>
+                                        <td>{{ $merchant->humo_merchant_id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.humo_terminal_id')</th>
+                                        <td>{{ $merchant->humo_terminal_id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.is_register_uzcard')</th>
+                                        <td>{{ $merchant->is_register_uzcard }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.is_register_humo')</th>
+                                        <td>{{ $merchant->is_register_humo }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.account_id')</th>
+                                        <td>{{ $merchant->account_id }}</td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
                         <div>
                             <a href="{{ route('merchantIndex') }}" type="button" class="btn btn-danger"> Back</a>
                         </div>

@@ -24,9 +24,7 @@ Auth::routes();
 
 // Welcome page
 Route::get('/', function (){
-    QrCode::size(500)
-        ->format('png')
-        ->generate('Content of qr code will go here', public_path('images/qrcode.png'));
+    return view('welcome');
 })->name('welcome');
 
 // Web pages
