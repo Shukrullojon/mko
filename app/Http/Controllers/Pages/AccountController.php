@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Card;
 use App\Services\Luhn;
+use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use App\Models\Pages\Account;
 use Illuminate\Support\Str;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 class AccountController extends Controller
 {
     public function index(Request $request){
+        $service = TransactionService::transaction();
+        dd($service);
         try{
             $accounts = new Account();
             if($request->filled('number'))

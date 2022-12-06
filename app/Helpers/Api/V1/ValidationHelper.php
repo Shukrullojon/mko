@@ -43,6 +43,10 @@ class ValidationHelper
             return [
                 "params.token" => "required|exists:cards,token"
             ];
+        }else if($params['method'] == "partner.get"){
+            return [];
+        }else if($params['method'] == "partner.merchant"){
+            return [];
         }else{
             return [
                 "method" => [
@@ -53,7 +57,9 @@ class ValidationHelper
                     merchant.period,
                     merchant.schedule,
                     payment.confirm,
-                    card.info,",
+                    card.info,
+                    partner.get,
+                    partner.merchant",
                 ],
             ];
         }
