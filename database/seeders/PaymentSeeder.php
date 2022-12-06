@@ -22,7 +22,7 @@ class PaymentSeeder extends Seeder
             $client = Client::inRandomOrder()->first();
             $merchant = Merchant::select('id')->inRandomOrder()->first();
             $period = MerchantPeriod::where('merchant_id',$merchant->id)->inRandomOrder()->first();
-            
+
             $cost = rand(100000000,500000000);
             Payment::create([
                 'client_id' => $client->id,
