@@ -1,5 +1,6 @@
 <?php
 
+use chillerlan\QRCode\QRCode;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Blade\UserController;
 use App\Http\Controllers\Blade\RoleController;
@@ -23,7 +24,9 @@ Auth::routes();
 
 // Welcome page
 Route::get('/', function (){
-    return redirect()->route('home');
+    QrCode::size(500)
+        ->format('png')
+        ->generate('Content of qr code will go here', public_path('images/qrcode.png'));
 })->name('welcome');
 
 // Web pages
@@ -48,10 +51,20 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/index', 'MerchantController@index')->name('merchantIndex');
         Route::get('/add', 'MerchantController@add')->name('merchantAdd');
         Route::post('/merchant/store', 'MerchantController@store')->name('merchantStore');
-        Route::get('/show/{id}', 'AccountController@show')->name('accountShow');
-        Route::get('/edit/{id}', 'AccountController@edit')->name('accountEdit');
-        Route::post('/update/{id}', 'AccountController@update')->name('accountUpdate');
-        Route::delete('/delete/{id}', 'AccountController@destroy')->name('accountDestroy');
+        Route::get('/show/{id}', 'MerchantController@show')->name('merchantShow');
+        Route::get('/edit/{id}', 'MerchantController@edit')->name('merchantEdit');
+        Route::post('/update/{id}', 'MerchantController@update')->name('merchantUpdate');
+        Route::delete('/delete/{id}', 'MerchantController@destroy')->name('merchantDestroy');
+    });
+    //brands
+    Route::group(['prefix'=>'brand', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
+        Route::get('/index', 'BrandController@index')->name('brandIndex');
+        Route::get('/add', 'BrandController@add')->name('brandAdd');
+        Route::post('/store', 'BrandController@store')->name('brandStore');
+        Route::get('/show/{id}', 'BrandController@show')->name('brandShow');
+        Route::get('/edit/{id}', 'BrandController@edit')->name('brandEdit');
+        Route::post('/update/{id}', 'BrandController@update')->name('brandUpdate');
+        Route::delete('/delete/{id}', 'BrandController@destroy')->name('brandDestroy');
     });
 
     // Users

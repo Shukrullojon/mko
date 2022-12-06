@@ -12,6 +12,13 @@ return [
         'percentage' => 'Процент',
         'card' => 'Кошелек',
     ],
+    'brand' => [
+        'brands' => 'Бренды',
+        'name' => 'Название',
+        'logo' => 'Логотип',
+        'status' => 'Статус',
+        'is_unired' => 'Униред',
+    ],
     'merchant' => [
         'merchants' => 'Tорговцы',
         'brand_id' => 'Ид Бренда',
@@ -19,6 +26,14 @@ return [
         'account_id' => 'Ид Аккаунта',
         'key' => 'Ключ',
         'card' => 'Кошелек',
+        'is_register_uzcard' => 'регистрация uzcard',
+        'is_register_humo' => 'регистрация humo',
+        'filial' => 'Филиал',
+        'address' => 'Адрес',
+        'uzcard_merchant_id' => 'Ид Мерчанта uzcard',
+        'humo_merchant_id' => 'Ид Мерчанта humo',
+        'uzcard_terminal_id' => 'Ид Терминала uzcard',
+        'humo_terminal_id' => 'Ид Терминала humo',
     ],
     'userManagement' => [
         'title'          => 'Управление пользователями',
