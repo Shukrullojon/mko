@@ -30,51 +30,6 @@
                                 <span class="fas fa-plus-circle"></span>
                                 @lang('global.add')
                             </a>
-                            {{--                        @endcan--}}
-
-                            <button name="filter" value="1" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter-modal"><i class="fas fa-filter"></i> @lang('global.filter')</button>
-
-                            <div class="modal fade" id="filter-modal" tabindex="-1" role="dialog" aria-labelledby="filters" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">@lang('global.filter')</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-{{--                                        <form action="/accounts" method="get">--}}
-{{--                                            <div class="modal-body">--}}
-{{--                                                --}}{{--name--}}
-{{--                                                <div class="form-group row align-items-center">--}}
-{{--                                                    <div class="col-3">--}}
-{{--                                                        <h6>name</h6>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-6">--}}
-{{--                                                        <input class="form-control form-control-sm" type="text" name="search_name" autocomplete="off" value="{{ old('card_number',request()->card_number??'') }}">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-group row align-items-center">--}}
-{{--                                                    <div class="col-3">--}}
-{{--                                                        <h6>account</h6>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-6">--}}
-{{--                                                        <input class="form-control form-control-sm" type="text" name="search_account" autocomplete="off" value="{{ old('card_number',request()->card_number??'') }}">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-
-{{--                                            </div>--}}
-
-{{--                                            <div class="modal-footer">--}}
-{{--                                                <button type="submit" name="" class="btn btn-primary">Применитъ</button>--}}
-{{--                                            </div>--}}
-{{--                                        </form>--}}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a href="{{ route('accountIndex') }}" class="btn btn-secondary btn-sm"><i class="fa fa-redo-alt"></i> @lang('global.clear')</a>
-
                         </div>
                     </div>
                     <!-- /.card-header -->

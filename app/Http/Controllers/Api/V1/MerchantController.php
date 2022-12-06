@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pages\MerchantPeriod;
+use App\Services\GraphicService;
 use Illuminate\Http\Request;
 use App\Models\Pages\Merchant;
 
@@ -16,7 +18,13 @@ class MerchantController extends Controller
     }
 
     public function schedule($params){
-        return $params['params'];
+        $mp = MerchantPeriod::find($params['params']['period_id']);
+        $graphic = GraphicService::done([
+            'period' => $mp->period,
+            'percentage' => $mp->percentage,
+            'amount' => $params['params']['amount'],
+        ]);
+        return $graphic;
     }
 
 }
