@@ -84,7 +84,7 @@
                                     <td>{{ $account->inn }}</td>
                                     <td>{{ $account->name }}</td>
                                     <td>{{ $account->filial }}</td>
-                                    <td>{{ $account->card->number }}</td>
+                                    <td>{{ $account->card->number??"" }}</td>
                                     <td>{{ $account->percentage }}</td>
                                     <td>
                                         <form action="{{ route('accountDestroy',$account->id) }}" method="post">
