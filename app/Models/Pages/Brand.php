@@ -13,4 +13,11 @@ class Brand extends Model
 
     protected $guarded = [];
 
+    public function merchant() {
+        return $this->belongsTo(Merchant::class);
+    }
+    public static function get(){
+        $brands = Brand::all();
+        return $brands;
+    }
 }

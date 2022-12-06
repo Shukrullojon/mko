@@ -43,6 +43,17 @@ Route::group(['middleware' => 'auth'],function (){
         Route::delete('/delete/{id}', 'AccountController@destroy')->name('accountDestroy');
     });
 
+    //merchants
+    Route::group(['prefix'=>'merchant', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
+        Route::get('/index', 'MerchantController@index')->name('merchantIndex');
+        Route::get('/add', 'MerchantController@add')->name('merchantAdd');
+        Route::post('/merchant/store', 'MerchantController@store')->name('merchantStore');
+        Route::get('/show/{id}', 'AccountController@show')->name('accountShow');
+        Route::get('/edit/{id}', 'AccountController@edit')->name('accountEdit');
+        Route::post('/update/{id}', 'AccountController@update')->name('accountUpdate');
+        Route::delete('/delete/{id}', 'AccountController@destroy')->name('accountDestroy');
+    });
+
     // Users
     Route::get('/users',[UserController::class,'index'])->name('userIndex');
     Route::get('/user/add',[UserController::class,'add'])->name('userAdd');
