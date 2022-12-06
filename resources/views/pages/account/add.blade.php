@@ -31,7 +31,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        <form action="{{ route('accountStore') }}" method="post">
+                        <form action="{{ route('accountAdd') }}" method="post">
                             @csrf
 
                             <div class="form-group">
@@ -86,24 +86,4 @@
         </div>
     </section>
 
-@endsection
-@section('scripts')
-    <script>
-        $(document).on("click","#card",function (){
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                type:'POST',
-                data:{name:name,},
-                url:'{{ route('createAccCard') }}',
-                success:function(data){
-                    if(data){
-                        $("#card").html('');
-                    }else{
-                        console.log(data);
-                        alert(data['message'])
-                    }
-                }
-            });
-        });
-    </script>
 @endsection
