@@ -91,9 +91,6 @@
                                                 <a href="{{ route('merchantEdit',$merchant->id) }}" class="btn btn-primary btn-sm" style="margin-left: 5px; margin-right: 5px">
                                                     <span class="fa fa-edit"></span>
                                                 </a>
-                                                <input name="_method" type="hidden" value="DELETE">
-                                                <button type="button" class="btn btn-danger btn-sm" onclick="if (confirm('Вы уверены?')) {this.form.submit()}">
-                                                    <span class="fa fa-trash"></span>
                                                 </button>
                                             </div>
                                         </form>
