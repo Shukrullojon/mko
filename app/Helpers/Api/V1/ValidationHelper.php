@@ -59,7 +59,7 @@ class ValidationHelper
                     payment.confirm,
                     card.info,
                     partner.get,
-                    partner.merchant",
+                    partner.merchant,",
                 ],
             ];
         }

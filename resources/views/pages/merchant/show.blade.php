@@ -53,10 +53,7 @@
                                         <th>@lang('cruds.merchant.key')</th>
                                         <td>
                                             {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(100)->generate($merchant->key); !!}
-                                            {{--                                    <img style="display: block; margin-right: auto;"--}}
-                                            {{--                                         src="data:image/png;base64, {!! base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')--}}
-                                            {{--                                            ->size(200)->generate($merchant->key)) !!} ">--}}
-                                            <a href="{{ response()->download(public_path('i01_photo_2021-04-21_22-51-36.jpg')) }}"
+                                            <a href="{{ route('downloadSvg', ['key' => $merchant->key]) }}"
                                                style="float: right" target="_blank" download class="btn btn-success ion-android-download">Download</a>
 
                                         </td>

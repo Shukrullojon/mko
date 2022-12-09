@@ -79,37 +79,37 @@
         @endcan
     </ul>
 
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
-                <i class="fas fa-palette"></i>
-                <p>
-                    @lang('global.theme')
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none">
-                <li class="nav-item">
-                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'default']) }}" class="nav-link">
-                        <i class="nav-icon fas fa-circle text-info"></i>
-                        <p class="text">Default {{ auth()->user()->theme == 'default' ? '✅':'' }}</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'light']) }}" class="nav-link">
-                        <i class="nav-icon fas fa-circle text-white"></i>
-                        <p>Light {{ auth()->user()->theme == 'light' ? '✅':'' }}</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'dark']) }}" class="nav-link">
-                        <i class="nav-icon fas fa-circle text-gray"></i>
-                        <p>Dark {{ auth()->user()->theme == 'dark' ? '✅':'' }}</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
-    </ul>
+{{--    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">--}}
+{{--        <li class="nav-item has-treeview">--}}
+{{--            <a href="" class="nav-link">--}}
+{{--                <i class="fas fa-palette"></i>--}}
+{{--                <p>--}}
+{{--                    @lang('global.theme')--}}
+{{--                    <i class="right fas fa-angle-left"></i>--}}
+{{--                </p>--}}
+{{--            </a>--}}
+{{--            <ul class="nav nav-treeview" style="display: none">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'default']) }}" class="nav-link">--}}
+{{--                        <i class="nav-icon fas fa-circle text-info"></i>--}}
+{{--                        <p class="text">Default {{ auth()->user()->theme == 'default' ? '✅':'' }}</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'light']) }}" class="nav-link">--}}
+{{--                        <i class="nav-icon fas fa-circle text-white"></i>--}}
+{{--                        <p>Light {{ auth()->user()->theme == 'light' ? '✅':'' }}</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'dark']) }}" class="nav-link">--}}
+{{--                        <i class="nav-icon fas fa-circle text-gray"></i>--}}
+{{--                        <p>Dark {{ auth()->user()->theme == 'dark' ? '✅':'' }}</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </li>--}}
+{{--    </ul>--}}
     {{--    @can('card.main')--}}
 
     {{--    @endcan--}}

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pages\Account;
 use App\Models\Pages\Card;
 use App\Models\Pages\Merchant;
+use App\Models\Pages\MerchantTerminal;
 use App\Models\Pages\Payment;
 use App\Services\Luhn;
 use BaconQrCode\Encoder\QrCode;
@@ -71,6 +72,8 @@ class MerchantController extends Controller
             'account_inn' => 'required',
             'account_filial' => 'required',
             'percentage' => 'required',
+            'merchant' => 'required',
+            'terminal' => 'required',
         ]);
         try{
             $merchant = DB::transaction(function() use ($request){
@@ -110,6 +113,15 @@ class MerchantController extends Controller
                     'is_register_humo' => 0,
                     'is_register_uzcard' => 0,
                 ]);
+
+                $merchantTerminal = MerchantTerminal::create([
+                    'merchant_id' => $merchant->id,
+                    'merchant' => $request->merchant,
+                    'terminal' => $request->terminal,
+                    'balance' => 0,
+                    'status' => 1,
+                ]);
+
                 return $merchant;
             });
             return redirect()->route('merchantShow',$merchant->id);
