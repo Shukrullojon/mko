@@ -33,7 +33,31 @@
 
                         <form action="{{ route('merchantStore') }}" method="post">
                             @csrf
-
+                        <h2 class="text-center">Информация о Мерчанта</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.merchant.merchant')</label>
+                                        <input type="text" name="merchant" value="{{ old('merchant') }}"
+                                               class="form-control {{ $errors->has('merchant') ? "is-invalid":"" }}"
+                                               autocomplete="off" required>
+                                        @if($errors->has('merchant'))
+                                            <span class="error invalid-feedback">{{ $errors->first('merchant') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.merchant.terminal')</label>
+                                        <input type="text" name="terminal" value="{{ old('terminal') }}"
+                                               class="form-control {{ $errors->has('terminal') ? "is-invalid":"" }}"
+                                               autocomplete="off" required>
+                                        @if($errors->has('terminal'))
+                                            <span class="error invalid-feedback">{{ $errors->first('terminal') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -86,7 +110,6 @@
                                 </div>
                             </div>
 
-                            <h3>Merchant Information</h3>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -134,7 +157,7 @@
                                 </div>
                             </div>
 
-                            <h3>Account information</h3>
+                            <h2 class="text-center">Информация о Cчета</h2>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">

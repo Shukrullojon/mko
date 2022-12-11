@@ -18,9 +18,18 @@ class PartnerController extends Controller
 
     public function merchant($params){
         $merchants = Merchant::where('brand_id',$params['params']['partner_id'])->get();
+        $brand = Brand::find($params['params']['partner_id']);
         return [
             'merchants' => $merchants,
+            'brand' => [
+                'name' => $brand->name,
+                'logo' => $brand->logo,
+            ],
         ];
+    }
+
+    public function a($params){
+        return [];
     }
 
 }

@@ -26,6 +26,10 @@ class MerchantController extends Controller
                 'is_register_humo' => $merchant->is_register_humo,
                 'is_register_uzcard' => $merchant->is_register_uzcard,
             ],
+            'brand' => [
+                'name' => $merchant->brand->name ?? "",
+                'logo' => $merchant->brand->logo ?? "",
+            ],
         ];
     }
 

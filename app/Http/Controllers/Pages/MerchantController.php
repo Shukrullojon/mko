@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Pages\Account;
 use App\Models\Pages\Card;
 use App\Models\Pages\Merchant;
+use App\Models\Pages\MerchantTerminal;
+use App\Models\Pages\Payment;
 use App\Services\Luhn;
+use BaconQrCode\Encoder\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MerchantController extends Controller
@@ -33,7 +37,7 @@ class MerchantController extends Controller
                 $merchants = $merchants->where('percentage','LIKE','%'.$request->percentage.'%');
             if($request->filled('filial'))
                 $merchants = $merchants->where('filial','LIKE','%'.$request->filial.'%');
-            $merchants = $merchants->latest()->paginate(2);
+            $merchants = $merchants->latest()->paginate(10);
             return view('pages.merchant.index', compact('merchants'));
         }catch(\Exception $exception){
             return back()->with('error',$exception->getMessage());
@@ -68,6 +72,8 @@ class MerchantController extends Controller
             'account_inn' => 'required',
             'account_filial' => 'required',
             'percentage' => 'required',
+            'merchant' => 'required',
+            'terminal' => 'required',
         ]);
         try{
             $merchant = DB::transaction(function() use ($request){
@@ -107,6 +113,15 @@ class MerchantController extends Controller
                     'is_register_humo' => 0,
                     'is_register_uzcard' => 0,
                 ]);
+
+                $merchantTerminal = MerchantTerminal::create([
+                    'merchant_id' => $merchant->id,
+                    'merchant' => $request->merchant,
+                    'terminal' => $request->terminal,
+                    'balance' => 0,
+                    'status' => 1,
+                ]);
+
                 return $merchant;
             });
             return redirect()->route('merchantShow',$merchant->id);
@@ -133,11 +148,12 @@ class MerchantController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $merchant = Merchant::find($id);
+        return view('pages.merchant.edit', compact('merchant'));
     }
 
     /**
@@ -145,21 +161,49 @@ class MerchantController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'key' => 'required',
+            'filial' => 'required',
+            'address' => 'required',
+            'brand_id' => 'required',
+        ]);
+        $merchant = Merchant::where('id', $id)->first();
+        $merchant->update([
+            'brand_id' => $request->brand_id,
+            'name' => $request->name,
+            'key' => $request->key,
+            'filial' => $request->filial,
+            'address' => $request->address,
+            'account_id' => $request->id,
+            'uzcard_merchant_id' => $request->uzcard_merchant_id,
+            'uzcard_terminal_id' => $request->uzcard_terminal_id,
+            'humo_merchant_id' => $request->humo_merchant_id,
+            'humo_terminal_id' => $request->humo_terminal_id,
+            'is_register_humo' => $request->is_register_humo,
+            'is_register_uzcard' => $request->is_register_uzcard,
+        ]);
+        return redirect()->route('merchantShow', $id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $merchant = Merchant::find($id);
+        $payments = Payment::where('merchant_id', $id)->get();
+        foreach ($payments as $payment) {
+            $payment->delete();
+        }
+        $merchant->delete();
+        return back();
     }
 }

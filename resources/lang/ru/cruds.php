@@ -11,6 +11,8 @@ return [
         'filial' => 'Филиал',
         'percentage' => 'Процент',
         'card' => 'Кошелек',
+        'account_inn' => 'Инн аккаунта',
+        'account_filial' => 'Филиал аккаунта',
     ],
     'brand' => [
         'brands' => 'Бренды',
@@ -20,7 +22,9 @@ return [
         'is_unired' => 'Униред',
     ],
     'merchant' => [
-        'merchants' => 'Tорговцы',
+        'merchant' => 'Мерчант',
+        'terminal' => 'Терминал',
+        'merchants' => 'Мерчанты',
         'brand_id' => 'Ид Бренда',
         'name' => 'Название',
         'account_id' => 'Ид Аккаунта',

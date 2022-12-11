@@ -21,12 +21,15 @@ use App\Http\Controllers\Blade\ApiUserController;
 // Default laravel auth routes
 Auth::routes();
 
+Route::get('/download/{key}', function ($key){
+    \SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(250)->generate($key, public_path('images/'.$key.'.png') );
+    return response()->download(public_path('images\\'.$key.'.png'));
+})->name('downloadSvg');
+
 
 // Welcome page
 Route::get('/', function (){
-    QrCode::size(500)
-        ->format('png')
-        ->generate('Content of qr code will go here', public_path('images/qrcode.png'));
+    return view('welcome');
 })->name('welcome');
 
 // Web pages

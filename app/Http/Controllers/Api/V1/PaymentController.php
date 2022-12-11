@@ -10,6 +10,7 @@ use App\Models\Pages\Merchant;
 use App\Models\Pages\MerchantPeriod;
 use App\Models\Pages\Payment;
 use App\Services\CardService;
+use App\Services\MerchantService;
 use Illuminate\Support\Str;
 
 class PaymentController extends Controller
@@ -42,18 +43,22 @@ class PaymentController extends Controller
         ]);
 
         try {
-            $hold = CardService::holdCredit([
+            $debit = CardService::debit([
                 'token' => $card->token,
                 'expire' => $card->expire,
                 'amount' => $params['params']['amount'] + $params['params']['amount'] * ($period->percentage / 100),
             ]);
-            if($hold){
+            if($debit){
+                $credirMerchant = MerchantService::credit([
+                    'merchant_id' => $merchant->id,
+                    'amount' => $params['params']['amount'] + $params['params']['amount'] * ($period->percentage / 100),
+                ]);
+
                 $payment->update([
                     'status' => 1,
                 ]);
             }
-            return ($hold) ? ['tr_id' => $payment->tr_id,]
-                : ErrorHelper::error301();
+            return ['tr_id' => $payment->tr_id];
         }catch(\Exception $e){
             return [
                 'error' => [
