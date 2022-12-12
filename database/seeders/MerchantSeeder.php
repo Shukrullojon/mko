@@ -23,7 +23,7 @@ class MerchantSeeder extends Seeder
             $account = Account::select('id')->inRandomOrder()->first();
             Merchant::create([
                 'brand_id' => $brand->id,
-                'key' => Str::random(20),
+                'key' => Str::uuid(),
                 'name' => "Filial 1",
                 'filial' => "Filial 1",
                 'address' => "Address",
