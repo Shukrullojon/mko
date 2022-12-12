@@ -41,6 +41,20 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label>Brand Id</label>
+                                <select class="select2 brand_id" id="brand_id" name="brand_id" data-placeholder="@lang('pleaseSelect')" style="width: 100%;">
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Merchant Id</label>
+                                <select class="form-control merchants" name="merchant_id" data-placeholder="@lang('pleaseSelect')" style="width: 100%;">
+                                    <option value="0" selected></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>@lang('cruds.user.fields.email')</label>
                                 <input type="email" name="email" class="form-control {{ $errors->has('email') ? "is-invalid":"" }}" value="{{ old('email') }}" required>
                                 @if($errors->has('email'))
@@ -83,4 +97,27 @@
         </div>
     </section>
 
+@endsection
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            $("select.brand_id").change(function () {
+                var brandId = $(this).children("option:selected").val();
+
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    data: {brandId: brandId},
+                    url: '{{ route('getBrand') }}',
+                    success: function (data) {
+                        $("select.merchants").html(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
+
+    </script>
 @endsection

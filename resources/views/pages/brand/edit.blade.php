@@ -42,7 +42,9 @@
                             </div>
                             <div class="form-group">
                                 <label>@lang('cruds.brand.logo')</label>
-                                <input type="text" name="logo" class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}" value="{{ old('logo',$brand->logo) }}" required>
+                                <input type="file" name="logo" value="{{ old('logo') }}"
+                                       class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}"
+                                       autocomplete="off" accept="image/*" required>
                                 @if($errors->has('logo') || 1)
                                     <span class="error invalid-feedback">{{ $errors->first('logo') }}</span>
                                 @endif
