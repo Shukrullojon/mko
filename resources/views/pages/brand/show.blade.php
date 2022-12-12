@@ -39,7 +39,7 @@
                             </tr>
                             <tr>
                                 <th>@lang('cruds.brand.logo')</th>
-                                <td>{{ $brand->logo }}</td>
+                                <td><img src="{{ asset('/images/'.$brand->logo) }}" alt="" style="width: 50px; height: 50px" ></td>
                             </tr>
                             <tr>
                                 <th>@lang('cruds.brand.status')</th>

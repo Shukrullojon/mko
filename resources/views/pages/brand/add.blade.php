@@ -31,7 +31,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        <form action="{{ route('brandStore') }}" method="post">
+                        <form action="{{ route('brandStore') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
@@ -48,7 +48,7 @@
                                 <label>@lang('cruds.brand.logo')</label>
                                 <input type="file" name="logo" value="{{ old('logo') }}"
                                        class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}"
-                                       autocomplete="off" required>
+                                       autocomplete="off" accept="image/*" required>
                                 @if($errors->has('logo'))
                                     <span class="error invalid-feedback">{{ $errors->first('logo') }}</span>
                                 @endif
@@ -66,8 +66,8 @@
                             <div class="form-group">
                                 <label>@lang('cruds.brand.is_unired')</label>
                                 <select name="is_unired" id="" class="form-control">
-                                    <option value="0">True</option>
-                                    <option value="1">False</option>
+                                    <option value="1">True</option>
+                                    <option value="0">False</option>
                                 </select>
                                 @if($errors->has('is_unired'))
                                     <span class="error invalid-feedback">{{ $errors->first('is_unired') }}</span>

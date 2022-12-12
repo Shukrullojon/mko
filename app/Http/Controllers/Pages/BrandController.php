@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Brand;
+use App\Models\Pages\Merchant;
 use App\Services\MobileService;
 use Database\Seeders\BrandSeeder;
 use Illuminate\Http\Request;
@@ -25,7 +26,10 @@ class BrandController extends Controller
                 $brands = $brands->where('logo', 'LIKE', '%' . $request->logo . '%');
             if ($request->filled('status'))
                 $brands = $brands->where('status', 'LIKE', '%' . $request->status . '%');
-            $brands = $brands->latest()->paginate(2);
+            if (!(auth()->user()->hasRole('Super Admin')))
+                $brands = $brands->where('id', auth()->user()->brand_id);
+            $brands = $brands->latest()->paginate(10);
+
             return view('pages.brand.index', compact('brands'));
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
@@ -57,10 +61,24 @@ class BrandController extends Controller
             'is_unired' => 'required',
         ]);
 
+
+        // Get reference to uploaded image
+        $request->validate([
+            'logo.*' => 'mimes:pdf,jpeg,png,jpg,svg',
+        ]);
+//        dd($request->file('logo'));
+        if($request->hasFile('logo')) {
+
+            $file = $request->file('logo');
+            $fileName = $file->getClientOriginalName();
+            $destinationPath = public_path() . '/images';
+            $file->move($destinationPath, $fileName);
+//            return redirect('/uploadfile');
+        }
         try {
             $brand = Brand::create([
                 'name' => $request->name,
-                'logo' => $request->logo,
+                'logo' => $fileName,
                 'status' => $request->status,
                 'is_unired' => $request->is_unired,
             ]);
@@ -109,6 +127,20 @@ class BrandController extends Controller
             'status' => 'required',
             'is_unired' => 'required',
         ]);
+
+        // Get reference to uploaded image
+        $request->validate([
+            'logo.*' => 'mimes:pdf,jpeg,png,jpg,svg',
+        ]);
+//        dd($request->file('logo'));
+        if($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $fileName = $file->getClientOriginalName();
+            $destinationPath = public_path() . '/images';
+            $file->move($destinationPath, $fileName);
+//            return redirect('/uploadfile');
+        }
+
         $brand = Brand::where('id', $id)->first();
         $brand->update([
             'name' => $request->name,
@@ -129,12 +161,15 @@ class BrandController extends Controller
     {
     }
 
-    public function getBrand($id)
+    public function getBrand(Request $request)
     {
-        return 12;
-        $data = [];
-        $data['partner_id'] = $id;
-        $brand = MobileService::branches($data);
-        return $brand;
+        $brandId =  $request->brandId;
+        $merchants = Merchant::where('brand_id', $brandId)->get();
+        $options = ["<option value='0'>null</option>"];
+        foreach ($merchants as $merchant){
+            $option = "<option value='$merchant->id'>".$merchant->name."</option>";
+            $options[] = $option;
+        }
+        return $options;
     }
 }

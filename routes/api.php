@@ -33,4 +33,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Route::post('/account/createAccCard', 'AccountController@createAccCard')->name('createAccCard');
-Route::post('/getBrand', 'App\Http\Controllers\Pages\BrandController@getBrand')->name('getBrand');
+Route::post('/getBrand', [BrandController::class, 'getBrand'])->name('getBrand');
