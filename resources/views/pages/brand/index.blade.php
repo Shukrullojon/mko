@@ -45,27 +45,27 @@
                                aria-describedby="dataTable_info">
                             <thead>
                             <tr>
-                                <th>@lang('cruds.brand.name')</th>
+                                <th>Ид</th>
+                                <th>@lang('cruds.brand.brand_name')</th>
+                                <th width="80px">@lang('cruds.brand.status')</th>
                                 <th>@lang('cruds.brand.logo')</th>
-                                <th>@lang('cruds.brand.status')</th>
-                                <th></th>
+                                <th class="text-center">действие</th>
                             </tr>
                             <tr class="text-center">
                                 <form action="">
                                     <th>
-                                        <input value="{{ request()->name }}" type="text"
-                                               placeholder="@lang('cruds.brand.name')" class="clear-class form-control"
-                                               name="name">
                                     </th>
                                     <th>
-                                        <input value="{{ request()->logo }}" type="text"
-                                               placeholder="@lang('cruds.brand.logo')" class="clear-class form-control"
-                                               name="logo">
+                                        <input value="{{ request()->brand_name }}" type="text"
+                                               placeholder="@lang('cruds.brand.brand_name')" class="clear-class form-control"
+                                               name="brand_name">
                                     </th>
                                     <th>
                                         <input value="{{ request()->status }}" type="text"
                                                placeholder="@lang('cruds.brand.status')"
                                                class="clear-class form-control" name="status">
+                                    </th>
+                                    <th>
                                     </th>
                                     <th>
 
@@ -82,22 +82,37 @@
                             <tbody>
                             @foreach($brands as $brand)
                                 <tr>
+                                    <td>{{ $brand->id }}</td>
                                     <td>{{ $brand->name }}</td>
-                                    <td>{{ $brand->logo }}</td>
-                                    <td>{{ $brand->status }}</td>
-                                    <td>
-                                        <form action="{{ route('brandDestroy',$brand->id) }}" method="post">
+                                    <td class="text-center">{{ $brand->status }}</td>
+                                    <td class="text-center">
+{{--                                        @dd(public_path('images/'.$brand->logo_name))--}}
+                                        @if(file_exists(public_path('images/'.$brand->logo_name)))
+                                            <img src="{{ $brand->logo }}" alt="" style="width: 50px; height: 50px" >
+                                        @else
+                                            ''
+                                        @endif
+
+                                    </td>
+                                    <td class="text-center">
+                                        <form action="" method="post">
                                             @csrf
                                             <div class="btn-group ">
                                                 <a href="{{ route('brandShow',$brand->id) }}"
                                                    class="btn btn-info btn-sm">
                                                     <span class="fa fa-eye"></span>
                                                 </a>
-                                                <a href="{{ route('brandEdit',$brand->id) }}"
-                                                   class="btn btn-primary btn-sm"
-                                                   style="margin-left: 5px; margin-right: 5px">
-                                                    <span class="fa fa-edit"></span>
-                                                </a>
+                                                @can('brand.edit')
+                                                    <a href="{{ route('brandEdit',$brand->id) }}"
+                                                       class="btn btn-primary btn-sm"
+                                                       style="margin-left: 5px; margin-right: 5px">
+                                                        <span class="fa fa-edit"></span>
+                                                    </a>
+                                                @endcan
+{{--                                                @can('brand.delete')--}}
+{{--                                                    <input name="_method" type="hidden" value="DELETE">--}}
+{{--                                                    <a href="{{ route('brandDestroy', $brand->id) }}" type="button" class="btn btn-danger btn-sm" onclick="if (confirm('Вы уверены?')) { this.form.submit() } "> @lang('global.delete')</a>--}}
+{{--                                                @endcan--}}
 
                                             </div>
                                         </form>

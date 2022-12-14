@@ -8,6 +8,8 @@ use App\Models\Pages\Merchant;
 use App\Services\MobileService;
 use Database\Seeders\BrandSeeder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class BrandController extends Controller
 {
@@ -20,15 +22,13 @@ class BrandController extends Controller
     {
         try {
             $brands = new Brand();
-            if ($request->filled('name'))
-                $brands = $brands->where('name', 'LIKE', '%' . $request->name . '%');
-            if ($request->filled('logo'))
-                $brands = $brands->where('logo', 'LIKE', '%' . $request->logo . '%');
+            if ($request->filled('brand_name'))
+                $brands = $brands->where('name', 'LIKE', '%' . $request->brand_name . '%');
             if ($request->filled('status'))
                 $brands = $brands->where('status', 'LIKE', '%' . $request->status . '%');
             if (!(auth()->user()->hasRole('Super Admin')))
                 $brands = $brands->where('id', auth()->user()->brand_id);
-            $brands = $brands->latest()->paginate(10);
+            $brands = $brands->orderBy('id', 'DESC')->paginate(10);
 
             return view('pages.brand.index', compact('brands'));
         } catch (\Exception $exception) {
@@ -72,13 +72,13 @@ class BrandController extends Controller
             $file = $request->file('logo');
             $fileName = $file->getClientOriginalName();
             $destinationPath = public_path() . '/images';
-            $file->move($destinationPath, $fileName);
-//            return redirect('/uploadfile');
+            $file->move($destinationPath, $file->hashName());
         }
         try {
             $brand = Brand::create([
                 'name' => $request->name,
-                'logo' => $fileName,
+                'logo' => asset('/').'/images/'.$fileName,
+                'logo_name' => $fileName,
                 'status' => $request->status,
                 'is_unired' => $request->is_unired,
             ]);
@@ -97,7 +97,12 @@ class BrandController extends Controller
     public function show($id)
     {
         $brand = Brand::find($id);
-        return view('pages.brand.show', compact('brand'));
+        $e = explode('/', $brand->logo);
+
+        return view('pages.brand.show', [
+            'brand' => $brand,
+            'logo' => end($e),
+        ]);
     }
 
     /**
@@ -133,21 +138,28 @@ class BrandController extends Controller
             'logo.*' => 'mimes:pdf,jpeg,png,jpg,svg',
         ]);
 //        dd($request->file('logo'));
+
+        $brand = Brand::where('id', $id)->first();
+        $oldBrand = $brand->logo;
+
         if($request->hasFile('logo')) {
             $file = $request->file('logo');
-            $fileName = $file->getClientOriginalName();
+            $fileName = $file->hashName();
             $destinationPath = public_path() . '/images';
+//            dd($oldBrand, $brand);
+            $name = self::logo($brand->logo);
+            if (file_exists(public_path('images/'.$name)))
+                unlink(public_path('images/'.$name));
             $file->move($destinationPath, $fileName);
+            $brand->logo = asset('/').'/images/'.$fileName;
+            $brand->logo_name = $fileName;
 //            return redirect('/uploadfile');
         }
 
-        $brand = Brand::where('id', $id)->first();
-        $brand->update([
-            'name' => $request->name,
-            'logo' => $request->logo,
-            'status' => $request->status,
-            'is_unired' => $request->is_unired,
-        ]);
+        $brand->name = $request->name;
+        $brand->status = $request->status;
+        $brand->is_unired = $request->is_unired;
+        $brand->update();
         return redirect()->route('brandShow', $brand->id);
     }
 
@@ -155,21 +167,41 @@ class BrandController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
+        dd($id);
+        $brand = Brand::find(12);
+        $brand->delete();
+        $name = self::logo($brand->logo);
+        if (public_path('images/'.$name))
+            unlink(public_path('images/'.$name));
+        return 'success';
     }
 
     public function getBrand(Request $request)
     {
         $brandId =  $request->brandId;
         $merchants = Merchant::where('brand_id', $brandId)->get();
+
         $options = ["<option value='0'>null</option>"];
         foreach ($merchants as $merchant){
             $option = "<option value='$merchant->id'>".$merchant->name."</option>";
             $options[] = $option;
         }
         return $options;
+    }
+    public static function logo($brand) {
+        $e = explode('/', $brand);
+        return end($e);
+    }
+
+    public function editLogo($id){
+        $brand = Brand::find($id);
+        $name = self::logo($brand->logo);
+        if (public_path('images/'.$name))
+            unlink(public_path('images/'.$name));
+        return $brand->logo;
     }
 }

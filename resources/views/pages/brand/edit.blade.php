@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -31,7 +32,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        <form action="{{ route('brandUpdate', $brand->id) }}" method="post">
+                        <form action="{{ route('brandUpdate', $brand->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label>@lang('cruds.brand.name')</label>
@@ -42,9 +43,11 @@
                             </div>
                             <div class="form-group">
                                 <label>@lang('cruds.brand.logo')</label>
+                                    <img src="{{ $brand->logo }}" id="img" alt="" style="width: 60px; max-height: 60px">
+                                    <button class="btn btn-danger ml-3" id="logo"><span class="fa fa-trash"></span></button>
                                 <input type="file" name="logo" value="{{ old('logo') }}"
                                        class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}"
-                                       autocomplete="off" accept="image/*" required>
+                                       autocomplete="off" accept="image/*">
                                 @if($errors->has('logo') || 1)
                                     <span class="error invalid-feedback">{{ $errors->first('logo') }}</span>
                                 @endif
@@ -76,4 +79,34 @@
         </div>
     </section>
 
+@endsection
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            $("button#logo").click(function (e) {
+                e.preventDefault()
+
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'GET',
+                    // data: {brandId: brandId},
+                    url: '{{ route('editLogo', $brand->id) }}',
+                    success: function (data) {
+                        const img = document.getElementsByTagName('img');
+                        img.style.display = 'none'
+                        console.log(img)
+                        // $("select.merchants").html(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
+        // const logo1 = document.getElementById('logo');
+        // logo1.addEventListener('click', (e) => {
+        //     e.preventDefault()
+        //     console.log(e.target.valueOf())
+        // })
+    </script>
 @endsection

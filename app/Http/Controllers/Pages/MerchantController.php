@@ -26,18 +26,19 @@ class MerchantController extends Controller
     {
         try{
             $merchants = new Merchant();
-            if($request->filled('number'))
-                $merchants = $merchants->where('number','LIKE','%'.$request->number.'%');
-            if($request->filled('inn')){
-                $merchants = $merchants->where('inn','LIKE','%'.$request->inn.'%');
-            }
             if($request->filled('name'))
                 $merchants = $merchants->where('name','LIKE','%'.$request->name.'%');
-            if($request->filled('percentage'))
-                $merchants = $merchants->where('percentage','LIKE','%'.$request->percentage.'%');
             if($request->filled('filial'))
                 $merchants = $merchants->where('filial','LIKE','%'.$request->filial.'%');
-            $merchants = $merchants->latest()->paginate(10);
+            if($request->filled('merchant_address'))
+                $merchants = $merchants->where('address','LIKE','%'.$request->merchant_address.'%');
+
+            if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id == null)
+                $merchants = $merchants->where('brand_id', auth()->user()->brand_id);
+            if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id != null)
+                $merchants = $merchants->where('brand_id', auth()->user()->brand_id)
+                                       ->where('id', auth()->user()->merchant_id);
+            $merchants = $merchants->orderBy('id', 'DESC')->paginate(10);
             return view('pages.merchant.index', compact('merchants'));
         }catch(\Exception $exception){
             return back()->with('error',$exception->getMessage());

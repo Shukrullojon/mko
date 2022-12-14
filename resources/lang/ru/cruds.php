@@ -5,7 +5,7 @@ return [
     'account' => [
         'account' => 'Счета',
         'type' => 'Тип',
-        'number' => 'Номер',
+        'account_number' => 'Номер Счета',
         'inn' => 'Инн',
         'name' => 'Название',
         'filial' => 'Филиал',
@@ -16,7 +16,7 @@ return [
     ],
     'brand' => [
         'brands' => 'Бренды',
-        'name' => 'Название',
+        'brand_name' => 'Имя Бренда',
         'logo' => 'Логотип',
         'status' => 'Статус',
         'is_unired' => 'Униред',
@@ -33,7 +33,7 @@ return [
         'is_register_uzcard' => 'регистрация uzcard',
         'is_register_humo' => 'регистрация humo',
         'filial' => 'Филиал',
-        'address' => 'Адрес',
+        'merchant_address' => 'Адрес Мерчанта',
         'uzcard_merchant_id' => 'Ид Мерчанта uzcard',
         'humo_merchant_id' => 'Ид Мерчанта humo',
         'uzcard_terminal_id' => 'Ид Терминала uzcard',

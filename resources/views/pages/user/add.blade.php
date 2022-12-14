@@ -110,6 +110,7 @@
                     data: {brandId: brandId},
                     url: '{{ route('getBrand') }}',
                     success: function (data) {
+                        // console.log(data)
                         $("select.merchants").html(data);
                     },
                     error: function(data) {

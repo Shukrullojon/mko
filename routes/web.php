@@ -67,7 +67,8 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/show/{id}', 'BrandController@show')->name('brandShow');
         Route::get('/edit/{id}', 'BrandController@edit')->name('brandEdit');
         Route::post('/update/{id}', 'BrandController@update')->name('brandUpdate');
-        Route::delete('/delete/{id}', 'BrandController@destroy')->name('brandDestroy');
+        Route::post('/delete/{id}', 'BrandController@destroy')->name('brandDestroy');
+        Route::get('/editLogo/{id}', 'BrandController@editLogo')->name('editLogo');
     });
 
     // Users

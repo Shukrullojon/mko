@@ -42,25 +42,33 @@
                         <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="dataTable_info">
                             <thead>
                                 <tr>
-                                    <th>@lang('cruds.merchant.brand_id')</th>
+                                    <th width="50px">@lang('global.id')</th>
                                     <th>@lang('cruds.merchant.name')</th>
-                                    <th>@lang('cruds.merchant.account_id')</th>
-                                    <th>@lang('cruds.merchant.key')</th>
-                                    <th></th>
+                                    <th>@lang('cruds.brand.brand_name')</th>
+                                    <th>@lang('cruds.merchant.filial')</th>
+                                    <th>@lang('cruds.merchant.merchant_address')</th>
+                                    <th>@lang('cruds.account.account_number')</th>
+                                    <th class="text-center">@lang('global.actions')</th>
                                 </tr>
                                 <tr class="text-center">
                                     <form action="">
                                         <th>
-                                            <input value="{{ request()->brand_id }}" type="text" placeholder="@lang('cruds.merchant.brand_id')" class="clear-class form-control" name="number">
+{{--                                            <input value="{{ request()->name }}" type="text" placeholder="@lang('cruds.merchant.name')" class="clear-class form-control" name="inn">--}}
                                         </th>
                                         <th>
-                                            <input value="{{ request()->name }}" type="text" placeholder="@lang('cruds.merchant.name')" class="clear-class form-control" name="inn">
+                                            <input value="{{ request()->name }}" type="text" placeholder="@lang('cruds.merchant.name')" class="clear-class form-control" name="name">
                                         </th>
                                         <th>
-                                            <input value="{{ request()->account_id }}" type="text" placeholder="@lang('cruds.merchant.account_id')" class="clear-class form-control" name="name">
+{{--                                            <input value="{{ request()->brand_name }}" type="text" placeholder="@lang('cruds.merchant.brand_name')" class="clear-class form-control" name="brand_name">--}}
                                         </th>
                                         <th>
-                                            <input value="{{ request()->key }}" type="text" placeholder="@lang('cruds.merchant.key')" class="clear-class form-control" name="filial">
+                                            <input value="{{ request()->filial }}" type="text" placeholder="@lang('cruds.merchant.filial')" class="clear-class form-control" name="filial">
+                                        </th>
+                                        <th>
+                                            <input value="{{ request()->merchant_address }}" type="text" placeholder="@lang('cruds.merchant.merchant_address')" class="clear-class form-control" name="merchant_address">
+                                        </th>
+                                        <th>
+{{--                                            <input value="{{ request()->account_number }}" type="text" placeholder="@lang('cruds.account.account_number')" class="clear-class form-control" name="account_number">--}}
                                         </th>
                                         <th>
 
@@ -71,16 +79,19 @@
                                                 <span class="fa fa-reply"></span>
                                             </a>
                                         </th>
+                                        <th></th>
                                     </form>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($merchants as $merchant)
                                 <tr>
-                                    <td>{{ $merchant->brand->name }}</td>
+                                    <td>{{ $merchant->id }}</td>
                                     <td>{{ $merchant->name }}</td>
+                                    <td>{{ $merchant->brand->name }}</td>
+                                    <td>{{ $merchant->filial }}</td>
+                                    <td>{{ $merchant->address }}</td>
                                     <td>{{ $merchant->account->number }}</td>
-                                    <td>{{ $merchant->key }}</td>
                                     <td>
                                         <form action="{{ route('merchantDestroy',$merchant->id) }}" method="post">
                                             @csrf

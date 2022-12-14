@@ -101,11 +101,7 @@
                     data: {brandId: brandId},
                     url: '{{ route('getBrand') }}',
                     success: function (data) {
-                        if (data) {
-                            alert(data)
-                        } else {
-                            alert('error')
-                        }
+                        $('se')
                     }
                 });
             });
