@@ -25,4 +25,7 @@ class Payment extends Model
         return $this->belongsTo(Card::class,'sender_card','token');
     }
 
+    public function transactions(){
+        return $this->hasMany(Transaction::class,'id','payment_id');
+    }
 }

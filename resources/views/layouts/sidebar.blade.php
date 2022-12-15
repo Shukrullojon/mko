@@ -54,11 +54,28 @@
 
 
         <li class="nav-item">
+            <a href="{{ route('paymentIndex') }}" class="nav-link {{ Request::is('payment*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>@lang('cruds.payment.payment')</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('clientIndex') }}" class="nav-link {{ Request::is('client*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>@lang('cruds.client.clients')</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a href="{{ route('brandIndex') }}" class="nav-link {{ Request::is('brand*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>
                 <sub><i class="fas fa-child"></i></sub>
                 <p>@lang('cruds.brand.brands')</p>
             </a>
+        </li>
 
         <li class="nav-item">
             <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
@@ -68,48 +85,48 @@
             </a>
         </li>
 
-{{--        @can('api-user.view')--}}
-{{--            <li class="nav-item">--}}
-{{--                <a href="{{ route('api-userIndex') }}" class="nav-link {{ Request::is('api-users*') ? "active":'' }}">--}}
-{{--                    <i class="fas fa-cog"></i>--}}
-{{--                    <sub><i class="fas fa-child"></i></sub>--}}
-{{--                    <p> API Users</p>--}}
-{{--                </a>--}}
-{{--            </li>--}}
-{{--        @endcan--}}
+        {{--        @can('api-user.view')--}}
+        {{--            <li class="nav-item">--}}
+        {{--                <a href="{{ route('api-userIndex') }}" class="nav-link {{ Request::is('api-users*') ? "active":'' }}">--}}
+        {{--                    <i class="fas fa-cog"></i>--}}
+        {{--                    <sub><i class="fas fa-child"></i></sub>--}}
+        {{--                    <p> API Users</p>--}}
+        {{--                </a>--}}
+        {{--            </li>--}}
+        {{--        @endcan--}}
     </ul>
 
-{{--    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">--}}
-{{--        <li class="nav-item has-treeview">--}}
-{{--            <a href="" class="nav-link">--}}
-{{--                <i class="fas fa-palette"></i>--}}
-{{--                <p>--}}
-{{--                    @lang('global.theme')--}}
-{{--                    <i class="right fas fa-angle-left"></i>--}}
-{{--                </p>--}}
-{{--            </a>--}}
-{{--            <ul class="nav nav-treeview" style="display: none">--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'default']) }}" class="nav-link">--}}
-{{--                        <i class="nav-icon fas fa-circle text-info"></i>--}}
-{{--                        <p class="text">Default {{ auth()->user()->theme == 'default' ? '✅':'' }}</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'light']) }}" class="nav-link">--}}
-{{--                        <i class="nav-icon fas fa-circle text-white"></i>--}}
-{{--                        <p>Light {{ auth()->user()->theme == 'light' ? '✅':'' }}</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'dark']) }}" class="nav-link">--}}
-{{--                        <i class="nav-icon fas fa-circle text-gray"></i>--}}
-{{--                        <p>Dark {{ auth()->user()->theme == 'dark' ? '✅':'' }}</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-{{--    </ul>--}}
+    {{--    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">--}}
+    {{--        <li class="nav-item has-treeview">--}}
+    {{--            <a href="" class="nav-link">--}}
+    {{--                <i class="fas fa-palette"></i>--}}
+    {{--                <p>--}}
+    {{--                    @lang('global.theme')--}}
+    {{--                    <i class="right fas fa-angle-left"></i>--}}
+    {{--                </p>--}}
+    {{--            </a>--}}
+    {{--            <ul class="nav nav-treeview" style="display: none">--}}
+    {{--                <li class="nav-item">--}}
+    {{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'default']) }}" class="nav-link">--}}
+    {{--                        <i class="nav-icon fas fa-circle text-info"></i>--}}
+    {{--                        <p class="text">Default {{ auth()->user()->theme == 'default' ? '✅':'' }}</p>--}}
+    {{--                    </a>--}}
+    {{--                </li>--}}
+    {{--                <li class="nav-item">--}}
+    {{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'light']) }}" class="nav-link">--}}
+    {{--                        <i class="nav-icon fas fa-circle text-white"></i>--}}
+    {{--                        <p>Light {{ auth()->user()->theme == 'light' ? '✅':'' }}</p>--}}
+    {{--                    </a>--}}
+    {{--                </li>--}}
+    {{--                <li class="nav-item">--}}
+    {{--                    <a href="{{ route('userSetTheme',[auth()->id(),'theme' => 'dark']) }}" class="nav-link">--}}
+    {{--                        <i class="nav-icon fas fa-circle text-gray"></i>--}}
+    {{--                        <p>Dark {{ auth()->user()->theme == 'dark' ? '✅':'' }}</p>--}}
+    {{--                    </a>--}}
+    {{--                </li>--}}
+    {{--            </ul>--}}
+    {{--        </li>--}}
+    {{--    </ul>--}}
     {{--    @can('card.main')--}}
 
     {{--    @endcan--}}

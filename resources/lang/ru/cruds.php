@@ -2,6 +2,12 @@
 
 return [
     'search' => "Поиск",
+    'payment' => [
+        'payment' => "Оплата",
+    ],
+    'client' => [
+        'clients' => "Клиенты",
+    ],
     'account' => [
         'account' => 'Счета',
         'type' => 'Тип',

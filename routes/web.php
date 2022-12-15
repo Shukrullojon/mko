@@ -70,6 +70,16 @@ Route::group(['middleware' => 'auth'],function (){
         Route::post('/delete/{id}', 'BrandController@destroy')->name('brandDestroy');
         Route::get('/editLogo/{id}', 'BrandController@editLogo')->name('editLogo');
     });
+    // Payments
+    Route::group(['prefix'=>'payment', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
+        Route::get('/index', 'PaymentController@index')->name('paymentIndex');
+        Route::get('/show/{id}', 'PaymentController@show')->name('paymentShow');
+    });
+    // Clients
+    Route::group(['prefix'=>'client', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
+        Route::get('/index', 'ClientController@index')->name('clientIndex');
+        Route::get('/show/{id}', 'ClientController@show')->name('clientShow');
+    });
 
     // Users
     Route::get('/users',[UserController::class,'index'])->name('userIndex');

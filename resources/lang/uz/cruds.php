@@ -2,6 +2,12 @@
 
 return [
     'search' => "Qidiruv",
+    'payment' => [
+        'payment' => "To'lovlar",
+    ],
+    'client' => [
+        'clients' => "Mijozlar",
+    ],
     'account' => [
         'account' => 'Hisob raqam',
         'type' => 'Turi',
