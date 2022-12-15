@@ -35,12 +35,12 @@
                             @csrf
 
                             <div class="form-group">
-                                <label>@lang('cruds.brand.name')</label>
-                                <input type="text" name="name" value="{{ old('name') }}"
-                                       class="form-control {{ $errors->has('name') ? "is-invalid":"" }}"
+                                <label>@lang('cruds.brand.brand_name')</label>
+                                <input type="text" name="brand_name" value="{{ old('brand_name') }}"
+                                       class="form-control {{ $errors->has('brand_name') ? "is-invalid":"" }}"
                                        autocomplete="off" required>
-                                @if($errors->has('name'))
-                                    <span class="error invalid-feedback">{{ $errors->first('name') }}</span>
+                                @if($errors->has('brand_name'))
+                                    <span class="error invalid-feedback">{{ $errors->first('brand_name') }}</span>
                                 @endif
                             </div>
 
@@ -56,16 +56,19 @@
 
                             <div class="form-group">
                                 <label>@lang('cruds.brand.status')</label>
-                                <input type="text" name="status" value="{{ old('status') }}"
-                                       class="form-control {{ $errors->has('status') ? "is-invalid":"" }}"
-                                       autocomplete="off" required>
+                                <select name="status" id="" class="form-control">
+                                    <option selected disabled>select status</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">InActive</option>
+                                </select>
                                 @if($errors->has('status'))
                                     <span class="error invalid-feedback">{{ $errors->first('status') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
                                 <label>@lang('cruds.brand.is_unired')</label>
-                                <select name="is_unired" id="" class="form-control">
+                                <select name="is_unired" id="" class="form-control" required>
+                                    <option selected disabled>select status</option>
                                     <option value="1">True</option>
                                     <option value="0">False</option>
                                 </select>

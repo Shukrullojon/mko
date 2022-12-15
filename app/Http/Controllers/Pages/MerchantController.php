@@ -63,11 +63,12 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $this->validate($request, [
             'brand_id' => 'required',
             'name' => 'required',
             'filial' => 'required',
-            'address' => 'required',
+            'merchant_address' => 'required',
             'number' => 'required',
             'account_name' => 'required',
             'account_inn' => 'required',

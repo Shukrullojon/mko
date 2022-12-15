@@ -34,39 +34,66 @@
 
                         <form action="{{ route('brandUpdate', $brand->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group">
-                                <label>@lang('cruds.brand.name')</label>
-                                <input type="text" name="name" class="form-control {{ $errors->has('name') ? "is-invalid":"" }}" value="{{ old('name',$brand->name) }}" required>
-                                @if($errors->has('name') || 1)
-                                    <span class="error invalid-feedback">{{ $errors->first('name') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>@lang('cruds.brand.logo')</label>
-                                    <img src="{{ $brand->logo }}" id="img" alt="" style="width: 60px; max-height: 60px">
-                                    <button class="btn btn-danger ml-3" id="logo"><span class="fa fa-trash"></span></button>
-                                <input type="file" name="logo" value="{{ old('logo') }}"
-                                       class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}"
-                                       autocomplete="off" accept="image/*">
-                                @if($errors->has('logo') || 1)
-                                    <span class="error invalid-feedback">{{ $errors->first('logo') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>@lang('cruds.brand.status')</label>
-                                <input type="text" name="status" class="form-control {{ $errors->has('status') ? "is-invalid":"" }}" value="{{ old('status',$brand->status) }}" required>
-                                @if($errors->has('status') || 1)
-                                    <span class="error invalid-feedback">{{ $errors->first('status') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label>@lang('cruds.brand.brands')</label>
-                                <input type="text" name="is_unired" class="form-control {{ $errors->has('is_unired') ? "is-invalid":"" }}" value="{{ old('is_unired',$brand->is_unired) }}" required>
-                                @if($errors->has('is_unired') || 1)
-                                    <span class="error invalid-feedback">{{ $errors->first('is_unired') }}</span>
-                                @endif
-                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.brand.brand_name')</label>
+                                        <input type="text" name="brand_name" class="form-control {{ $errors->has('brand_name') ? "is-invalid":"" }}" value="{{ old('brand_name',$brand->name) }}" required>
+                                        @if($errors->has('brand_name') || 1)
+                                            <span class="error invalid-feedback">{{ $errors->first('brand_name') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.brand.status')</label>
+                                        <select name="status" id="" class="form-control">
+                                            @if($brand->status == true)
+                                                <option value="1" selected>Active</option>
+                                                <option value="0">InActive</option>
+                                            @else
+                                                <option value="1" >Active</option>
+                                                <option value="0" selected>InActive</option>
+                                            @endif
+                                        </select>
+                                    </div>
 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.brand.logo')</label>
+                                        <input type="file" name="logo" value="{{ old('logo') }}"
+                                               class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}"
+                                               accept="image/*">
+{{--                                        @if($errors->has('logo') || 1)--}}
+{{--                                            <span class="error invalid-feedback">{{ $errors->first('logo') }}</span>--}}
+{{--                                        @endif--}}
+
+
+{{--                                            <button class="btn btn-danger ml-3" id="logo"><span class="fa fa-trash"></span></button>--}}
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <img src="{{ $brand->logo }}" id="img" alt="" style="width: 60px; max-height: 60px" class="ml-5">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.brand.is_unired')</label>
+                                        <select name="is_unired" id="" class="form-control">
+                                            @if($brand->is_unired == true)
+                                                <option value="1" selected>True</option>
+                                                <option value="0">False</option>
+                                            @else
+                                                <option value="1" >True</option>
+                                                <option value="0" selected>False</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success float-right">@lang('global.save')</button>
                                 <a href="{{ route('brandIndex') }}" class="btn btn-default float-left">@lang('global.cancel')</a>

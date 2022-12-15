@@ -23,7 +23,7 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-8 offset-2">
+            <div class="col-md-12 ">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">@lang('global.show')</h3>
@@ -34,7 +34,7 @@
                         <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="">
                             <thead>
                             <tr>
-                                <th>@lang('cruds.brand.name')</th>
+                                <th>@lang('cruds.brand.brand_name')</th>
                                 <td>{{ $brand->name }}</td>
                             </tr>
                             <tr>
@@ -43,11 +43,11 @@
                             </tr>
                             <tr>
                                 <th>@lang('cruds.brand.status')</th>
-                                <td>{{ $brand->status }}</td>
+                                <td>{{ status($brand->status) }}</td>
                             </tr>
                             <tr>
                                 <th>@lang('cruds.brand.is_unired')</th>
-                                <td>{{ $brand->is_unired }}</td>
+                                <td>{{ $brand->is_unired==1 ? 'True' : 'False' }}</td>
                             </tr>
 
                             </thead>

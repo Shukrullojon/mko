@@ -33,9 +33,6 @@
                                 </a>
                             @endcan
 
-                            <a href="{{ route('brandIndex') }}" class="btn btn-secondary btn-sm"><i
-                                    class="fa fa-redo-alt"></i> @lang('global.clear')</a>
-
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -61,9 +58,9 @@
                                                name="brand_name">
                                     </th>
                                     <th>
-                                        <input value="{{ request()->status }}" type="text"
-                                               placeholder="@lang('cruds.brand.status')"
-                                               class="clear-class form-control" name="status">
+{{--                                        <input value="{{ request()->status }}" type="text"--}}
+{{--                                               placeholder="@lang('cruds.brand.status')"--}}
+{{--                                               class="clear-class form-control" name="status">--}}
                                     </th>
                                     <th>
                                     </th>
@@ -84,13 +81,12 @@
                                 <tr>
                                     <td>{{ $brand->id }}</td>
                                     <td>{{ $brand->name }}</td>
-                                    <td class="text-center">{{ $brand->status }}</td>
+                                    <td class="text-center">{{ status($brand->status) }}</td>
                                     <td class="text-center">
 {{--                                        @dd(public_path('images/'.$brand->logo_name))--}}
                                         @if(file_exists(public_path('images/'.$brand->logo_name)))
                                             <img src="{{ $brand->logo }}" alt="" style="width: 50px; height: 50px" >
-                                        @else
-                                            ''
+
                                         @endif
 
                                     </td>

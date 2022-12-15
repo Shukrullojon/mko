@@ -29,10 +29,8 @@
                             <a href="{{ route('merchantAdd') }}" class="btn btn-success btn-sm float-right">
                                 <span class="fas fa-plus-circle"></span>
                                 @lang('global.add')
-                            </a>
-                            {{--                        @endcan--}}
+                            </a>                            {{--                        @endcan--}}
 
-                            <a href="{{ route('merchantIndex') }}" class="btn btn-secondary btn-sm"><i class="fa fa-redo-alt"></i> @lang('global.clear')</a>
 
                         </div>
                     </div>
@@ -43,7 +41,7 @@
                             <thead>
                                 <tr>
                                     <th width="50px">@lang('global.id')</th>
-                                    <th>@lang('cruds.merchant.name')</th>
+                                    <th>@lang('cruds.merchant.merchant_name')</th>
                                     <th>@lang('cruds.brand.brand_name')</th>
                                     <th>@lang('cruds.merchant.filial')</th>
                                     <th>@lang('cruds.merchant.merchant_address')</th>

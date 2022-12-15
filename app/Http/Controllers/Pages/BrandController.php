@@ -55,12 +55,13 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'brand_name' => 'required',
             'logo' => 'required',
             'status' => 'required',
             'is_unired' => 'required',
         ]);
 
+//        dd($request->all());
 
         // Get reference to uploaded image
         $request->validate([
@@ -70,13 +71,13 @@ class BrandController extends Controller
         if($request->hasFile('logo')) {
 
             $file = $request->file('logo');
-            $fileName = $file->getClientOriginalName();
+            $fileName = $file->hashName();
             $destinationPath = public_path() . '/images';
             $file->move($destinationPath, $file->hashName());
         }
         try {
             $brand = Brand::create([
-                'name' => $request->name,
+                'name' => $request->brand_name,
                 'logo' => asset('/').'/images/'.$fileName,
                 'logo_name' => $fileName,
                 'status' => $request->status,
@@ -127,20 +128,20 @@ class BrandController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'logo' => 'required',
+            'brand_name' => 'required',
+//            'logo' => 'required',
             'status' => 'required',
             'is_unired' => 'required',
         ]);
 
         // Get reference to uploaded image
-        $request->validate([
-            'logo.*' => 'mimes:pdf,jpeg,png,jpg,svg',
-        ]);
+        if ($request->logo)
+            $request->validate([
+                'logo.*' => 'mimes:pdf,jpeg,png,jpg,svg',
+            ]);
 //        dd($request->file('logo'));
 
         $brand = Brand::where('id', $id)->first();
-        $oldBrand = $brand->logo;
 
         if($request->hasFile('logo')) {
             $file = $request->file('logo');
@@ -156,7 +157,7 @@ class BrandController extends Controller
 //            return redirect('/uploadfile');
         }
 
-        $brand->name = $request->name;
+        $brand->name = $request->brand_name;
         $brand->status = $request->status;
         $brand->is_unired = $request->is_unired;
         $brand->update();
