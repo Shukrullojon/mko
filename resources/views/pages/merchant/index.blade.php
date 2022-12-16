@@ -54,7 +54,7 @@
 {{--                                            <input value="{{ request()->name }}" type="text" placeholder="@lang('cruds.merchant.name')" class="clear-class form-control" name="inn">--}}
                                         </th>
                                         <th>
-                                            <input value="{{ request()->name }}" type="text" placeholder="@lang('cruds.merchant.name')" class="clear-class form-control" name="name">
+                                            <input value="{{ request()->merchant_name }}" type="text" placeholder="@lang('cruds.merchant.merchant_name')" class="clear-class form-control" name="merchant_name">
                                         </th>
                                         <th>
 {{--                                            <input value="{{ request()->brand_name }}" type="text" placeholder="@lang('cruds.merchant.brand_name')" class="clear-class form-control" name="brand_name">--}}
@@ -88,7 +88,6 @@
                             @foreach($merchants as $merchant)
                                 <tr>
                                     <td>{{ $num ++ }}</td>
-                                    <td>{{ $merchant->id }}</td>
                                     <td>{{ $merchant->name }}</td>
                                     <td>{{ $merchant->brand->name }}</td>
                                     <td>{{ $merchant->filial }}</td>

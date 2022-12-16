@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>@lang('cruds.merchant.merchants')</h1>
+                    <h1>@lang('cruds.merchant.merchant')</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
-                        <li class="breadcrumb-item active">@lang('cruds.merchant.merchants')</li>
+                        <li class="breadcrumb-item active">@lang('cruds.merchant.merchant')</li>
                         <li class="breadcrumb-item active">@lang('global.show')</li>
                     </ol>
                 </div>
@@ -35,14 +35,8 @@
                                 <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
                                        aria-describedby="">
                                     <thead>
-
-
                                     <tr>
-                                        <th>Ид</th>
-                                        <td>{{ $merchant->id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>@lang('cruds.merchant.name')</th>
+                                        <th>@lang('cruds.merchant.merchant_name')</th>
                                         <td>{{ $merchant->name }}</td>
                                     </tr>
                                     <tr>
@@ -59,7 +53,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>@lang('cruds.merchant.address')</th>
+                                        <th>@lang('cruds.merchant.merchant_address')</th>
                                         <td>{{ $merchant->address }}</td>
                                     </tr>
 
@@ -70,10 +64,6 @@
                                 <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
                                        aria-describedby="">
                                     <thead>
-                                    <tr>
-                                        <th>@lang('cruds.merchant.uzcard_merchant_id')</th>
-                                        <td>{{ $merchant->uzcard_merchant_id }}</td>
-                                    </tr>
                                     <tr>
                                         <th>@lang('cruds.merchant.uzcard_terminal_id')</th>
                                         <td>{{ $merchant->uzcard_terminal_id }}</td>
@@ -95,10 +85,28 @@
                                         <td>{{ $merchant->is_register_humo }}</td>
                                     </tr>
                                     <tr>
-                                        <th>@lang('cruds.merchant.account_id')</th>
-                                        <td>{{ $merchant->account_id }}</td>
+                                        <th>@lang('cruds.account.account_number')</th>
+                                        <td>{{ $merchant->account->number }}</td>
                                     </tr>
                                     </thead>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table id="" class="table table-bordered  dataTable dtr-inline">
+                                    <thead>
+                                    <tr>
+                                        <th>@lang('cruds.merchant.merchant_period')</th>
+                                        <th>@lang('cruds.merchant.merchant_percentage')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($merchant->periods as $period)
+                                        <tr>
+                                            <td>{{ $period->period }}</td>
+                                            <td>{{ $period->percentage }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

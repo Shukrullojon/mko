@@ -8,6 +8,7 @@ use App\Models\Pages\Brand;
 use App\Models\Pages\Card;
 use App\Models\Pages\Merchant;
 use App\Models\Pages\MerchantPeriod;
+use App\Models\Pages\MerchantPeriodHistory;
 use App\Models\Pages\MerchantTerminal;
 use App\Models\Pages\Payment;
 use App\Services\Luhn;
@@ -40,7 +41,7 @@ class MerchantController extends Controller
             if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id != null)
                 $merchants = $merchants->where('brand_id', auth()->user()->brand_id)
                                        ->where('id', auth()->user()->merchant_id);
-            $merchants = $merchants->orderBy('id', 'DESC')->paginate(20);
+            $merchants = $merchants->orderBy('id', 'DESC')->paginate(5);
             return view('pages.merchant.index', compact('merchants'));
         }catch(\Exception $exception){
             return back()->with('error',$exception->getMessage());
@@ -84,6 +85,7 @@ class MerchantController extends Controller
         ]);
         try{
             $merchant = DB::transaction(function() use ($request){
+
                 $cardnew = new Luhn();
                 $card =  $cardnew->run();
                 $card = Card::create([
@@ -129,13 +131,22 @@ class MerchantController extends Controller
                     'status' => 1,
                 ]);
 
-                foreach($request->p as $row){
+                foreach($request->periods as $row){
                     if($row['merchant_period'] and $row['merchant_percentage']){
                         MerchantPeriod::create([
                             'merchant_id' => $merchant->id,
                             'period' => $row['merchant_period'],
                             'percentage' => $row['merchant_percentage'],
                             'status' => 1,
+                        ]);
+                    }
+                }
+                foreach($request->periods as $row){
+                    if($row['merchant_period'] and $row['merchant_percentage']){
+                        MerchantPeriodHistory::create([
+                            'merchant_id' => $merchant->id,
+                            'period' => $row['merchant_period'],
+                            'percentage' => $row['merchant_percentage']
                         ]);
                     }
                 }
