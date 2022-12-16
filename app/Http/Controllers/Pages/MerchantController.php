@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Account;
+use App\Models\Pages\Brand;
 use App\Models\Pages\Card;
 use App\Models\Pages\Merchant;
+use App\Models\Pages\MerchantPeriod;
 use App\Models\Pages\MerchantTerminal;
 use App\Models\Pages\Payment;
 use App\Services\Luhn;
@@ -38,7 +40,7 @@ class MerchantController extends Controller
             if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id != null)
                 $merchants = $merchants->where('brand_id', auth()->user()->brand_id)
                                        ->where('id', auth()->user()->merchant_id);
-            $merchants = $merchants->orderBy('id', 'DESC')->paginate(10);
+            $merchants = $merchants->orderBy('id', 'DESC')->paginate(20);
             return view('pages.merchant.index', compact('merchants'));
         }catch(\Exception $exception){
             return back()->with('error',$exception->getMessage());
@@ -52,7 +54,10 @@ class MerchantController extends Controller
      */
     public function add()
     {
-        return view('pages.merchant.add');
+        $brands = Brand::get();
+        return view('pages.merchant.add',[
+            'brands' => $brands,
+        ]);
     }
 
     /**
@@ -63,13 +68,13 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
+
         $this->validate($request, [
             'brand_id' => 'required',
-            'name' => 'required',
+            'merchant_name' => 'required',
             'filial' => 'required',
             'merchant_address' => 'required',
-            'number' => 'required',
+            'account_number' => 'required',
             'account_name' => 'required',
             'account_inn' => 'required',
             'account_filial' => 'required',
@@ -93,7 +98,7 @@ class MerchantController extends Controller
                 ]);
                 $account = Account::create([
                     'type' => 1,
-                    'number' => $request->number,
+                    'number' => $request->account_number,
                     'inn' => $request->account_inn,
                     'name' => $request->account_name,
                     'filial' => $request->account_filial,
@@ -103,10 +108,10 @@ class MerchantController extends Controller
 
                 $merchant = Merchant::create([
                     'brand_id' => $request->brand_id,
-                    'name' => $request->name,
+                    'name' => $request->merchant_name,
                     'key' => Str::uuid(),
                     'filial' => $request->filial,
-                    'address' => $request->address,
+                    'address' => $request->merchant_address,
                     'account_id' => $account->id,
                     'uzcard_merchant_id' => $request->uzcard_merchant_id,
                     'uzcard_terminal_id' => $request->uzcard_terminal_id,
@@ -123,6 +128,17 @@ class MerchantController extends Controller
                     'balance' => 0,
                     'status' => 1,
                 ]);
+
+                foreach($request->p as $row){
+                    if($row['merchant_period'] and $row['merchant_percentage']){
+                        MerchantPeriod::create([
+                            'merchant_id' => $merchant->id,
+                            'period' => $row['merchant_period'],
+                            'percentage' => $row['merchant_percentage'],
+                            'status' => 1,
+                        ]);
+                    }
+                }
 
                 return $merchant;
             });

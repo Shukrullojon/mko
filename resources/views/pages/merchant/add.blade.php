@@ -62,17 +62,15 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>@lang('cruds.merchant.brand_id')</label>
-                                        <select name="brand_id" id="brand_id"
-                                                class="form-control brand1" {{ $errors->has('brand_id') ? "is-invalid":"" }}
-                                        ">
-                                        @foreach(\App\Models\Pages\Brand::get() as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        <select name="brand_id" id="brand_id" class="form-control" {{ $errors->has('brand_id') ? "is-invalid":"" }}">
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                             @endforeach
-                                            </select>
-                                            @if($errors->has('brand_id'))
-                                                <span
-                                                    class="error invalid-feedback">{{ $errors->first('brand_id') }}</span>
-                                            @endif
+                                        </select>
+                                        @if($errors->has('brand_id'))
+                                            <span
+                                                class="error invalid-feedback">{{ $errors->first('brand_id') }}</span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -170,33 +168,18 @@
 
                             <br>
                             <h2 class="text-center" style="color: #00b44e">Информация о Перид Мерчанта</h2>
-                            <div class="row" id="container">
-                                <div class="row" id="mainsection">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>@lang('cruds.merchant.merchant_month')</label>
-                                            <div style="display: flex">
-                                                <input type="number" name="merchant_month"
-                                                       value="{{ old('merchant_month') }}"
-                                                       class="form-control {{ $errors->has('merchant_month') ? "is-invalid":"" }}"
-                                                       autocomplete="off" required>
-                                                <p>month</p>
-                                                @if($errors->has('merchant_month'))
-                                                    <span
-                                                        class="error invalid-feedback">{{ $errors->first('merchant_month') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
+                            <input type="hidden" name="" id="period_key" value="0">
+
+                            <div id="period_example">
+                                <div class="row" id="asd0">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>@lang('cruds.merchant.merchant_period')</label>
                                             <div style="display: flex">
-                                                <input type="number" name="merchant_period"
+                                                <input type="number" name="p[0][merchant_period]"
                                                        value="{{ old('merchant_period') }}"
                                                        class="form-control {{ $errors->has('merchant_period') ? "is-invalid":"" }}"
                                                        autocomplete="off" required>
-                                                <p>period</p>
                                                 @if($errors->has('merchant_period'))
                                                     <span
                                                         class="error invalid-feedback">{{ $errors->first('merchant_period') }}</span>
@@ -205,15 +188,14 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>@lang('cruds.merchant.merchant_percentage')</label>
                                             <div style="display: flex">
-                                                <input type="number" name="merchant_percentage"
+                                                <input type="number" name="p[0][merchant_percentage]"
                                                        value="{{ old('merchant_percentage') }}"
                                                        class="form-control {{ $errors->has('merchant_percentage') ? "is-invalid":"" }}"
                                                        autocomplete="off" required>
-                                                <p>percentage</p>
                                                 @if($errors->has('merchant_percentage'))
                                                     <span
                                                         class="error invalid-feedback">{{ $errors->first('merchant_percentage') }}</span>
@@ -221,11 +203,15 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="col-md-4">
+                                        <br>
+                                        <button class="btn btn-success mt-2 add_period">Add</button>
+                                        <button class="btn btn-danger mt-2 remove_period" value="0">Remove</button>
+                                    </div>
                                 </div>
+                            </div>
+                            <div id="period_out">
 
-                                <a href="" id="add" type="button" class="btn btn-success mr-3">add</a>
-                                <a href="" type="button" onclick="remove()" class="btn btn-danger">remove</a>
                             </div>
                             <br>
 
@@ -311,12 +297,52 @@
 @endsection
 @section('scripts')
     <script>
-        document.getElementById("add").onclick = function (e) {
-            e.preventDefault();
+        $(document).on("click", ".add_period", function () {
+            var period_key = parseInt($("#period_key").val());
+            period_key = period_key + 1;
 
-            var container = document.getElementById("container");
-            var section = document.getElementById("mainsection");
-            container.appendChild(section.cloneNode(true));
-        }
+            var w = '<div class = "row" id="asd' + period_key + '">' +
+                '<div class = "col-md-4">' +
+                '<div class = "form-group">' +
+                '<label>@lang('cruds.merchant.merchant_period')</label>' +
+                '<div style="display: flex">' +
+                '<input type="number" name="p[' + period_key + '][merchant_period]" class="form-control" autocomplete="off" required>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+
+                '<div class = "col-md-4">' +
+                '<div class = "form-group">' +
+                '<label>@lang('cruds.merchant.merchant_percentage')</label>' +
+                '<div style="display: flex">' +
+                '<input type="number" name="p[' + period_key + '][merchant_percentage]" class="form-control" autocomplete="off" required>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+
+                '<div class="col-md-4"> <br>' +
+                '<button class="btn btn-success mt-2 add_period">Add</button>' +
+                '<button class="btn btn-danger mt-2 remove_period"  value="' + period_key + '">Remove</button>' +
+                '</div>' +
+                '</div>';
+
+            $("#period_out").append(w);
+            $("#period_key").val(period_key);
+        });
+
+        $(document).on("click", ".remove_period", function () {
+            var value = $(this).attr("value");
+            $("#asd" + value).remove();
+        });
+
+        /*document.getElementById("add").onclick = function (e)
+            {
+                e.preventDefault();
+
+                var container = document.getElementById("container");
+                var section = document.getElementById("mainsection");
+                container.appendChild(section.cloneNode(true));
+            }
+        */
     </script>
 @endsection

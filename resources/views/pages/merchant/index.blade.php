@@ -40,7 +40,7 @@
                         <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="dataTable_info">
                             <thead>
                                 <tr>
-                                    <th width="50px">@lang('global.id')</th>
+                                    <th>№</th>
                                     <th>@lang('cruds.merchant.merchant_name')</th>
                                     <th>@lang('cruds.brand.brand_name')</th>
                                     <th>@lang('cruds.merchant.filial')</th>
@@ -82,8 +82,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $num = (request()->page) ? request()->page*20+1  : 1;
+                            @endphp
                             @foreach($merchants as $merchant)
                                 <tr>
+                                    <td>{{ $num ++ }}</td>
                                     <td>{{ $merchant->id }}</td>
                                     <td>{{ $merchant->name }}</td>
                                     <td>{{ $merchant->brand->name }}</td>
