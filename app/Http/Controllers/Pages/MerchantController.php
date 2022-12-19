@@ -29,8 +29,8 @@ class MerchantController extends Controller
     {
         try{
             $merchants = new Merchant();
-            if($request->filled('name'))
-                $merchants = $merchants->where('name','LIKE','%'.$request->name.'%');
+            if($request->filled('merchant_name'))
+                $merchants = $merchants->where('name','LIKE','%'.$request->merchant_name.'%');
             if($request->filled('filial'))
                 $merchants = $merchants->where('filial','LIKE','%'.$request->filial.'%');
             if($request->filled('merchant_address'))
@@ -69,9 +69,9 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-
+//        dd($request->all());
         $this->validate($request, [
-            'brand_id' => 'required',
+            'brand_name' => 'required',
             'merchant_name' => 'required',
             'filial' => 'required',
             'merchant_address' => 'required',
@@ -109,7 +109,7 @@ class MerchantController extends Controller
                 ]);
 
                 $merchant = Merchant::create([
-                    'brand_id' => $request->brand_id,
+                    'brand_id' => $request->brand_name,
                     'name' => $request->merchant_name,
                     'key' => Str::uuid(),
                     'filial' => $request->filial,
@@ -182,7 +182,11 @@ class MerchantController extends Controller
     public function edit($id)
     {
         $merchant = Merchant::find($id);
-        return view('pages.merchant.edit', compact('merchant'));
+        $brands = Brand::all();
+        return view('pages.merchant.edit', [
+            'merchant' => $merchant,
+            'brands' => $brands
+        ]);
     }
 
     /**

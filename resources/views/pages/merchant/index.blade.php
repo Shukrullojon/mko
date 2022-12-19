@@ -40,7 +40,7 @@
                         <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="dataTable_info">
                             <thead>
                                 <tr>
-                                    <th>№</th>
+{{--                                    <th>№</th>--}}
                                     <th>@lang('cruds.merchant.merchant_name')</th>
                                     <th>@lang('cruds.brand.brand_name')</th>
                                     <th>@lang('cruds.merchant.filial')</th>
@@ -50,9 +50,9 @@
                                 </tr>
                                 <tr class="text-center">
                                     <form action="">
-                                        <th>
+{{--                                        <th>--}}
 {{--                                            <input value="{{ request()->name }}" type="text" placeholder="@lang('cruds.merchant.name')" class="clear-class form-control" name="inn">--}}
-                                        </th>
+{{--                                        </th>--}}
                                         <th>
                                             <input value="{{ request()->merchant_name }}" type="text" placeholder="@lang('cruds.merchant.merchant_name')" class="clear-class form-control" name="merchant_name">
                                         </th>
@@ -87,7 +87,7 @@
                             @endphp
                             @foreach($merchants as $merchant)
                                 <tr>
-                                    <td>{{ $num ++ }}</td>
+{{--                                    <td>{{ $num ++ }}</td>--}}
                                     <td>{{ $merchant->name }}</td>
                                     <td>{{ $merchant->brand->name }}</td>
                                     <td>{{ $merchant->filial }}</td>
