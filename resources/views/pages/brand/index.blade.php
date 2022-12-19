@@ -42,7 +42,7 @@
                                aria-describedby="dataTable_info">
                             <thead>
                             <tr>
-                                <th>Ид</th>
+
                                 <th>@lang('cruds.brand.brand_name')</th>
                                 <th width="80px">@lang('cruds.brand.status')</th>
                                 <th>@lang('cruds.brand.logo')</th>
@@ -50,8 +50,7 @@
                             </tr>
                             <tr class="text-center">
                                 <form action="">
-                                    <th>
-                                    </th>
+
                                     <th>
                                         <input value="{{ request()->brand_name }}" type="text"
                                                placeholder="@lang('cruds.brand.brand_name')" class="clear-class form-control"
@@ -79,7 +78,7 @@
                             <tbody>
                             @foreach($brands as $brand)
                                 <tr>
-                                    <td>{{ $brand->id }}</td>
+
                                     <td>{{ $brand->name }}</td>
                                     <td class="text-center">{{ status($brand->status) }}</td>
                                     <td class="text-center">

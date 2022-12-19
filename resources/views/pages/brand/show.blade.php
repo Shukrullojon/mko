@@ -52,9 +52,6 @@
 
                             </thead>
                         </table>
-                        <div>
-                            <a href="{{ route('brandIndex') }}" type="button" class="btn btn-danger"> Back</a>
-                        </div>
 
                     </div>
                 </div>

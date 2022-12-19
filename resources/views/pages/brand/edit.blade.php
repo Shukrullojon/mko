@@ -48,13 +48,8 @@
                                     <div class="form-group">
                                         <label>@lang('cruds.brand.status')</label>
                                         <select name="status" id="" class="form-control">
-                                            @if($brand->status == true)
-                                                <option value="1" selected>Active</option>
-                                                <option value="0">InActive</option>
-                                            @else
-                                                <option value="1" >Active</option>
-                                                <option value="0" selected>InActive</option>
-                                            @endif
+                                                <option value="1" @if($brand->status) selected @endif>Active</option>
+                                                <option value="0" @if(!$brand->status) selected @endif>InActive</option>
                                         </select>
                                     </div>
 
@@ -67,13 +62,6 @@
                                         <input type="file" name="logo" value="{{ old('logo') }}"
                                                class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}"
                                                accept="image/*">
-{{--                                        @if($errors->has('logo') || 1)--}}
-{{--                                            <span class="error invalid-feedback">{{ $errors->first('logo') }}</span>--}}
-{{--                                        @endif--}}
-
-
-{{--                                            <button class="btn btn-danger ml-3" id="logo"><span class="fa fa-trash"></span></button>--}}
-
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -83,13 +71,8 @@
                                     <div class="form-group">
                                         <label>@lang('cruds.brand.is_unired')</label>
                                         <select name="is_unired" id="" class="form-control">
-                                            @if($brand->is_unired == true)
-                                                <option value="1" selected>True</option>
-                                                <option value="0">False</option>
-                                            @else
-                                                <option value="1" >True</option>
-                                                <option value="0" selected>False</option>
-                                            @endif
+                                            <option value="1" @if($brand->is_unired) selected @endif>True</option>
+                                            <option value="0" @if(!$brand->is_unired) selected @endif>False</option>
                                         </select>
                                     </div>
                                 </div>
@@ -106,34 +89,4 @@
         </div>
     </section>
 
-@endsection
-@section('scripts')
-    <script>
-        $(document).ready(function () {
-            $("button#logo").click(function (e) {
-                e.preventDefault()
-
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    type: 'GET',
-                    // data: {brandId: brandId},
-                    url: '{{ route('editLogo', $brand->id) }}',
-                    success: function (data) {
-                        const img = document.getElementsByTagName('img');
-                        img.style.display = 'none'
-                        console.log(img)
-                        // $("select.merchants").html(data);
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-            });
-        });
-        // const logo1 = document.getElementById('logo');
-        // logo1.addEventListener('click', (e) => {
-        //     e.preventDefault()
-        //     console.log(e.target.valueOf())
-        // })
-    </script>
 @endsection
