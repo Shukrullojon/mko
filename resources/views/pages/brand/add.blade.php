@@ -57,7 +57,6 @@
                             <div class="form-group">
                                 <label>@lang('cruds.brand.status')</label>
                                 <select name="status" id="" class="form-control">
-                                    <option selected disabled>select status</option>
                                     <option value="1">Active</option>
                                     <option value="0">InActive</option>
                                 </select>
@@ -68,7 +67,6 @@
                             <div class="form-group">
                                 <label>@lang('cruds.brand.is_unired')</label>
                                 <select name="is_unired" id="" class="form-control" required>
-                                    <option selected disabled>select status</option>
                                     <option value="1">True</option>
                                     <option value="0">False</option>
                                 </select>
@@ -77,37 +75,15 @@
                                 @endif
                             </div>
 
-
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success float-right">@lang('global.save')</button>
                                 <a href="{{ route('brandIndex') }}"
                                    class="btn btn-default float-left">@lang('global.cancel')</a>
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-@endsection
-@section('scripts')
-    <script>
-        $(document).ready(function () {
-            $("select.brand1").change(function () {
-                var brandId = $(this).children("option:selected").val();
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    type: 'POST',
-                    data: {brandId: brandId},
-                    url: '{{ route('getBrand') }}',
-                    success: function (data) {
-                        $('se')
-                    }
-                });
-            });
-        });
-    </script>
 @endsection

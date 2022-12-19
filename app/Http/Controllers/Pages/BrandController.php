@@ -56,30 +56,20 @@ class BrandController extends Controller
     {
         $this->validate($request, [
             'brand_name' => 'required',
-            'logo' => 'required',
             'status' => 'required',
             'is_unired' => 'required',
+            'logo' => 'required|mimes:pdf,jpeg,png,jpg,svg',
         ]);
-
-//        dd($request->all());
-
-        // Get reference to uploaded image
-        $request->validate([
-            'logo.*' => 'mimes:pdf,jpeg,png,jpg,svg',
-        ]);
-//        dd($request->file('logo'));
         if($request->hasFile('logo')) {
-
             $file = $request->file('logo');
             $fileName = $file->hashName();
-            $destinationPath = public_path() . '/images';
+            $destinationPath = public_path().'/images';
             $file->move($destinationPath, $file->hashName());
         }
         try {
             $brand = Brand::create([
                 'name' => $request->brand_name,
                 'logo' => asset('/').'/images/'.$fileName,
-                'logo_name' => $fileName,
                 'status' => $request->status,
                 'is_unired' => $request->is_unired,
             ]);
@@ -95,14 +85,10 @@ class BrandController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         $brand = Brand::find($id);
-        $e = explode('/', $brand->logo);
-
         return view('pages.brand.show', [
             'brand' => $brand,
-            'logo' => end($e),
         ]);
     }
 
@@ -112,8 +98,7 @@ class BrandController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $brand = Brand::find($id);
         return view('pages.brand.edit', compact('brand'));
     }
@@ -129,32 +114,19 @@ class BrandController extends Controller
     {
         $this->validate($request, [
             'brand_name' => 'required',
-//            'logo' => 'required',
             'status' => 'required',
             'is_unired' => 'required',
         ]);
-
-        // Get reference to uploaded image
-        if ($request->logo)
-            $request->validate([
-                'logo.*' => 'mimes:pdf,jpeg,png,jpg,svg',
-            ]);
-//        dd($request->file('logo'));
-
-        $brand = Brand::where('id', $id)->first();
-
+        $brand = Brand::find($id);
         if($request->hasFile('logo')) {
             $file = $request->file('logo');
             $fileName = $file->hashName();
             $destinationPath = public_path() . '/images';
-//            dd($oldBrand, $brand);
             $name = self::logo($brand->logo);
             if (file_exists(public_path('images/'.$name)))
                 unlink(public_path('images/'.$name));
             $file->move($destinationPath, $fileName);
             $brand->logo = asset('/').'/images/'.$fileName;
-            $brand->logo_name = $fileName;
-//            return redirect('/uploadfile');
         }
 
         $brand->name = $request->brand_name;
@@ -172,13 +144,7 @@ class BrandController extends Controller
      */
     public function destroy(int $id)
     {
-        dd($id);
-        $brand = Brand::find(12);
-        $brand->delete();
-        $name = self::logo($brand->logo);
-        if (public_path('images/'.$name))
-            unlink(public_path('images/'.$name));
-        return 'success';
+
     }
 
     public function getBrand(Request $request)
@@ -193,16 +159,10 @@ class BrandController extends Controller
         }
         return $options;
     }
+
     public static function logo($brand) {
         $e = explode('/', $brand);
         return end($e);
     }
 
-    public function editLogo($id){
-        $brand = Brand::find($id);
-        $name = self::logo($brand->logo);
-        if (public_path('images/'.$name))
-            unlink(public_path('images/'.$name));
-        return $brand->logo;
-    }
 }
