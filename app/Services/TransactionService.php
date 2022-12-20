@@ -15,6 +15,7 @@ class TransactionService
         $payments = Payment::where('is_transaction',0)->get();
         $accountItunisoft = Account::where('type',3)->first();
         $accountMko = Account::where('type',4)->first();
+
         foreach($payments as $payment){
             DB::transaction(function () use ($payment, $accountItunisoft,$accountMko){
                 $merchantTr = Transaction::create([
@@ -59,8 +60,8 @@ class TransactionService
         $transactions = Transaction::where('status',0)->get();
         foreach($transactions as $transaction){
             // debit hold
-            $debitHold = CardService::holdDebit([
-                'token' => $transaction->sender_card,
+            $debitMerchant = MerchantService::debit([
+                'merchant_id' => $transaction->payment->merchant_id,
                 'amount' => $transaction->amount,
             ]);
             // credit
