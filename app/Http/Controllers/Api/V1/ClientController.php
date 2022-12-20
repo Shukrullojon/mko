@@ -30,8 +30,7 @@ class ClientController extends Controller
             ];
         }
 
-        $client = Client::where('application_id',$params['params']['application_id'])
-            ->where('passport',$params['params']['passport'])
+        $client = Client::where('passport',$params['params']['passport'])
             ->where('pnfl',$params['params']['pnfl'])
             ->first();
         if (empty($client)){
