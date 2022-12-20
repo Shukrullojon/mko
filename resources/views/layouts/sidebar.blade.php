@@ -1,13 +1,53 @@
 {{--Left sidebar--}}
 <nav class="mt-2">
 
-    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
-        data-accordion="false">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+            <a href="{{ route('home') }}" class="nav-link {{ Request::is('home*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>Главная</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('paymentIndex') }}" class="nav-link {{ Request::is('payment*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>@lang('cruds.payment.payment')</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('clientIndex') }}" class="nav-link {{ Request::is('client*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>@lang('cruds.client.clients')</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('brandIndex') }}" class="nav-link {{ Request::is('brand*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>@lang('cruds.brand.brands')</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
+                <i class="fas fa-cog"></i>
+                <sub><i class="fas fa-child"></i></sub>
+                <p>@lang('cruds.merchant.merchants')</p>
+            </a>
+        </li>
+
+
         @canany([
-          'permission.show',
-          'roles.show',
-          'user.show'
-       ])
+  'permission.show',
+  'roles.show',
+  'user.show'
+])
             <li class="nav-item has-treeview">
                 <a href="#"
                    class="nav-link {{ (Request::is('permission*') || Request::is('role*') || Request::is('user*')) ? 'active':''}}">
@@ -52,48 +92,6 @@
             </li>
         @endcanany
 
-
-        <li class="nav-item">
-            <a href="{{ route('paymentIndex') }}" class="nav-link {{ Request::is('payment*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
-                <p>@lang('cruds.payment.payment')</p>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="{{ route('clientIndex') }}" class="nav-link {{ Request::is('client*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
-                <p>@lang('cruds.client.clients')</p>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="{{ route('brandIndex') }}" class="nav-link {{ Request::is('brand*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
-                <p>@lang('cruds.brand.brands')</p>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
-                <p>@lang('cruds.merchant.merchants')</p>
-            </a>
-        </li>
-
-        {{--        @can('api-user.view')--}}
-        {{--            <li class="nav-item">--}}
-        {{--                <a href="{{ route('api-userIndex') }}" class="nav-link {{ Request::is('api-users*') ? "active":'' }}">--}}
-        {{--                    <i class="fas fa-cog"></i>--}}
-        {{--                    <sub><i class="fas fa-child"></i></sub>--}}
-        {{--                    <p> API Users</p>--}}
-        {{--                </a>--}}
-        {{--            </li>--}}
-        {{--        @endcan--}}
     </ul>
 
     {{--    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">--}}
