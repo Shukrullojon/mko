@@ -17,6 +17,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $userDashboard = User::create([
+            "name" => "Dashboard",
+            "email" => "dashboard@gmail.com",
+            "token" => Str::random(80),
+            "password" => Hash::make(12345678),
+            "theme" => "default",
+            "created_at" => date("Y-m-d H:i:s"),
+            "updated_at" => date("Y-m-d H:i:s"),
+        ]);
         DB::table('roles')->insert(
             [
                 'name' => "Admin",
