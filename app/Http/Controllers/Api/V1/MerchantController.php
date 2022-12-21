@@ -13,7 +13,11 @@ class MerchantController extends Controller
 {
     public function period($params){
         $merchant = Merchant::where('key',$params['params']['key'])->first();
+        $account = Account::where('type',3)->first();
+        $accountMko = Account::where('type',4)->first();
+        $percentage = $account->percentage + $accountMko->percentage +$merchant->account->percentage;
         return [
+            'commission_percentage' => $percentage,
             'periods' => $merchant->periods,
             'merchant' => [
                 'key' => $merchant->key,
