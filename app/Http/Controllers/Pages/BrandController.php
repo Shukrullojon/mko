@@ -21,8 +21,6 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $service = TransactionService::transaction();
-        dd($service);
         try {
             $brands = new Brand();
             if ($request->filled('brand_name'))

@@ -26,4 +26,8 @@ class HomeController extends Controller
             return view('welcome');
 	}
 
+    public function transaction(){
+        $service = TransactionService::transaction();
+        dd($service);
+    }
 }
