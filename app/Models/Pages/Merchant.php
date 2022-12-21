@@ -20,6 +20,9 @@ class Merchant extends Model
     public function account(){
         return $this->belongsTo(Account::class);
     }
+    public function terminal(){
+        return $this->belongsTo(MerchantTerminal::class);
+    }
 
     public function periods(){
         return $this->hasMany(MerchantPeriod::class)->select('id','period','percentage')->where('status',1);
