@@ -34,7 +34,7 @@ class AccountPartnerSeeder extends Seeder
             "name" => "Mko",
             "filial" => "01186",
             "card_id" => $card->id,
-            "percentage" => "16",
+            "percentage" => "2",
         ]);
 
         // ItUnisoft

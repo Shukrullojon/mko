@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pages\Brand;
 use App\Models\Pages\Merchant;
 use App\Services\MobileService;
+use App\Services\TransactionService;
 use Database\Seeders\BrandSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -20,6 +21,8 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
+        $service = TransactionService::transaction();
+        dd($service);
         try {
             $brands = new Brand();
             if ($request->filled('brand_name'))

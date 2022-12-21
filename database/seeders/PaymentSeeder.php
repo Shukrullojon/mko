@@ -18,7 +18,7 @@ class PaymentSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i < 100; $i++){
+        /*for($i = 0; $i < 100; $i++){
             $client = Client::inRandomOrder()->first();
             $merchant = Merchant::select('id')->inRandomOrder()->first();
             $period = MerchantPeriod::where('merchant_id',$merchant->id)->inRandomOrder()->first();
@@ -30,7 +30,6 @@ class PaymentSeeder extends Seeder
                 'period' => $period->period,
                 'percentage' => $period->percentage,
                 'sender_card' => $client->card->number,
-                'cost' => $cost,
                 'amount' => $cost + $cost * ($period->percentage / 100),
                 'date' => date("Y-m-d"),
                 'is_transaction' => 0,
@@ -39,6 +38,6 @@ class PaymentSeeder extends Seeder
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
             ]);
-        }
+        }*/
     }
 }

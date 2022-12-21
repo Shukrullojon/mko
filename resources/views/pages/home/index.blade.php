@@ -7,8 +7,10 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ $card->owner }}</h3>
-                        <p>{{ number_format($card->balance/100) }} UZS</p>
+                        @if($card)
+                            <h3>{{ $card->owner ?? "" }}</h3>
+                            <p>{{ number_format($card->balance/100) }} UZS</p>
+                        @endif
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>

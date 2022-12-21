@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Helpers\Api\V1\ErrorHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Pages\Account;
 use App\Models\Pages\Card;
 use App\Models\Pages\Client;
 use App\Models\Pages\Merchant;
@@ -20,6 +21,8 @@ class PaymentController extends Controller
         $client = Client::where('card_id',$card->id)->first();
         $merchant = Merchant::where('key',$params['params']['key'])->first();
         $period = MerchantPeriod::where('id',$params['params']['period_id'])->where('merchant_id',$merchant->id)->first();
+        $account = Account::where('type',3)->first();
+        $accountMko = Account::where('type',4)->first();
         if(empty($card) or empty($client) or empty($merchant) or empty($period)){
             return ErrorHelper::error300();
         }
@@ -30,12 +33,13 @@ class PaymentController extends Controller
 
         $payment = Payment::create([
             'client_id' => $client->id,
+            'name' => $params['params']['name'],
             'merchant_id' => $merchant->id,
             'period' => $period->period,
             'percentage' => $period->percentage,
             'sender_card' => $card->token,
-            'cost' => $params['params']['amount'],
-            'amount' => $params['params']['amount'] + $params['params']['amount']*($period->percentage/100),
+            'amount' => $params['params']['amount'],
+            'percentage_amount' => (($merchant->account->percentage+$account->percentage+$accountMko->percentage)*$params['params']['amount'])/100,
             'date' => date("Y-m-d"),
             'is_transaction' => 0,
             'status' => 0,
@@ -46,20 +50,21 @@ class PaymentController extends Controller
             $debit = CardService::debit([
                 'token' => $card->token,
                 'expire' => $card->expire,
-                'amount' => $params['params']['amount'] + $params['params']['amount'] * ($period->percentage / 100),
+                'amount' => $payment->amount + $payment->percentage_amount,
             ]);
             if($debit){
                 $credirMerchant = MerchantService::credit([
                     'card_id' => $card->id,
                     'merchant_id' => $merchant->id,
-                    'amount' => $params['params']['amount'] + $params['params']['amount'] * ($period->percentage / 100),
+                    'amount' => $payment->amount + $payment->percentage_amount,
                 ]);
-
                 $payment->update([
                     'status' => 1,
                 ]);
             }
-            return ['tr_id' => $payment->tr_id];
+            return [
+                'tr_id' => $payment->tr_id
+            ];
         }catch(\Exception $e){
             return [
                 'error' => [

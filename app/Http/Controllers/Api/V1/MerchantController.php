@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pages\Account;
 use App\Models\Pages\MerchantPeriod;
 use App\Services\GraphicService;
 use Illuminate\Http\Request;
@@ -35,11 +36,16 @@ class MerchantController extends Controller
 
     public function schedule($params){
         $mp = MerchantPeriod::find($params['params']['period_id']);
+        $merchant = Merchant::find($mp->merchant_id);
+        $account = Account::where('type',3)->first();
+        $accountMko = Account::where('type',4)->first();
+        // $merchnt->account->percentage
         $graphic = GraphicService::done([
             'period' => $mp->period,
             'percentage' => $mp->percentage,
             'amount' => $params['params']['amount'],
         ]);
+        $graphic['percentage_amount'] = (($merchant->account->percentage+$account->percentage+$accountMko->percentage)*$params['params']['amount'])/100;
         return $graphic;
     }
 

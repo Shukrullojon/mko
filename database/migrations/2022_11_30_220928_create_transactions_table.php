@@ -20,7 +20,6 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('account_id')->index();
             $table->unsignedBigInteger('payment_id')->index();
             $table->bigInteger('amount');
-            $table->bigInteger('cost_amount');
             $table->integer('percentage');
             $table->integer('status');
             $table->integer('is_sent')->comment("0 -> merchant puli cardda 1 -> carddan r/s o'tqazgan");
