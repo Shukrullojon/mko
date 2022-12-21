@@ -12,11 +12,11 @@ class ValidationHelper
             ];
         }else if($params['method'] == "client.create"){
             return [
-                "params.application_id" => "required|unique:clients,application_id",
-                "params.client_code" => "required|unique:clients,client_code",
-                "params.passport" => "required|unique:clients,passport",
-                "params.pnfl" => "required|unique:clients,pnfl",
-                "params.phone" => "required|unique:cards,phone",
+                "params.application_id" => "required",
+                "params.client_code" => "required",
+                "params.passport" => "required",
+                "params.pnfl" => "required",
+                "params.phone" => "required",
                 "params.limit" => "required|numeric",
                 "params.date_expiry" => "required",
                 "params.first_name" => "required",

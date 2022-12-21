@@ -50,6 +50,7 @@ class PaymentController extends Controller
             ]);
             if($debit){
                 $credirMerchant = MerchantService::credit([
+                    'card_id' => $card->id,
                     'merchant_id' => $merchant->id,
                     'amount' => $params['params']['amount'] + $params['params']['amount'] * ($period->percentage / 100),
                 ]);
