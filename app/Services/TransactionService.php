@@ -14,10 +14,9 @@ use Illuminate\Support\Facades\DB;
 class TransactionService
 {
     public static function transaction(){
-        $payments = Payment::where('is_transaction',0)->get();
+        $payments = Payment::where('is_transaction',0)->where('created_at','<',date("Y-m-d H:i:s", strtotime("+15 min")))->get();
         $accountItunisoft = Account::where('type',3)->first();
         $accountMko = Account::where('type',4)->first();
-
         foreach($payments as $payment){
             DB::transaction(function () use ($payment, $accountItunisoft,$accountMko){
                 $merchantTr = Transaction::create([
@@ -77,27 +76,13 @@ class TransactionService
                         'status' => 1,
                     ]);
                 }else{
-                    dd("111");
+                    $creditMerchant = MerchantService::credit([
+                        'merchant_id' => $transaction->payment->merchant_id,
+                        'amount' => $transaction->amount,
+                    ]);
                 }
             }
         }
-
-        /*$payments = Payment::where('is_transaction',0)->get();
-        foreach($payments as $payment){
-            $terminal = MerchantTerminal::where('merchant_id',$payment->merchant_id)->first();
-            $debit = MerchantService::debit([
-                'terminal_id' => $terminal->id,
-                'card_id' => $payment->merchant->account->card_id,
-                'amount' => $payment->amount
-            ]);
-            if($debit){
-                // card credit
-                $credit = CardService::credit([
-                    'token' => $payment->merchant->account->card->token,
-                    'amount' => $payment->amount,
-                ]);
-            }
-        }*/
     }
 
 }
