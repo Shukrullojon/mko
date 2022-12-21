@@ -20,4 +20,12 @@ class Transaction extends Model
     public function payment(){
         return $this->belongsTo(Payment::class);
     }
+
+    public function sender(){
+        return $this->belongsTo(Card::class,'sender_card','token');
+    }
+
+    public function receiver(){
+        return $this->belongsTo(Card::class,'receiver_card','token');
+    }
 }

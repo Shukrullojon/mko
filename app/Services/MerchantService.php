@@ -12,12 +12,12 @@ class MerchantService
         if(empty($merchant)){
             return false;
         }
-        TransactionTerminal::create([
+/*        TransactionTerminal::create([
             'terminal_id' => $merchant->id,
             'card_id' => $data['card_id'],
             'type' => 1,
             'amount' => $data['amount'],
-        ]);
+        ]);*/
         $merchant->update([
             'balance' => $merchant->balance + $data['amount'],
         ]);

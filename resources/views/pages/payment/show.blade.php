@@ -56,13 +56,13 @@
                                     </tr>
 
                                     <tr>
-                                        <th>Cost</th>
-                                        <td>{{ number_format($payment->cost/100) }}</td>
+                                        <th>Amount</th>
+                                        <td>{{ number_format($payment->amount/100) }} so'm</td>
                                     </tr>
 
                                     <tr>
-                                        <th>Amount</th>
-                                        <td>{{ number_format($payment->amount/100) }}</td>
+                                        <th>Percentage Amount</th>
+                                        <td>{{ number_format($payment->percentage_amount/100) }} so'm</td>
                                     </tr>
 
                                     <tr>
@@ -89,12 +89,35 @@
                                        aria-describedby="">
                                     <thead>
                                     <tr>
-                                        <th></th>
+                                        <th>Sender</th>
+                                        <th>Receiver</th>
+                                        <th>Amount</th>
+                                        <th>Is_sent</th>
+                                    </tr>
+                                    @php $sum = 0 @endphp
+                                    @foreach($payment->transactions as $transaction)
+                                        <tr>
+                                            <td>
+                                                {{ $transaction->sender->number }}
+                                            </td>
+                                            <td>
+                                                {{ $transaction->receiver->number }}
+                                            </td>
+                                            <td>
+                                                {{ number_format($transaction->amount/100) }}
+                                            </td>
+                                            <td>
+                                                {{ $transaction->is_sent }}
+                                            </td>
+                                        </tr>
+                                        @php $sum += $transaction->amount @endphp
+                                    @endforeach
+                                    <tr>
+                                        <td>Итого</td>
+                                        <td></td>
+                                        <td>{{ number_format($sum/100) }}</td>
                                         <td></td>
                                     </tr>
-                                    @foreach($payment->transactions as $transaction)
-
-                                    @endforeach
                                     </thead>
                                 </table>
                             </div>

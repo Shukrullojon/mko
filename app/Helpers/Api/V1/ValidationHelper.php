@@ -47,6 +47,10 @@ class ValidationHelper
             return [];
         }else if($params['method'] == "partner.merchant"){
             return [];
+        }else if($params['method'] == "payment.cancel"){
+            return [
+                "params.tr_id" => "required|exists:payments,tr_id"
+            ];
         }else{
             return [
                 "method" => [
@@ -59,7 +63,8 @@ class ValidationHelper
                     payment.confirm,
                     card.info,
                     partner.get,
-                    partner.merchant,",
+                    partner.merchant,
+                    payment.cancel",
                 ],
             ];
         }
