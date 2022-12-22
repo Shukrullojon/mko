@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\TransactionAccountService;
 use Illuminate\Console\Command;
 
 class TransactionAccountCommand extends Command
@@ -35,7 +36,9 @@ class TransactionAccountCommand extends Command
      *
      * @return int
      */
-    public function handle(){
-
+    public function handle()
+    {
+        TransactionAccountService::transaction();
+        return 0;
     }
 }
