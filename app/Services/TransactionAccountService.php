@@ -13,8 +13,8 @@ class TransactionAccountService
         $transactions = Transaction::where('is_sent', 0)->take(20)->get();
         $account = Account::where('type', 2)->first();
         foreach ($transactions as $transaction) {
-            $data = [
-                'type' => 101,
+            $abs = AbsService::transaction([
+                'type' => "101",
                 'sender_account' => $account->number,
                 'sender_code_filial' => $account->filial,
                 'sender_tax' => $account->inn,
@@ -28,8 +28,7 @@ class TransactionAccountService
                     "name" => "перевод (дата: " . date("Y-m-d H:i:s") . ") mko test"
                 ],
                 'amount' => $transaction->amount,
-            ];
-            $abs = AbsService::transaction($data);
+            ]);
             if (isset($abs['status']) and $abs['status']) {
                 $debit = CardService::debit([
                     'token' => $transaction->receiver_card,
