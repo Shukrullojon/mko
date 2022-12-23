@@ -47,6 +47,10 @@ class ValidationHelper
             return [];
         }else if($params['method'] == "partner.merchant"){
             return [];
+        }else if($params['method'] == "account.info"){
+            return [
+                'params.account' => 'required|size:20'
+            ];
         }else{
             return [
                 "method" => [
