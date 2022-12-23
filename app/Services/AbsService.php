@@ -41,7 +41,7 @@ class AbsService
             "params" => [
                 "account" => $data['account'],
                 "code_filial" => "00996",
-                "id" => rand(10000, 99999) . time(),
+                "id" => rand(10000, 99999),
             ]
         ]);
     }

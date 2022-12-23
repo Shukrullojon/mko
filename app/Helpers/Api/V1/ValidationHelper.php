@@ -68,7 +68,8 @@ class ValidationHelper
                     card.info,
                     partner.get,
                     partner.merchant,
-                    payment.cancel",
+                    payment.cancel,
+                    merchant.balance",
                 ],
             ];
         }
