@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
         $payment = Payment::create([
             'client_id' => $client->id,
-            'name' => $params['params']['name'],
+            'name' => $params['params']['name']??null,
             'merchant_id' => $merchant->id,
             'period' => $period->period,
             'percentage' => $period->percentage,
