@@ -16,4 +16,9 @@ class Client extends Model
     public function card(){
         return $this->belongsTo(Card::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

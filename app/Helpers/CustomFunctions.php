@@ -161,6 +161,51 @@ if (!function_exists('info_message'))
         message_set($message,'info',5);
     }
 }
+if (!function_exists('get_graphic'))
+{
+    function get_graphic($period,$percentage,$amount)
+    {
+        # Initial params
+        $amount = $amount + ceil($amount/100*$percentage);
+
+        $dailySum = intval($amount/$period);
+        $residue = $amount - ($dailySum*$period);
+
+        $startDate = date('Y-m-d');
+        $endDate = date('Y-m-01',strtotime($startDate.' first day of +1 month'));
+        $graphic = [];
+
+        while ($period > 0){
+            //Days in this month
+            $days = (strtotime($endDate) - strtotime($startDate)) / 86400;
+
+            if ($days > $period)
+                $days = $period;
+
+            $sum = $days * $dailySum;
+
+            // Engi birinchi oyga qoldiqni qo'shib yuborish
+            if ($residue > 0){
+                $sum += $residue;
+                $residue = 0;
+            }
+
+            //add data to graphic list
+            $graphic[] = [
+                'days' => $days,
+                'amount' => $sum,
+                'month' => date('Y-M',strtotime($startDate))
+            ];
+
+            //update initial params for the next cycle
+            $period -= $days;
+            $startDate = $endDate;
+            $endDate = date('Y-m-01',strtotime($startDate.' first day of +1 month'));
+        }
+
+        return $graphic;
+    }
+}
 
 if (!function_exists('message_clear'))
 {
