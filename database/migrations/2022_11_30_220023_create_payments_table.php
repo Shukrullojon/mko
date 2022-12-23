@@ -15,13 +15,14 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string("name")->nullable();
             $table->unsignedBigInteger('client_id')->index();
             $table->unsignedBigInteger('merchant_id')->index();
             $table->integer('period');
             $table->integer('percentage');
             $table->string('sender_card',100)->index();
-            $table->bigInteger('cost');
             $table->bigInteger('amount');
+            $table->bigInteger('percentage_amount');
             $table->date('date');
             $table->tinyInteger('is_transaction')->commnent("0->paymentni transaksiyalari qo'shilmagan 1 -> tranzaksiyalar qo'shilgan");
             $table->tinyInteger('status')->comment("0 -> payment check create 1 -> clientni cardidan hold_amount ga olinadi");

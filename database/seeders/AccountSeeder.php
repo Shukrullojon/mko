@@ -24,7 +24,7 @@ class AccountSeeder extends Seeder
                 "name" => "Filial name",
                 "filial" => "01186",
                 "card_id" => $card->id,
-                "percentage" => "82",
+                "percentage" => "2",
             ]);
         }
 

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             MerchantSeeder::class,
             MerchantPeriodSeeder::class,
+            MerchantTerminalSeeder::class,
             PaymentSeeder::class,
             UserSeeder::class,
         ]);

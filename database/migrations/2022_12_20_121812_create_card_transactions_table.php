@@ -19,6 +19,7 @@ class CreateCardTransactionsTable extends Migration
             $table->string('receiver',20);
             $table->bigInteger('amount');
             $table->boolean('status');
+            $table->bigInteger('payment_id')->nullable();
             $table->timestamps();
         });
     }

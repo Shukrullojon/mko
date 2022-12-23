@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'],function (){
 
     // there should be graphics, diagrams about total conditions
     Route::get('/home', [HomeController::class,'index'])->name('home');
+    Route::get('/transaction', [HomeController::class,'transaction'])->name('transaction');
 
     //accounts
     Route::group(['prefix'=>'account', 'namespace'=>'\App\Http\Controllers\Pages'], function(){

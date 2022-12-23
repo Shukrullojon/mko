@@ -51,6 +51,14 @@ class ValidationHelper
             return [
                 'params.account' => 'required|size:20'
             ];
+        }else if($params['method'] == "payment.cancel"){
+            return [
+                "params.tr_id" => "required|exists:payments,tr_id"
+            ];
+        }else if($params['method'] == "merchant.balance"){
+            return [
+                "params.account" => "required|exists:accounts,number"
+            ];
         }else{
             return [
                 "method" => [
@@ -63,7 +71,9 @@ class ValidationHelper
                     payment.confirm,
                     card.info,
                     partner.get,
-                    partner.merchant,",
+                    partner.merchant,
+                    payment.cancel,
+                    merchant.balance",
                 ],
             ];
         }
