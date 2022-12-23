@@ -19,7 +19,7 @@ class MerchantController extends Controller
         $accountMko = Account::where('type', 4)->first();
         $percentage = $account->percentage + $accountMko->percentage + $merchant->account->percentage;
         return [
-            'commission_percentage' => $percentage,
+            'commission' => 0,
             'periods' => $merchant->periods,
             'merchant' => [
                 'key' => $merchant->key,
@@ -44,15 +44,17 @@ class MerchantController extends Controller
     {
         $mp = MerchantPeriod::find($params['params']['period_id']);
         $merchant = Merchant::find($mp->merchant_id);
-        $account = Account::where('type', 3)->first();
-        $accountMko = Account::where('type', 4)->first();
+
+        /*$account = Account::where('type', 3)->first();
+        $accountMko = Account::where('type', 4)->first();*/
+
         // $merchnt->account->percentage
         $graphic = GraphicService::done([
             'period' => $mp->period,
             'percentage' => $mp->percentage,
             'amount' => $params['params']['amount'],
         ]);
-        $graphic['percentage_amount'] = (($merchant->account->percentage + $account->percentage + $accountMko->percentage) * $params['params']['amount']) / 100;
+        //$graphic['percentage_amount'] = (($merchant->account->percentage + $account->percentage + $accountMko->percentage) * $params['params']['amount']) / 100;
         return $graphic;
     }
 
