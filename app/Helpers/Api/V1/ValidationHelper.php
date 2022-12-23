@@ -51,6 +51,10 @@ class ValidationHelper
             return [
                 "params.tr_id" => "required|exists:payments,tr_id"
             ];
+        }else if($params['method'] == "merchant.balance"){
+            return [
+                "params.account" => "required|exists:accounts,number"
+            ];
         }else{
             return [
                 "method" => [

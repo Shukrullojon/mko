@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Account;
 use App\Models\Pages\MerchantPeriod;
+use App\Services\AbsService;
 use App\Services\GraphicService;
 use Illuminate\Http\Request;
 use App\Models\Pages\Merchant;
@@ -53,4 +54,7 @@ class MerchantController extends Controller
         return $graphic;
     }
 
+    public function balance($params){
+        $bas = AbsService::transaction();
+    }
 }

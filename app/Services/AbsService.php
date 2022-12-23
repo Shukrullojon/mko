@@ -8,7 +8,7 @@ class AbsService
 {
     public static function transaction($data)
     {
-        $data = [
+        return AbsGateway::fire('POST', 'api/v1/bank', [
             "jsonrpc" => "2.0",
             "id" => rand(10000, 99999),
             "method" => "iabs.transactions.create.transactions",
@@ -29,8 +29,21 @@ class AbsService
                 "purpose" => $data['purpose'],
                 "amount" => (float)$data['amount']
             ]
-        ];
-        return AbsGateway::fire('POST', 'api/v1/bank', $data);
+        ]);
+    }
+
+    public static function getAccountDetails($data)
+    {
+        return AbsGateway::fire('POST', 'api/v1/bank', [
+            "jsonrpc" => "2.0",
+            "id" => rand(10000, 99999) . time(),
+            "method" => "iabs.account.get.account.details",
+            "params" => [
+                "account" => $data['account'],
+                "code_filial" => "00996",
+                "id" => rand(10000, 99999) . time(),
+            ]
+        ]);
     }
 
 }
