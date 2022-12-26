@@ -58,7 +58,11 @@ Route::any('graphic',function (\Illuminate\Http\Request $request){
     if (isset($card->client->transactions)){
         foreach ($card->client->transactions as $payment) {
 
+<<<<<<< HEAD
             $amount = ceil(($payment->percentage * $payment->amount)/100) + $payment->amount;
+=======
+
+>>>>>>> 9f117f40e306af47555c3cf3c2d45d1b5b90d975
             $list = get_graphic($payment->period,$payment->percentage,$payment->amount);
 
             foreach ($list as $item) {
