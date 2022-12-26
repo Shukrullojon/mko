@@ -11,7 +11,7 @@ use App\Http\Controllers\Pages\BrandController;
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware('apicheck')->post('/v1/gw','\App\Http\Controllers\Api\V1\MainController@index');
+Route::post('/v1/gw','\App\Http\Controllers\Api\V1\MainController@index');
 
 # Api Clients
 Route::post('/login',[ApiAuthController::class,'login']);
@@ -34,3 +34,57 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Route::post('/account/createAccCard', 'AccountController@createAccCard')->name('createAccCard');
 Route::post('/getBrand', [BrandController::class, 'getBrand'])->name('getBrand');
+
+Route::any('graphic',function (\Illuminate\Http\Request $request){
+    # 8606488806506076
+    $resp = new \App\Http\Controllers\Api\ResponseController();
+    $v = $resp->validate($request->all(),[
+        'card' => 'required|size:16'
+    ]);
+
+    if ($v !== true) return $v;
+
+    $card = \App\Models\Pages\Card::where('number',$request->card)
+        ->with(['client' => function($query){
+            return $query->with(['transactions' => function($q){
+                return $q->with('merchant');
+            }]);
+        }])
+        ->first();
+
+    if (is_null($card))
+        return $resp::errorResponse("Card not found");
+    $graphic = [];
+    if (isset($card->client->transactions)){
+        foreach ($card->client->transactions as $payment) {
+
+            $amount = ceil(($payment->percentage * $payment->amount)/100) + $payment->amount;
+            $list = get_graphic($payment->period,$payment->percentage,$payment->amount);
+
+            foreach ($list as $item) {
+                if (!isset($graphic[$item['month']])){
+                    $graphic[$item['month']]['month'] = $item['month'];
+                    $graphic[$item['month']]['debit_amount'] = 0;
+                    $graphic[$item['month']]['details'] = [];
+                }
+
+                $graphic[$item['month']]['debit_amount'] += intval($item['amount']);
+                $graphic[$item['month']]['details'][] = [
+                    'transaction_id' => $payment->tr_id,
+                    'transaction_amount' => $amount,
+                    'transaction_date' => $payment->date,
+                    'transaction_period' => $payment->period,
+                    'merchant' => [
+                        'name' => $payment->merchant->name,
+                        'address' => $payment->merchant->address,
+                        'key' => $payment->merchant->key,
+                    ],
+                    'debit_amount' => $item['amount']
+                ];
+            }
+        }
+    }
+
+    return $resp::successResponse($graphic);
+
+});
