@@ -10,7 +10,8 @@ class TransactionAccountService
 {
     public static function transaction()
     {
-        $transactions = Transaction::where('is_sent', 0)->take(20)->get();
+        $transactions = Transaction::where('is_sent', 0)->where('type',0)->take(20)->get();
+
         $account = Account::where('type', 2)->first();
         foreach ($transactions as $transaction) {
             $abs = AbsService::transaction([
@@ -29,6 +30,7 @@ class TransactionAccountService
                 ],
                 'amount' => $transaction->amount,
             ]);
+            
             if (isset($abs['status']) and $abs['status']) {
                 $debit = CardService::debit([
                     'token' => $transaction->receiver_card,
