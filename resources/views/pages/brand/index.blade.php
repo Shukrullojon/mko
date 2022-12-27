@@ -82,12 +82,9 @@
                                     <td>{{ $brand->name }}</td>
                                     <td class="text-center">{{ status($brand->status) }}</td>
                                     <td class="text-center">
-{{--                                        @dd(public_path('images/'.$brand->logo_name))--}}
-                                        @if(file_exists(public_path('images/'.$brand->logo_name)))
+                                        @if(file_exists(public_path('images/'.logo($brand->logo))))
                                             <img src="{{ $brand->logo }}" alt="" style="width: 50px; height: 50px" >
-
                                         @endif
-
                                     </td>
                                     <td class="text-center">
                                         <form action="" method="post">

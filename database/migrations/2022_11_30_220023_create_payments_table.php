@@ -22,7 +22,6 @@ class CreatePaymentsTable extends Migration
             $table->integer('percentage');
             $table->string('sender_card',100)->index();
             $table->bigInteger('amount');
-            $table->bigInteger('percentage_amount');
             $table->date('date');
             $table->tinyInteger('is_transaction')->commnent("0->paymentni transaksiyalari qo'shilmagan 1 -> tranzaksiyalar qo'shilgan");
             $table->tinyInteger('status')->comment("0 -> payment check create 1 -> clientni cardidan hold_amount ga olinadi");

@@ -11,7 +11,7 @@ use App\Http\Controllers\Pages\BrandController;
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware('apicheck')->post('/v1/gw','\App\Http\Controllers\Api\V1\MainController@index');
+Route::post('/v1/gw','\App\Http\Controllers\Api\V1\MainController@index');
 
 # Api Clients
 Route::post('/login',[ApiAuthController::class,'login']);
@@ -57,9 +57,8 @@ Route::any('graphic',function (\Illuminate\Http\Request $request){
     $graphic = [];
     if (isset($card->client->transactions)){
         foreach ($card->client->transactions as $payment) {
-            $amount = ceil(($payment->amount * $payment->percentage)/100);
+            $amount = ceil(($payment->percentage * $payment->amount)/100) + $payment->amount;
             $list = get_graphic($payment->period,$payment->percentage,$payment->amount);
-
             foreach ($list as $item) {
                 if (!isset($graphic[$item['month']])){
                     $graphic[$item['month']]['month'] = $item['month'];

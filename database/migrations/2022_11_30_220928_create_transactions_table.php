@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->string('sender_card',100)->index();
             $table->string('receiver_card',100)->index();
             $table->unsignedBigInteger('account_id')->index();
+            $table->boolean('type')->comment("0 - merchant 1 - ItUnisoft uchun");
             $table->unsignedBigInteger('payment_id')->index();
             $table->bigInteger('amount');
             $table->integer('percentage');
