@@ -39,7 +39,6 @@
                                 <th>Percentage</th>
                                 <th>Date</th>
                                 <th>Amount</th>
-                                <th>Commission Amount</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -61,7 +60,6 @@
                                     <td>{{ $payment->percentage }}</td>
                                     <td>{{ $payment->date }}</td>
                                     <td>{{ number_format($payment->amount/100) }}</td>
-                                    <td>{{ number_format($payment->percentage_amount/100) }}</td>
                                     <td>{{ $payment->status }}</td>
                                     <td>
                                         <a href="{{ route('paymentShow',$payment->id) }}"

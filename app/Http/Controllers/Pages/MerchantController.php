@@ -42,7 +42,7 @@ class MerchantController extends Controller
             if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id != null)
                 $merchants = $merchants->where('brand_id', auth()->user()->brand_id)
                     ->where('id', auth()->user()->merchant_id);
-            $merchants = $merchants->orderBy('id', 'DESC')->paginate(5);
+            $merchants = $merchants->orderBy('id', 'DESC')->paginate(20);
             return view('pages.merchant.index', compact('merchants'));
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());

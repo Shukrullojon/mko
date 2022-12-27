@@ -27,14 +27,9 @@ Route::get('/download/{key}', function ($key){
 })->name('downloadSvg');
 
 
-// Welcome page
-Route::get('/', function (){
-    return view('welcome');
-})->name('welcome');
-
 // Web pages
 Route::group(['middleware' => 'auth'],function (){
-
+    Route::get('/', [App\Http\Controllers\Blade\HomeController::class, 'index']);
     // there should be graphics, diagrams about total conditions
     Route::get('/home', [HomeController::class,'index'])->name('home');
     Route::get('/transaction', [HomeController::class,'transaction'])->name('transaction');
