@@ -24,6 +24,7 @@ class PaymentController extends Controller
         $period = MerchantPeriod::where('id', $params['params']['period_id'])->where('merchant_id', $merchant->id)->first();
         $account = Account::where('type', 3)->first();
         $accountMko = Account::where('type', 4)->first();
+//        dd($period, $params['params']);
         if (empty($card) or empty($client) or empty($merchant) or empty($period)) {
             return ErrorHelper::error300();
         }
@@ -34,7 +35,7 @@ class PaymentController extends Controller
 
         $payment = Payment::create([
             'client_id' => $client->id,
-            'name' => $params['params']['name']??null,
+            'name' => $params['params']['name'],
             'merchant_id' => $merchant->id,
             'period' => $period->period,
             'percentage' => $period->percentage,
