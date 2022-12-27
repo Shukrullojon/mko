@@ -36,7 +36,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/getBrand', [BrandController::class, 'getBrand'])->name('getBrand');
 
 Route::any('graphic',function (\Illuminate\Http\Request $request){
-    # 8606488806506076
     $resp = new \App\Http\Controllers\Api\ResponseController();
     $v = $resp->validate($request->all(),[
         'card' => 'required|size:16'
