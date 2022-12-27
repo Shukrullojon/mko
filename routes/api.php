@@ -85,7 +85,6 @@ Route::any('graphic',function (\Illuminate\Http\Request $request){
             }
         }
     }
-
     return $resp::successResponse($graphic);
 
 });
