@@ -57,18 +57,19 @@ Route::any('graphic',function (\Illuminate\Http\Request $request){
     $graphic = [];
     if (isset($card->client->transactions)){
         foreach ($card->client->transactions as $payment) {
-
-
+            $amount = ceil(($payment->amount * $payment->percentage)/100);
             $list = get_graphic($payment->period,$payment->percentage,$payment->amount);
 
             foreach ($list as $item) {
                 if (!isset($graphic[$item['month']])){
                     $graphic[$item['month']]['month'] = $item['month'];
+                    $graphic[$item['month']]['amount'] = 0;
+                    $graphic[$item['month']]['paid_amount'] = 0;
                     $graphic[$item['month']]['debit_amount'] = 0;
                     $graphic[$item['month']]['details'] = [];
                 }
 
-                $graphic[$item['month']]['debit_amount'] += intval($item['amount']);
+                $graphic[$item['month']]['amount'] += intval($item['amount']);
                 $graphic[$item['month']]['details'][] = [
                     'transaction_id' => $payment->tr_id,
                     'transaction_amount' => $amount,
@@ -79,7 +80,9 @@ Route::any('graphic',function (\Illuminate\Http\Request $request){
                         'address' => $payment->merchant->address,
                         'key' => $payment->merchant->key,
                     ],
-                    'debit_amount' => $item['amount']
+                    'amount' => $item['amount'],
+                    'debit_amount' => 0,
+                    'paid_amount' => 0
                 ];
             }
         }
