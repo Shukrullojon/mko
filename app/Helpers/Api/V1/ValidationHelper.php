@@ -59,6 +59,10 @@ class ValidationHelper
             return [
                 "params.account" => "required|exists:accounts,number"
             ];
+        }else if($params['method'] == "card.card"){
+            return [
+                "params.token" => "required|exists:cards,token"
+            ];
         }else{
             return [
                 "method" => [
@@ -73,7 +77,8 @@ class ValidationHelper
                     partner.get,
                     partner.merchant,
                     payment.cancel,
-                    merchant.balance",
+                    merchant.balance,
+                    card.card",
                 ],
             ];
         }
