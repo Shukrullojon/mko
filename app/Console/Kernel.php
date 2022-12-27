@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        TransactionCommand::class,
-        TransactionAccountCommand::class,
+        /*TransactionCommand::class,
+        TransactionAccountCommand::class,*/
     ];
 
     /**

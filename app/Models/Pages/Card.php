@@ -13,5 +13,8 @@ class Card extends Model
 
     protected $guarded = [];
 
-
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
 }
