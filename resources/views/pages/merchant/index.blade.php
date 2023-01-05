@@ -97,11 +97,11 @@
                             @foreach($merchants as $merchant)
                                 <tr>
 {{--                                    <td>{{ $num ++ }}</td>--}}
-                                    <td>{{ $merchant->brand->name }}</td>
+                                    <td>{{ $merchant->brand->name ?? ""}}</td>
                                     <td>{{ $merchant->name }}</td>
                                     <td>{{ $merchant->filial }}</td>
                                     <td>{{ $merchant->address }}</td>
-                                    <td>{{ $merchant->account->number }}</td>
+                                    <td>{{ $merchant->account->number ?? "" }}</td>
                                     <td>@lang('cruds.status.'.$merchant->status)</td>
                                     <td>
                                         <form action="{{ route('merchantDestroy',$merchant->id) }}" method="post">
