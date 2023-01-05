@@ -39,7 +39,7 @@
                             <thead>
                                 <tr>
                                     <th>@lang('cruds.brand.brand_name')</th>
-                                    <th>@lang('cruds.merchant.merchant_name')</th>
+                                    {{--<th>@lang('cruds.merchant.merchant_name')</th>--}}
                                     <th>@lang('cruds.merchant.filial')</th>
                                     <th>@lang('cruds.merchant.merchant_address')</th>
                                     <th>@lang('cruds.account.account')</th>
@@ -58,9 +58,9 @@
                                                 </select>
                                             @endif
                                         </th>
-                                        <th>
+                                        {{--<th>
                                             <input value="{{ request()->merchant_name }}" type="text" placeholder="@lang('cruds.merchant.merchant_name')" class="clear-class form-control" name="merchant_name">
-                                        </th>
+                                        </th>--}}
                                         <th>
                                             <input value="{{ request()->filial }}" type="text" placeholder="@lang('cruds.merchant.filial')" class="clear-class form-control" name="filial">
                                         </th>
@@ -98,7 +98,7 @@
                                 <tr>
 {{--                                    <td>{{ $num ++ }}</td>--}}
                                     <td>{{ $merchant->brand->name ?? ""}}</td>
-                                    <td>{{ $merchant->name }}</td>
+                                    {{--<td>{{ $merchant->name }}</td>--}}
                                     <td>{{ $merchant->filial }}</td>
                                     <td>{{ $merchant->address }}</td>
                                     <td>{{ $merchant->account->number ?? "" }}</td>
