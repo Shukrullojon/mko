@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'],function (){
         Route::post('/update/{id}', 'MerchantController@update')->name('merchantUpdate');
         Route::post('/getAccountDetails/', 'MerchantController@getAccountDetails')->name('getAccountDetails');
         Route::delete('/delete/{id}', 'MerchantController@destroy')->name('merchantDestroy');
+        Route::post('/removeMerchant', 'MerchantController@removeMerchant')->name('removeMerchant');
     });
     //brands
     Route::group(['prefix'=>'brand', 'namespace'=>'\App\Http\Controllers\Pages'], function(){

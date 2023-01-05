@@ -51,7 +51,6 @@
                                             @endif
                                     </div>
                                 </div>
-
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>@lang('cruds.merchant.filial')</label>

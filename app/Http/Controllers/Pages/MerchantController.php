@@ -201,66 +201,52 @@ class MerchantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
         Validator::make($request->all(), [
-            "merchant" => "required|string",
-            "terminal" => "required|string",
-            "brand_name" => "required|string",
-            "merchant_name" => "required|string",
+            "brand_id" => "required|string",
+            //"merchant_name" => "required|string",
             "filial" => "required|number",
             "merchant_address" => "required|string",
             "account_number" => "required|number",
             "account_name" => "required|string",
             "account_inn" => "required|number",
             "account_filial" => "required|number",
-            "percentage" => "required|number",
-            "uzcard_merchant_id" => "required|string",
-            "uzcard_terminal_id" => "required|string",
-            "humo_merchant_id" => "required|string",
-            "humo_terminal_id" => "required|string",
             "periods" => "required|array",
         ]);
-//        dd($request->all(), $id);
+
         $merchant = DB::transaction(function () use ($request, $id) {
             $merchant = Merchant::where('id', $id)->first();
-            $account = Account::where('number', $request->account_number)->where('inn', $request->account_inn)->first();
+            $account = Account::where('id', $merchant->account->id)->first();
 
             $merchant->update([
-                'brand_id' => $request->brand_name,
-                'name' => $request->merchant_name,
+                'brand_id' => $request->brand_id,
                 'filial' => $request->filial,
                 'address' => $request->merchant_address,
-//                'account_id' => $account->id??null,
-                'uzcard_merchant_id' => $request->uzcard_merchant_id,
-                'uzcard_terminal_id' => $request->uzcard_terminal_id,
-                'humo_merchant_id' => $request->humo_merchant_id,
-                'humo_terminal_id' => $request->humo_terminal_id,
-                'is_register_humo' => 1,
-                'is_register_uzcard' => 1,
+                'status' => $request->status,
             ]);
+
             $account->update([
                 'number' => $request->account_number,
                 'inn' => $request->account_inn,
                 'name' => $request->account_name,
                 'filial' => $request->account_filial
             ]);
-            $merchantTerminal = MerchantTerminal::where('merchant_id', $id)->first();
-            $merchantTerminal->update([
-                'merchant' => $request->merchant,
-                'terminal' => $request->terminal,
-            ]);
-            $period1 = MerchantPeriod::where('merchant_id', $id)->get();
+
             foreach ($request->periods as $per) {
-                MerchantPeriod::FirstOrCreate([
-                    'id' => $request->merchant_period_id,
-                    'period' => $request->period,
-                ]);
-                MerchantPeriod::create([
-                    'period' => $per['merchant_period'],
-                    'percentage' => $per['merchant_percentage'],
-                    'merchant_id' => $id,
-                    'status' => 1
-                ]);
+                if(isset($per->merchant_period_id) and $per->merchant_period_id){
+                    MerchantPeriod::update([
+                        'merchant_id' => $id,
+                        'period' => $per['merchant_period'],
+                        'percentage' => $per['merchant_percentage'],
+                        'status' => 1
+                    ])->where('id',$per->merchant_period_id);
+                }else{
+                    MerchantPeriod::Create([
+                        'merchant_id' => $id,
+                        'period' => $per['merchant_period'],
+                        'percentage' => $per['merchant_percentage'],
+                        'status' => 1
+                    ]);
+                }
             }
         });
         return redirect()->route('merchantShow', $id);
@@ -298,5 +284,21 @@ class MerchantController extends Controller
                 'status' => false,
             ];
 
+    }
+
+    public function removeMerchant(Request $request)
+    {
+        if ($request->period_id) {
+            $period = MerchantPeriod::find($request->period_id);
+            MerchantPeriodHistory::create([
+                'merchant_id' => $period->merchant_id,
+                'period' => $period->period,
+                'percentage' => $period->percentage,
+            ]);
+            $period->delete();
+            return back()->with('success', 'Successfully deleted');
+        } else {
+            return back()->with('error', 'Could not be deleted');
+        }
     }
 }
