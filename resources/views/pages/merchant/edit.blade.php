@@ -258,7 +258,8 @@
                             </div>
                             <hr style="background-color: #9f1447; border-width: 2px">
                             <br>
-                            <input type="hidden" name="" id="period_key" value="0">
+                            <input type="hidden" name="" id="period_key" value="{{ count($periods) }}">
+                            @php $cou = 0 @endphp
                             @foreach($periods as $period)
                                 <div class="row" id="period_example">
                                     <div class="row" id="remove_0">
@@ -266,7 +267,8 @@
                                             <div class="form-group">
                                                 <label>@lang('cruds.merchant.merchant_period')</label>
                                                 <div style="display: flex">
-                                                    <input type="number" name="periods[0][merchant_period]"
+                                                    <input type="hidden" name="periods[{{ $cou++ }}][merchant_period_id]" value="{{ $period->id }}">
+                                                    <input type="number" name="periods[{{ $cou++ }}][merchant_period]"
                                                            value="{{ $period->period }}"
                                                            class="form-control {{ $errors->has('merchant_period') ? "is-invalid":"" }}"
                                                            autocomplete="off" required>

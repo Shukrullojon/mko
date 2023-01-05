@@ -134,8 +134,8 @@ class MerchantController extends Controller
                 ]);
                 $merchantTerminal = MerchantTerminal::create([
                     'merchant_id' => $merchant->id,
-                    'merchant' => str_replace($request->filial, " ", "") . $merchant->id,
-                    'terminal' => str_replace($request->filial, " ", "") . $merchant->id,
+                    'merchant' => str_replace(" ", "", $request->filial) . $merchant->id,
+                    'terminal' => str_replace(" ", "", $request->filial) . $merchant->id,
                     'balance' => 0,
                     'status' => 1,
                 ]);
@@ -251,6 +251,10 @@ class MerchantController extends Controller
             ]);
             $period1 = MerchantPeriod::where('merchant_id', $id)->get();
             foreach ($request->periods as $per) {
+                MerchantPeriod::FirstOrCreate([
+                    'id' => $request->merchant_period_id,
+                    'period' => $request->period,
+                ]);
                 MerchantPeriod::create([
                     'period' => $per['merchant_period'],
                     'percentage' => $per['merchant_percentage'],
