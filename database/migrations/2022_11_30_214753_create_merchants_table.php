@@ -27,7 +27,7 @@ class CreateMerchantsTable extends Migration
             $table->boolean("is_register_humo")->nullable();
             $table->boolean("is_register_uzcard")->nullable();
             $table->unsignedBigInteger("account_id")->index()->nullable();
-
+            $table->tinyInteger('status')->nullable();
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->timestamps();

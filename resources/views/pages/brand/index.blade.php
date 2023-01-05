@@ -46,7 +46,7 @@
                                 <th>@lang('cruds.brand.brand_name')</th>
                                 <th width="80px">@lang('cruds.brand.status')</th>
                                 <th>@lang('cruds.brand.logo')</th>
-                                <th class="text-center">действие</th>
+                                <th class="text-center"></th>
                             </tr>
                             <tr class="text-center">
                                 <form action="">
@@ -80,11 +80,9 @@
                                 <tr>
 
                                     <td>{{ $brand->name }}</td>
-                                    <td class="text-center">{{ status($brand->status) }}</td>
+                                    <td class="text-center">@lang('cruds.status.'.$brand->status)</td>
                                     <td class="text-center">
-                                        @if(file_exists(public_path('images/'.logo($brand->logo))))
-                                            <img src="{{ $brand->logo }}" alt="" style="width: 50px; height: 50px" >
-                                        @endif
+                                        <img src="{{ $brand->logo }}" alt="" style="width: 50px; height: 50px" >
                                     </td>
                                     <td class="text-center">
                                         <form action="" method="post">
@@ -101,11 +99,6 @@
                                                         <span class="fa fa-edit"></span>
                                                     </a>
                                                 @endcan
-{{--                                                @can('brand.delete')--}}
-{{--                                                    <input name="_method" type="hidden" value="DELETE">--}}
-{{--                                                    <a href="{{ route('brandDestroy', $brand->id) }}" type="button" class="btn btn-danger btn-sm" onclick="if (confirm('Вы уверены?')) { this.form.submit() } "> @lang('global.delete')</a>--}}
-{{--                                                @endcan--}}
-
                                             </div>
                                         </form>
                                     </td>

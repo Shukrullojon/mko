@@ -38,6 +38,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>@lang('cruds.brand.brand_name')</label>
+                                        <label for="*" style="color:red">*</label>
                                         <input type="text" name="brand_name" class="form-control {{ $errors->has('brand_name') ? "is-invalid":"" }}" value="{{ old('brand_name',$brand->name) }}" required>
                                         @if($errors->has('brand_name') || 1)
                                             <span class="error invalid-feedback">{{ $errors->first('brand_name') }}</span>
@@ -47,9 +48,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>@lang('cruds.brand.status')</label>
+                                        <label for="*" style="color:red">*</label>
                                         <select name="status" id="" class="form-control">
-                                                <option value="1" @if($brand->status) selected @endif>Active</option>
-                                                <option value="0" @if(!$brand->status) selected @endif>InActive</option>
+                                                <option value="1" @if($brand->status) selected @endif>@lang('cruds.status.1')</option>
+                                                <option value="0" @if(!$brand->status) selected @endif>@lang('cruds.status.0')</option>
                                         </select>
                                     </div>
 
@@ -70,9 +72,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>@lang('cruds.brand.is_unired')</label>
+                                        <label for="*" style="color:red">*</label>
                                         <select name="is_unired" id="" class="form-control">
-                                            <option value="1" @if($brand->is_unired) selected @endif>True</option>
-                                            <option value="0" @if(!$brand->is_unired) selected @endif>False</option>
+                                            <option value="1" @if($brand->is_unired) selected @endif>@lang('cruds.status.1')</option>
+                                            <option value="0" @if(!$brand->is_unired) selected @endif>@lang('cruds.status.0')</option>
                                         </select>
                                     </div>
                                 </div>

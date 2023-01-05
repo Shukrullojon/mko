@@ -36,15 +36,11 @@
                                        aria-describedby="">
                                     <thead>
                                     <tr>
-                                        <th>@lang('cruds.merchant.merchant_name')</th>
-                                        <td>{{ $merchant->name }}</td>
-                                    </tr>
-                                    <tr>
                                         <th>@lang('cruds.merchant.filial')</th>
                                         <td>{{ $merchant->filial }}</td>
                                     </tr>
                                     <tr>
-                                        <th>@lang('cruds.merchant.key')</th>
+                                        <th>QR</th>
                                         <td>
                                             {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(100)->generate($merchant->key); !!}
                                             <a href="{{ route('downloadSvg', ['key' => $merchant->key]) }}"
@@ -59,39 +55,7 @@
 
                                     </thead>
                                 </table>
-                            </div>
-                            <div class="col-md-6">
-                                <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
-                                       aria-describedby="">
-                                    <thead>
-                                    <tr>
-                                        <th>@lang('cruds.merchant.uzcard_terminal_id')</th>
-                                        <td>{{ $merchant->uzcard_terminal_id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>@lang('cruds.merchant.humo_merchant_id')</th>
-                                        <td>{{ $merchant->humo_merchant_id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>@lang('cruds.merchant.humo_terminal_id')</th>
-                                        <td>{{ $merchant->humo_terminal_id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>@lang('cruds.merchant.is_register_uzcard')</th>
-                                        <td>{{ $merchant->is_register_uzcard }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>@lang('cruds.merchant.is_register_humo')</th>
-                                        <td>{{ $merchant->is_register_humo }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>@lang('cruds.account.account_number')</th>
-                                        <td>{{ $merchant->account->number }}</td>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                            <div class="col-md-6">
+                                <br>
                                 <table id="" class="table table-bordered  dataTable dtr-inline">
                                     <thead>
                                     <tr>
@@ -107,6 +71,55 @@
                                         </tr>
                                     @endforeach
                                     </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                       aria-describedby="">
+                                    <thead>
+
+                                    <tr>
+                                        <th>@lang('cruds.account.account_number')</th>
+                                        <td>{{ $merchant->account->number ?? "" }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>@lang('cruds.account.name')</th>
+                                        <td>{{ $merchant->account->name ?? "" }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>@lang('cruds.account.account_inn')</th>
+                                        <td>{{ $merchant->account->inn ?? "" }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>@lang('cruds.account.account_filial')</th>
+                                        <td>{{ $merchant->account->filial ?? "" }}</td>
+                                    </tr>
+
+                                    </thead>
+                                </table>
+                                <br>
+                                <table id="" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="">
+                                    <thead>
+
+                                    <tr>
+                                        <th>@lang('cruds.ucoin')</th>
+                                        <td>{{ $merchant->account->card->number ?? "" }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>@lang('cruds.expire')</th>
+                                        <td>{{ $merchant->account->card->expire ?? "" }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>@lang('cruds.balance')</th>
+                                        <td>{{ $merchant->account->card->balance ?? "" }}</td>
+                                    </tr>
+
+                                    </thead>
                                 </table>
                             </div>
                         </div>

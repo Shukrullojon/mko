@@ -59,7 +59,7 @@ class BrandController extends Controller
             'brand_name' => 'required',
             'status' => 'required',
             'is_unired' => 'required',
-            'logo' => 'required|mimes:pdf,jpeg,png,jpg,svg',
+            'logo' => 'required|mimes:jpeg,png,jpg,svg',
         ]);
         if($request->hasFile('logo')) {
             $file = $request->file('logo');
@@ -118,7 +118,6 @@ class BrandController extends Controller
             'status' => 'required',
             'is_unired' => 'required',
         ]);
-        dd($request->all());
         $brand = Brand::find($id);
         if($request->hasFile('logo')) {
             $file = $request->file('logo');
