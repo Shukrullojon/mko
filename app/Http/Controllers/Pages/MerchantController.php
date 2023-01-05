@@ -232,13 +232,14 @@ class MerchantController extends Controller
             ]);
 
             foreach ($request->periods as $per) {
-                if(isset($per->merchant_period_id) and $per->merchant_period_id){
-                    MerchantPeriod::update([
+
+                if(isset($per['merchant_period_id']) and $per['merchant_period_id']){
+                    MerchantPeriod::where('id',$per['merchant_period_id'])->update([
                         'merchant_id' => $id,
                         'period' => $per['merchant_period'],
                         'percentage' => $per['merchant_percentage'],
                         'status' => 1
-                    ])->where('id',$per->merchant_period_id);
+                    ]);
                 }else{
                     MerchantPeriod::Create([
                         'merchant_id' => $id,
