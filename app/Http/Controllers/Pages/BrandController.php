@@ -118,7 +118,7 @@ class BrandController extends Controller
             'status' => 'required',
             'is_unired' => 'required',
         ]);
-        dd($request->all());
+//        dd($request->all());
         $brand = Brand::find($id);
         if($request->hasFile('logo')) {
             $file = $request->file('logo');

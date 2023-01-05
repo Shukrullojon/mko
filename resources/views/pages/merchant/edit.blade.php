@@ -258,8 +258,9 @@
                             </div>
                             <hr style="background-color: #9f1447; border-width: 2px">
                             <br>
-                            <input type="hidden" name="" id="period_key" value="0">
+                            <input type="hidden" name="" id="period_key" value="0">{{ dd($periods) }}
                             @foreach($periods as $period)
+                                <input type="hidden" id="">
                                 <div class="row" id="period_example">
                                     <div class="row" id="remove_0">
                                         <div class="col-md-4">
@@ -348,7 +349,7 @@
                 '</div>' +
 
                 '<div class="col-md-4"> <br>' +
-                '<button class="btn btn-success mt-2 add_period">Add</button>' +
+                '<button class="btn btn-success mt-2 add_period" value="' + period_key + '">Add</button>' +
                 '<button class="btn btn-danger mt-2 remove_period"  value="' + period_key + '">Remove</button>' +
                 '</div>' +
                 '</div>';
@@ -361,5 +362,6 @@
             var value = $(this).attr("value");
             $("#remove_" + value).remove();
         });
+        $(document).on()
     </script>
 @endsection

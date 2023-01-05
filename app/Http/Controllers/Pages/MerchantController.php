@@ -203,7 +203,6 @@ class MerchantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
         Validator::make($request->all(), [
             "merchant" => "required|string",
             "terminal" => "required|string",
@@ -251,6 +250,13 @@ class MerchantController extends Controller
                 'merchant' => $request->merchant,
                 'terminal' => $request->terminal,
             ]);
+            foreach ($request->periods as $period) {
+                MerchantPeriodHistory::create([
+                    'merchant_id' => $id,
+                    'period' => $period->merchant_period,
+                    'percentage' => $period->merchant_percentage,
+                ]);
+            }
             $period1 = MerchantPeriod::where('merchant_id', $id)->get();
             foreach ($request->periods as $per) {
                 MerchantPeriod::create([

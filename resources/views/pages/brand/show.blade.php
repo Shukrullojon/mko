@@ -12,7 +12,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
-                        <li class="breadcrumb-item active">@lang('cruds.brand.brands')</li>
+                        <li class="breadcrumb-item active"><a href="{{ route('brandIndex') }}">@lang('cruds.brand.brands')</a></li>
                         <li class="breadcrumb-item active">@lang('global.edit')</li>
                     </ol>
                 </div>

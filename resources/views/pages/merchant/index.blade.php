@@ -50,20 +50,17 @@
                                 </tr>
                                 <tr class="text-center">
                                     <form action="">
-{{--                                        <th>--}}
-{{--                                            <input value="{{ request()->name }}" type="text" placeholder="@lang('cruds.merchant.name')" class="clear-class form-control" name="inn">--}}
-{{--                                        </th>--}}
                                         <th>
-                                            <input value="{{ request()->merchant_name }}" type="text" placeholder="@lang('cruds.merchant.merchant_name')" class="clear-class form-control" name="merchant_name">
+                                            <input value="{{ request()->merchant_name }}" type="text" placeholder="@lang('cruds.merchant.merchant_name')" class="clear-class form-control" name="merchant_name" autocomplete="off">
                                         </th>
                                         <th>
 {{--                                            <input value="{{ request()->brand_name }}" type="text" placeholder="@lang('cruds.merchant.brand_name')" class="clear-class form-control" name="brand_name">--}}
                                         </th>
                                         <th>
-                                            <input value="{{ request()->filial }}" type="text" placeholder="@lang('cruds.merchant.filial')" class="clear-class form-control" name="filial">
+                                            <input value="{{ request()->filial }}" type="text" placeholder="@lang('cruds.merchant.filial')" class="clear-class form-control" name="filial" autocomplete="off">
                                         </th>
                                         <th>
-                                            <input value="{{ request()->merchant_address }}" type="text" placeholder="@lang('cruds.merchant.merchant_address')" class="clear-class form-control" name="merchant_address">
+                                            <input value="{{ request()->merchant_address }}" type="text" placeholder="@lang('cruds.merchant.merchant_address')" class="clear-class form-control" name="merchant_address" autocomplete="off">
                                         </th>
                                         <th>
 {{--                                            <input value="{{ request()->account_number }}" type="text" placeholder="@lang('cruds.account.account_number')" class="clear-class form-control" name="account_number">--}}
