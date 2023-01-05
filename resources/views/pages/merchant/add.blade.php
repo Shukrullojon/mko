@@ -36,227 +36,130 @@
                             @csrf
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="panel-group">
-                                        <div class="panel panel-success">
-                                            <div class="row">
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.merchant.merchant')</label>
-                                                        <input type="text" name="merchant" value="{{ old('merchant') }}"
-                                                               class="form-control {{ $errors->has('merchant') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('merchant'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('merchant') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.merchant.terminal')</label>
-                                                        <input type="text" name="terminal" value="{{ old('terminal') }}"
-                                                               class="form-control {{ $errors->has('terminal') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('terminal'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('terminal') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.brand.brand_name')</label>
-                                                        <select name="brand_name" id="brand_name"
-                                                                class="form-control" {{ $errors->has('brand_name') ? "is-invalid":"" }}
-                                                        ">
-                                                        @foreach($brands as $brand)
-                                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                                            @endforeach
-                                                            </select>
-                                                            @if($errors->has('brand_id'))
-                                                                <span
-                                                                    class="error invalid-feedback">{{ $errors->first('brand_id') }}</span>
-                                                            @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.merchant.merchant_name')</label>
-                                                        <input type="text" name="merchant_name"
-                                                               value="{{ old('merchant_name') }}"
-                                                               class="form-control {{ $errors->has('merchant_name') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('merchant_name'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('merchant_name') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.merchant.filial')</label>
-                                                        <input type="text" name="filial" value="{{ old('filial') }}"
-                                                               class="form-control {{ $errors->has('filial') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('filial'))
-                                                            <span class="error invalid-feedback">{{ $errors->first('filial') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.merchant.merchant_address')</label>
-                                                        <input type="text" name="merchant_address" value="{{ old('merchant_address') }}"
-                                                               class="form-control {{ $errors->has('merchant_address') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('merchant_address'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('merchant_address') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="panel-group">
-                                        <div class="panel panel-success">
-                                            <div class="row">
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.account.account_number')</label>
-                                                        <input type="text" name="account_number"
-                                                               value="{{ old('account_number') }}"
-                                                               class="form-control {{ $errors->has('account_number') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('account_number'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('account_number') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.account.name')</label>
-                                                        <input type="text" name="account_name" value="{{ old('account_name') }}"
-                                                               class="form-control {{ $errors->has('account_name') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('account_name'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('account_name') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.account.account_inn')</label>
-                                                        <input type="text" name="account_inn" value="{{ old('account_inn') }}"
-                                                               class="form-control {{ $errors->has('account_inn') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('account_inn'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('account_inn') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.account.account_filial')</label>
-                                                        <input type="text" name="account_filial" value="{{ old('account_filial') }}"
-                                                               class="form-control {{ $errors->has('account_filial') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('account_filial'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('account_filial') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>@lang('cruds.account.percentage')</label>
-                                                        <input type="number" name="percentage" value="{{ old('percentage') }}"
-                                                               class="form-control {{ $errors->has('percentage') ? "is-invalid":"" }}"
-                                                               autocomplete="off" required>
-                                                        @if($errors->has('percentage'))
-                                                            <span
-                                                                class="error invalid-feedback">{{ $errors->first('percentage') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.brand.brand_name')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <select name="brand_id" id="brand_id" class="form-control" {{ $errors->has('brand_id') ? "is-invalid":"" }}">
+                                        @foreach($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            @endforeach
+                                            </select>
+                                            @if($errors->has('brand_id'))
+                                                <span
+                                                        class="error invalid-feedback">{{ $errors->first('brand_id') }}</span>
+                                            @endif
                                     </div>
                                 </div>
 
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.merchant.filial')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <input type="text" name="filial" value="{{ old('filial') }}"
+                                               class="form-control {{ $errors->has('filial') ? "is-invalid":"" }}"
+                                               autocomplete="off" required>
+                                        @if($errors->has('filial'))
+                                            <span class="error invalid-feedback">{{ $errors->first('filial') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.merchant.merchant_address')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <input type="text" name="merchant_address" value="{{ old('merchant_address') }}"
+                                               class="form-control {{ $errors->has('merchant_address') ? "is-invalid":"" }}"
+                                               autocomplete="off" required>
+                                        @if($errors->has('merchant_address'))
+                                            <span
+                                                class="error invalid-feedback">{{ $errors->first('merchant_address') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.brand.status')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <select name="status" id="" class="form-control">
+                                            <option value="1">@lang('cruds.status.1')</option>
+                                            <option value="0">@lang('cruds.status.0')</option>
+                                        </select>
+                                        @if($errors->has('status'))
+                                            <span class="error invalid-feedback">{{ $errors->first('status') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
+
                             <hr style="background-color: #9f1447; border-width: 2px">
+
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>@lang('cruds.merchant.uzcard_merchant_id')</label>
-                                        <input type="text" name="uzcard_merchant_id"
-                                               value="{{ old('uzcard_merchant_id') }}"
-                                               class="form-control {{ $errors->has('uzcard_merchant_id') ? "is-invalid":"" }}"
+                                        <label>@lang('cruds.account.account')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <input type="text" name="account_number" id="account_number"
+                                               value="{{ old('account_number') }}"
+                                               class="form-control {{ $errors->has('account_number') ? "is-invalid":"" }}"
                                                autocomplete="off" required>
-                                        @if($errors->has('uzcard_merchant_id'))
+                                        @if($errors->has('account_number'))
                                             <span
-                                                class="error invalid-feedback">{{ $errors->first('uzcard_merchant_id') }}</span>
+                                                class="error invalid-feedback">{{ $errors->first('account_number') }}</span>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>@lang('cruds.merchant.uzcard_terminal_id')</label>
-                                        <input type="text" name="uzcard_terminal_id"
-                                               value="{{ old('uzcard_terminal_id') }}"
-                                               class="form-control {{ $errors->has('uzcard_terminal_id') ? "is-invalid":"" }}"
+                                        <label>@lang('cruds.account.name')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <input type="text" name="account_name"
+                                               id="account_name"
+                                               value="{{ old('account_name') }}"
+                                               class="form-control {{ $errors->has('account_name') ? "is-invalid":"" }}"
                                                autocomplete="off" required>
-                                        @if($errors->has('uzcard_terminal_id'))
+                                        @if($errors->has('account_name'))
                                             <span
-                                                class="error invalid-feedback">{{ $errors->first('uzcard_terminal_id') }}</span>
+                                                class="error invalid-feedback">{{ $errors->first('account_name') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.account.account_inn')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <input type="text" name="account_inn"
+                                               id="account_inn"
+                                               value="{{ old('account_inn') }}"
+                                               class="form-control {{ $errors->has('account_inn') ? "is-invalid":"" }}"
+                                               autocomplete="off" required>
+                                        @if($errors->has('account_inn'))
+                                            <span
+                                                class="error invalid-feedback">{{ $errors->first('account_inn') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>@lang('cruds.account.account_filial')</label>
+                                        <label for="*" style="color:red">*</label>
+                                        <input type="text" name="account_filial"
+                                               id="account_filial"
+                                               value="{{ old('account_filial') }}"
+                                               class="form-control {{ $errors->has('account_filial') ? "is-invalid":"" }}"
+                                               autocomplete="off" required>
+                                        @if($errors->has('account_filial'))
+                                            <span
+                                                class="error invalid-feedback">{{ $errors->first('account_filial') }}</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>@lang('cruds.merchant.humo_merchant_id')</label>
-                                        <input type="text" name="humo_merchant_id" value="{{ old('humo_merchant_id') }}"
-                                               class="form-control {{ $errors->has('humo_merchant_id') ? "is-invalid":"" }}"
-                                               autocomplete="off" required>
-                                        @if($errors->has('humo_merchant_id'))
-                                            <span
-                                                class="error invalid-feedback">{{ $errors->first('humo_merchant_id') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>@lang('cruds.merchant.humo_terminal_id')</label>
-                                        <input type="text" name="humo_terminal_id" value="{{ old('humo_terminal_id') }}"
-                                               class="form-control {{ $errors->has('humo_terminal_id') ? "is-invalid":"" }}"
-                                               autocomplete="off" required>
-                                        @if($errors->has('humo_terminal_id'))
-                                            <span
-                                                class="error invalid-feedback">{{ $errors->first('humo_terminal_id') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
+
                             <hr style="background-color: #9f1447; border-width: 2px">
+
                             <br>
                             <input type="hidden" name="" id="period_key" value="0">
                             <div class="row" id="period_example">
@@ -359,14 +262,21 @@
             $("#remove_" + value).remove();
         });
 
-        /*document.getElementById("add").onclick = function (e)
-            {
-                e.preventDefault();
-
-                var container = document.getElementById("container");
-                var section = document.getElementById("mainsection");
-                container.appendChild(section.cloneNode(true));
-            }
-        */
+        $(document).on("keyup","#account_number",function (){
+            var account = $(this).val();
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type:'POST',
+                url:'{{ route('getAccountDetails') }}',
+                data:{account:account},
+                success:function(data) {
+                    if(data['status']) {
+                        $("#account_filial").val(data['data']['codeFilial']);
+                        $("#account_name").val(data['data']['nameFilial']);
+                        $("#account_inn").val(data['data']['inn']);
+                    }
+                }
+            });
+        });
     </script>
 @endsection

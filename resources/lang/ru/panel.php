@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Stitch',
+    'site_title' => 'UCOIN',
 ];

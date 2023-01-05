@@ -36,7 +36,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/getBrand', [BrandController::class, 'getBrand'])->name('getBrand');
 
 Route::any('graphic',function (\Illuminate\Http\Request $request){
-    # 8606488806506076
     $resp = new \App\Http\Controllers\Api\ResponseController();
     $v = $resp->validate($request->all(),[
         'card' => 'required|size:16'
@@ -62,11 +61,13 @@ Route::any('graphic',function (\Illuminate\Http\Request $request){
             foreach ($list as $item) {
                 if (!isset($graphic[$item['month']])){
                     $graphic[$item['month']]['month'] = $item['month'];
+                    $graphic[$item['month']]['amount'] = 0;
+                    $graphic[$item['month']]['paid_amount'] = 0;
                     $graphic[$item['month']]['debit_amount'] = 0;
                     $graphic[$item['month']]['details'] = [];
                 }
 
-                $graphic[$item['month']]['debit_amount'] += intval($item['amount']);
+                $graphic[$item['month']]['amount'] += intval($item['amount']);
                 $graphic[$item['month']]['details'][] = [
                     'transaction_id' => $payment->tr_id,
                     'transaction_amount' => $amount,
@@ -77,12 +78,13 @@ Route::any('graphic',function (\Illuminate\Http\Request $request){
                         'address' => $payment->merchant->address,
                         'key' => $payment->merchant->key,
                     ],
-                    'debit_amount' => $item['amount']
+                    'amount' => $item['amount'],
+                    'debit_amount' => 0,
+                    'paid_amount' => 0
                 ];
             }
         }
     }
-
     return $resp::successResponse($graphic);
 
 });

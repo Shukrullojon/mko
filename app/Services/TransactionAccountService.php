@@ -30,7 +30,7 @@ class TransactionAccountService
                 ],
                 'amount' => $transaction->amount,
             ]);
-            
+
             if (isset($abs['status']) and $abs['status']) {
                 $debit = CardService::debit([
                     'token' => $transaction->receiver_card,

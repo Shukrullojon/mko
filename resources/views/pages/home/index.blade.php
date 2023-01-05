@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6">
+{{--            <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
                         @if($accountMko)
@@ -47,7 +47,7 @@
                     </div>
                     <a href="" class="small-box-footer"></a>
                 </div>
-            </div>
+            </div>--}}
         </div>
     </div>
 @endsection

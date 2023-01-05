@@ -19,4 +19,13 @@ class CardController extends Controller
             'status' => $card->status,
         ];
     }
+
+    public function card($params){
+        $card = Card::where('token',$params['params']['token'])->first();
+        return [
+            'limit' => (int)$card->client->limit ?? "",
+            'balance' => (int)$card->balance ?? "",
+            'transaction_amount' => (int)$card->paymentSum->amount ?? "",
+        ];
+    }
 }

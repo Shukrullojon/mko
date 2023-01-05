@@ -10,7 +10,7 @@ class ResponseController
     {
         return [
             'status' => true,
-            'result' => $data
+            'result' => array_values($data)
         ];
     }
 

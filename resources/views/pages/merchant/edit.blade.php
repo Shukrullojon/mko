@@ -258,16 +258,17 @@
                             </div>
                             <hr style="background-color: #9f1447; border-width: 2px">
                             <br>
-                            <input type="hidden" name="" id="period_key" value="0">{{ dd($periods) }}
+                            <input type="hidden" name="" id="period_key" value="{{ count($periods) }}">
+                            @php $cou = 0 @endphp
                             @foreach($periods as $period)
-                                <input type="hidden" id="">
                                 <div class="row" id="period_example">
                                     <div class="row" id="remove_0">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>@lang('cruds.merchant.merchant_period')</label>
                                                 <div style="display: flex">
-                                                    <input type="number" name="periods[0][merchant_period]"
+                                                    <input type="hidden" name="periods[{{ $cou++ }}][merchant_period_id]" value="{{ $period->id }}">
+                                                    <input type="number" name="periods[{{ $cou++ }}][merchant_period]"
                                                            value="{{ $period->period }}"
                                                            class="form-control {{ $errors->has('merchant_period') ? "is-invalid":"" }}"
                                                            autocomplete="off" required>
@@ -349,7 +350,7 @@
                 '</div>' +
 
                 '<div class="col-md-4"> <br>' +
-                '<button class="btn btn-success mt-2 add_period" value="' + period_key + '">Add</button>' +
+                '<button class="btn btn-success mt-2 add_period">Add</button>' +
                 '<button class="btn btn-danger mt-2 remove_period"  value="' + period_key + '">Remove</button>' +
                 '</div>' +
                 '</div>';
@@ -362,6 +363,5 @@
             var value = $(this).attr("value");
             $("#remove_" + value).remove();
         });
-        $(document).on()
     </script>
 @endsection

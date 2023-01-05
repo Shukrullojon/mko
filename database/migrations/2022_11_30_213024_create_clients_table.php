@@ -28,6 +28,7 @@ class CreateClientsTable extends Migration
             $table->string('last_name',40);
             $table->string('middle_name',40);
             $table->tinyInteger('status');
+            $table->tinyInteger('is_sent')->default(0);
             $table->foreign('card_id')->references('id')->on('cards');
             $table->timestamps();
         });

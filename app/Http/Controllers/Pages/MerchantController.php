@@ -11,6 +11,7 @@ use App\Models\Pages\MerchantPeriod;
 use App\Models\Pages\MerchantPeriodHistory;
 use App\Models\Pages\MerchantTerminal;
 use App\Models\Pages\Payment;
+use App\Services\AbsService;
 use App\Services\Luhn;
 use BaconQrCode\Encoder\QrCode;
 use Illuminate\Http\Request;
@@ -30,6 +31,11 @@ class MerchantController extends Controller
     {
         try {
             $merchants = new Merchant();
+            $brands = Brand::all();
+            if ($request->filled('status'))
+                $merchants = $merchants->where('status', $request->status);
+            if ($request->filled('brand_id'))
+                $merchants = $merchants->where('brand_id', $request->brand_id);
             if ($request->filled('merchant_name'))
                 $merchants = $merchants->where('name', 'LIKE', '%' . $request->merchant_name . '%');
             if ($request->filled('filial'))
@@ -42,8 +48,11 @@ class MerchantController extends Controller
             if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id != null)
                 $merchants = $merchants->where('brand_id', auth()->user()->brand_id)
                     ->where('id', auth()->user()->merchant_id);
-            $merchants = $merchants->orderBy('id', 'DESC')->paginate(5);
-            return view('pages.merchant.index', compact('merchants'));
+            $merchants = $merchants->orderBy('id', 'DESC')->paginate(20);
+            return view('pages.merchant.index', [
+                'merchants' => $merchants,
+                'brands' => $brands,
+            ]);
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
@@ -70,19 +79,18 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         $this->validate($request, [
-            'brand_name' => 'required',
-            'merchant_name' => 'required',
+            'brand_id' => 'required',
+            //'merchant_name' => 'required',
             'filial' => 'required',
             'merchant_address' => 'required',
             'account_number' => 'required',
             'account_name' => 'required',
             'account_inn' => 'required',
             'account_filial' => 'required',
-            'percentage' => 'required',
+            /*'percentage' => 'required',
             'merchant' => 'required',
-            'terminal' => 'required',
+            'terminal' => 'required',*/
         ]);
         try {
             $merchant = DB::transaction(function () use ($request) {
@@ -110,24 +118,24 @@ class MerchantController extends Controller
                 ]);
 
                 $merchant = Merchant::create([
-                    'brand_id' => $request->brand_name,
-                    'name' => $request->merchant_name,
+                    'brand_id' => $request->brand_id,
                     'key' => Str::uuid(),
+                    'name' => "",
                     'filial' => $request->filial,
                     'address' => $request->merchant_address,
                     'account_id' => $account->id,
-                    'uzcard_merchant_id' => $request->uzcard_merchant_id,
+                    /*'uzcard_merchant_id' => $request->uzcard_merchant_id,
                     'uzcard_terminal_id' => $request->uzcard_terminal_id,
                     'humo_merchant_id' => $request->humo_merchant_id,
                     'humo_terminal_id' => $request->humo_terminal_id,
                     'is_register_humo' => 0,
-                    'is_register_uzcard' => 0,
+                    'is_register_uzcard' => 0,*/
+                    'status' => $request->status,
                 ]);
-
                 $merchantTerminal = MerchantTerminal::create([
                     'merchant_id' => $merchant->id,
-                    'merchant' => $request->merchant,
-                    'terminal' => $request->terminal,
+                    'merchant' => str_replace(" ", "", $request->filial) . $merchant->id,
+                    'terminal' => str_replace(" ", "", $request->filial) . $merchant->id,
                     'balance' => 0,
                     'status' => 1,
                 ]);
@@ -142,16 +150,6 @@ class MerchantController extends Controller
                         ]);
                     }
                 }
-                foreach ($request->periods as $row) {
-                    if ($row['merchant_period'] and $row['merchant_percentage']) {
-                        MerchantPeriodHistory::create([
-                            'merchant_id' => $merchant->id,
-                            'period' => $row['merchant_period'],
-                            'percentage' => $row['merchant_percentage']
-                        ]);
-                    }
-                }
-
                 return $merchant;
             });
             return redirect()->route('merchantShow', $merchant->id);
@@ -259,6 +257,10 @@ class MerchantController extends Controller
             }
             $period1 = MerchantPeriod::where('merchant_id', $id)->get();
             foreach ($request->periods as $per) {
+                MerchantPeriod::FirstOrCreate([
+                    'id' => $request->merchant_period_id,
+                    'period' => $request->period,
+                ]);
                 MerchantPeriod::create([
                     'period' => $per['merchant_period'],
                     'percentage' => $per['merchant_percentage'],
@@ -285,5 +287,22 @@ class MerchantController extends Controller
         }
         $merchant->delete();
         return back();
+    }
+
+    public function getAccountDetails(Request $request)
+    {
+        $abs = AbsService::getAccountDetails([
+            'account' => $request->account
+        ]);
+        if ($abs['status'])
+            return [
+                'status' => true,
+                'data' => $abs['data']['responseBody']
+            ];
+        else
+            return [
+                'status' => false,
+            ];
+
     }
 }

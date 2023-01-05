@@ -36,6 +36,7 @@
 
                             <div class="form-group">
                                 <label>@lang('cruds.brand.brand_name')</label>
+                                <label for="*" style="color:red">*</label>
                                 <input type="text" name="brand_name" value="{{ old('brand_name') }}"
                                        class="form-control {{ $errors->has('brand_name') ? "is-invalid":"" }}"
                                        autocomplete="off" required>
@@ -46,6 +47,7 @@
 
                             <div class="form-group">
                                 <label>@lang('cruds.brand.logo')</label>
+                                <label for="*" style="color:red">*</label>
                                 <input type="file" name="logo" value="{{ old('logo') }}"
                                        class="form-control {{ $errors->has('logo') ? "is-invalid":"" }}"
                                        autocomplete="off" accept="image/*" required>
@@ -56,9 +58,10 @@
 
                             <div class="form-group">
                                 <label>@lang('cruds.brand.status')</label>
+                                <label for="*" style="color:red">*</label>
                                 <select name="status" id="" class="form-control">
-                                    <option value="1">Active</option>
-                                    <option value="0">InActive</option>
+                                    <option value="1">@lang('cruds.status.1')</option>
+                                    <option value="0">@lang('cruds.status.0')</option>
                                 </select>
                                 @if($errors->has('status'))
                                     <span class="error invalid-feedback">{{ $errors->first('status') }}</span>
@@ -66,9 +69,10 @@
                             </div>
                             <div class="form-group">
                                 <label>@lang('cruds.brand.is_unired')</label>
+                                <label for="*" style="color:red">*</label>
                                 <select name="is_unired" id="" class="form-control" required>
-                                    <option value="1">True</option>
-                                    <option value="0">False</option>
+                                    <option value="1">@lang('cruds.status.1')</option>
+                                    <option value="0">@lang('cruds.status.0')</option>
                                 </select>
                                 @if($errors->has('is_unired'))
                                     <span class="error invalid-feedback">{{ $errors->first('is_unired') }}</span>
