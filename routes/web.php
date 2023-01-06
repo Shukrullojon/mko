@@ -78,6 +78,10 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/index', 'ClientController@index')->name('clientIndex');
         Route::get('/show/{id}', 'ClientController@show')->name('clientShow');
     });
+    // Mko
+    Route::group(['prefix'=>'mko', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
+        Route::get('/index', 'MkoController@index')->name('mko');
+    });
 
     // Users
     Route::get('/users',[UserController::class,'index'])->name('userIndex');

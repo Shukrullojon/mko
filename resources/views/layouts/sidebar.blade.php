@@ -9,6 +9,13 @@
                 <p>Главная</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('mko') }}" class="nav-link {{ Request::is('mko*') ? "active":'' }}">
+{{--                <i class="fas fa-cog"></i>--}}
+                <i class="fas fa-id-card"></i>
+                <p>МКО</p>
+            </a>
+        </li>
 
         <li class="nav-item">
             <a href="{{ route('paymentIndex') }}" class="nav-link {{ Request::is('payment*') ? "active":'' }}">
