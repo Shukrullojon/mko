@@ -17,7 +17,7 @@ class CreateCardsTable extends Migration
             $table->id();
             $table->string('number',16);
             $table->string('expire',4);
-            $table->tinyInteger('type')->comment("0 -> client, 1 -> merchant, 2 -> pay later");
+            $table->tinyInteger('type')->comment("0 -> client, 1 -> merchant, 3 -> pay later");
             $table->string('owner',100);
             $table->bigInteger('balance')->default(0);
             $table->bigInteger('hold_amount')->default(0);
