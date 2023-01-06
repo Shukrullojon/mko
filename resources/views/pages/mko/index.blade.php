@@ -21,17 +21,45 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="col-lg-12 col-12">
+                            <div class="row">
+                                <div class="col-md-4">
 
-                                <div class="small-box bg-success ">
-                                    <div class="inner">
-                                        <h3 class="text-center">53<sup style="font-size: 20px">%</sup></h3>
-                                        <p>Pay Later</p>
+                                    <div class="small-box bg-info ">
+                                        <div class="inner">
+                                            <h3 class="text-center">Pay Later<sup style="font-size: 20px"></sup></h3>
+                                            <p>{{ $mko->balance??'' }}</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                        <p href="#" class="small-box-footer " style="text-align: right"></p>
                                     </div>
-                                    <div class="icon">
-                                        <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="small-box bg-success ">
+                                        <div class="inner">
+                                            <h3 class="text-center">53<sup style="font-size: 20px">%</sup></h3>
+                                            <p>Pay Later</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                        <p href="#" class="small-box-footer " style="text-align: right">More info </p>
                                     </div>
-                                    <p href="#" class="small-box-footer " style="text-align: right">More info </p>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="small-box bg-danger ">
+                                        <div class="inner">
+                                            <h3 class="text-center">53<sup style="font-size: 20px">%</sup></h3>
+                                            <p>Pay Later</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                        <p href="#" class="small-box-footer " style="text-align: right">More info </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
