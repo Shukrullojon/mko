@@ -20,9 +20,9 @@ class CreateHistoriesTable extends Migration
             $table->string("dtAccName",150)->nullable();
             $table->string("dtMfo",10)->nullable();
             $table->string("purpose",255)->nullable();
-            $table->bigInteger("debit",250)->nullable();
-            $table->bigInteger("credit",250)->nullable();
-            $table->bigInteger("numberTrans",250)->nullable();
+            $table->string("debit",250)->nullable();
+            $table->string("credit",250)->nullable();
+            $table->string("numberTrans",250)->nullable();
             $table->tinyInteger("type")->nullable();
             $table->string("ctAcc",30)->nullable();
             $table->string("ctAccName",255)->nullable();

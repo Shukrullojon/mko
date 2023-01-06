@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\AbsService;
 use App\Services\TransactionAccountService;
 use Illuminate\Console\Command;
 
@@ -38,7 +39,9 @@ class GetAccountHistoryCommand extends Command
      */
     public function handle()
     {
-
-
+        $service = AbsService::getAccountHistory([
+            "abc" => "",
+        ]);
+        dd($service);
     }
 }
