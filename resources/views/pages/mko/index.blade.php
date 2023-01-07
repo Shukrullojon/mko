@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>MKO</h1>
+                    <h1>Mko</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
-                        <li class="breadcrumb-item active">MKO</li>
+                        <li class="breadcrumb-item active">Mko</li>
                     </ol>
                 </div>
             </div>
@@ -23,11 +23,10 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-4">
-
                                     <div class="small-box bg-info ">
                                         <div class="inner">
-                                            <h3 class="text-center">Pay Later<sup style="font-size: 20px"></sup></h3>
-                                            <p>{{ $mko->balance??'' }}</p>
+                                            <h3 class="text-center">Pay Later</h3>
+                                            <p>{{ number_format($mko->balance/100) }} UZS</p>
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
@@ -35,30 +34,30 @@
                                         <p href="#" class="small-box-footer " style="text-align: right"></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
 
+                                <div class="col-md-4">
                                     <div class="small-box bg-success ">
                                         <div class="inner">
-                                            <h3 class="text-center">53<sup style="font-size: 20px">%</sup></h3>
-                                            <p>Pay Later</p>
+                                            <h3 class="text-center">DEBIT</h3>
+                                            <p>{{ number_format($info->debit/100) }} UZS</p>
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
                                         </div>
-                                        <p href="#" class="small-box-footer " style="text-align: right">More info </p>
+                                        <p href="#" class="small-box-footer " style="text-align: right"> </p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
 
                                     <div class="small-box bg-danger ">
                                         <div class="inner">
-                                            <h3 class="text-center">53<sup style="font-size: 20px">%</sup></h3>
-                                            <p>Pay Later</p>
+                                            <h3 class="text-center">CREDIT</h3>
+                                            <p>{{ number_format($info->credit/100) }} UZS</p>
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
                                         </div>
-                                        <p href="#" class="small-box-footer " style="text-align: right">More info </p>
+                                        <p href="#" class="small-box-footer " style="text-align: right"></p>
                                     </div>
                                 </div>
                             </div>
@@ -68,15 +67,58 @@
                             <table class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="dataTable_info">
                                 <thead>
                                 <tr>
-                                    <th>header</th>
+                                    <th>Дата</th>
+                                    <th>Cчёт(debit)</th>
+                                    <th>Cчёт(credit)</th>
+                                    <th>Cумма(debit)</th>
+                                    <th>Cумма(credit)</th>
+                                    <th>@lang('global.action')</th>
+                                </tr>
+                                <tr class="text-center">
+                                    <form action="">
+                                        <th>
+                                            <input type="date" class="form-control" name="date" value="{{ request()->date }}">
+                                        </th>
+                                        <th>
+                                            <input value="{{ request()->dtAcc }}" type="text" placeholder="account" class="clear-class form-control" name="dtAcc">
+                                        </th>
+                                        <th>
+                                            <input value="{{ request()->ctAcc }}" type="text" placeholder="account" class="clear-class form-control" name="ctAcc">
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>
+
+                                            <button name="accountSearch" id="searchSubmit" class="btn btn-default" type="submit">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                            <a href="{{ route("mko") }}" class="btn btn-danger">
+                                                <span class="fa fa-reply"></span>
+                                            </a>
+                                        </th>
+
+                                    </form>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>body</td>
-                                </tr>
+                                @foreach($histories as $history)
+                                    <tr>
+                                        <td>{{ $history->date }}</td>
+                                        <td>{{ $history->dtAcc }}</td>
+                                        <td>{{ $history->ctAcc }}</td>
+                                        <td>{{ number_format($history->debit/100) }}</td>
+                                        <td>{{ number_format($history->credit/100) }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ route('mkoShow',$history->id) }}" class="btn btn-info btn-sm">
+                                                <span class="fa fa-eye"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
+
+                            {{ $histories->links() }}
                         </div>
                     </div>
                 </div>

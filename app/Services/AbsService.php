@@ -50,16 +50,16 @@ class AbsService
         ]);
     }
 
-    public static function getAccountHistory($data){
+    public static function getAccountHistory($account, $dateBegin){
         return AbsGateway::fire('POST', 'api/v1/bank', [
             "jsonrpc" => "2.0",
             "id" => rand(10000, 99999) . time(),
             "method" => "iabs.account.get.account.history",
             "params" => [
-                "account" => '22640000900001186005',
+                "account" => $account,
                 "code_filial" => "01186",
-                "dateBegin" => "01.01.2022",
-                "dateClose" => "06.01.2023",
+                "dateBegin" => $dateBegin,
+                "dateClose" => date('d.m.Y'),
             ]
         ]);
     }

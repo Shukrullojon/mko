@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth'],function (){
     // Mko
     Route::group(['prefix'=>'mko', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
         Route::get('/index', 'MkoController@index')->name('mko');
+        Route::get('/show/{id}', 'MkoController@show')->name('mkoShow');
     });
 
     // Users
