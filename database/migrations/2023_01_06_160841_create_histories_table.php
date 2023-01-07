@@ -27,6 +27,7 @@ class CreateHistoriesTable extends Migration
             $table->string("ctAcc",30)->nullable();
             $table->string("ctAccName",255)->nullable();
             $table->string("ctMfo",10)->nullable();
+            $table->tinyInteger("status",10)->nullable();
             $table->timestamps();
         });
     }

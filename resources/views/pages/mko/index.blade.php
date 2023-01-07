@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Mko</h1>
+                    <h1>PAY LATER</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
-                        <li class="breadcrumb-item active">Mko</li>
+                        <li class="breadcrumb-item active">PAY LATER</li>
                     </ol>
                 </div>
             </div>
@@ -36,20 +36,8 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="small-box bg-success ">
-                                        <div class="inner">
-                                            <h3 class="text-center">DEBIT</h3>
-                                            <p>{{ number_format($info->debit/100) }} UZS</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="ion ion-stats-bars"></i>
-                                        </div>
-                                        <p href="#" class="small-box-footer " style="text-align: right"> </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
 
-                                    <div class="small-box bg-danger ">
+                                    <div class="small-box bg-success">
                                         <div class="inner">
                                             <h3 class="text-center">CREDIT</h3>
                                             <p>{{ number_format($info->credit/100) }} UZS</p>
@@ -58,6 +46,19 @@
                                             <i class="ion ion-stats-bars"></i>
                                         </div>
                                         <p href="#" class="small-box-footer " style="text-align: right"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="small-box bg-danger">
+                                        <div class="inner">
+                                            <h3 class="text-center">DEBIT</h3>
+                                            <p>{{ number_format($info->debit/100) }} UZS</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                        <p href="#" class="small-box-footer " style="text-align: right"> </p>
                                     </div>
                                 </div>
                             </div>

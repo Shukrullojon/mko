@@ -6,8 +6,10 @@ use App\Models\Pages\Account;
 use App\Models\Pages\Card;
 use App\Models\Pages\History;
 use App\Services\AbsService;
+use App\Services\CardService;
 use App\Services\TransactionAccountService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class GetAccountHistoryCommand extends Command
 {
@@ -42,14 +44,50 @@ class GetAccountHistoryCommand extends Command
      */
     public function handle()
     {
-        $card = Card::where('type', 3)->first();
-        $account = Account::where('card_id', $card->id)->first();
+        $account = Account::where('type', 2)->first();
         $history = History::latest()->first();
-        $service = AbsService::getAccountHistory($account->number, '06.12.2022');
-//        dd($service['result']['responseBody']['response']);
-        if (isset($service['result']['responseBody']['response']) and $service['result']['responseBody']['response']){
-            History::saver($service['result']['responseBody']['response']);
+        $service = AbsService::getAccountHistory([
+            'account' => $account->number,
+            'date' => $history->date ?? "01.12.2022",
+            'filial' => $account->filial,
+        ]);
+
+        if (isset($service['result']['responseBody']['response']) and $service['result']['responseBody']['response']) {
+            foreach ($service['result']['responseBody']['response'] as $d){
+                History::firstOrCreate(
+                    [
+                        'numberTrans' => $d['numberTrans']
+                    ],
+                    [
+                        'date' => $d['date'],
+                        'dtAcc' => $d['dtAcc'],
+                        'dtAccName' => $d['dtAccName'],
+                        'dtMfo' => $d['dtMfo'],
+                        'purpose' => $d['purpose'],
+                        'debit' => $d['debit'] * 100,
+                        'credit' => $d['credit'] * 100,
+                        'numberTrans' => $d['numberTrans'],
+                        'type' => $d['type'],
+                        'ctAcc' => $d['ctAcc'],
+                        'ctAccName' => $d['ctAccName'],
+                        'ctMfo' => $d['ctMfo'],
+                        'status' => 0,
+                    ]);
+            }
         }
-        return 12;
+
+        $creditAmount = History::select(DB::raw("sum(credit) as credit"))->where('status',0)->where('credit','!=',0)->first();
+        if(!empty($creditAmount)){
+            $cardService = CardService::credit([
+                'token' => $account->card->token,
+                'amount' => $creditAmount->credit,
+            ]);
+            if($cardService){
+                History::where('status',0)->where('credit','!=',0)->update([
+                    'status' => 1,
+                ]);
+            }
+        }
+        return 0;
     }
 }

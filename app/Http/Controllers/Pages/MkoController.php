@@ -23,7 +23,7 @@ class MkoController extends Controller
             if ($request->ctAcc)
                 $histories = $histories->where('ctAcc', 'LIKE', "%$request->ctAcc%");
             if ($request->date)
-                $histories = $histories->where('date', 'LIKE', "%$request->date%");
+                $histories = $histories->where('date', date("d.m.Y",strtotime($request->date)));
 
             $histories = $histories->orderBy('id', 'DESC')->paginate(20);
             return view('pages.mko.index', [

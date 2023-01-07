@@ -53,11 +53,11 @@
                                     </tr>
                                     <tr>
                                         <th>credit</th>
-                                        <td>{{ $history->credit }}</td>
+                                        <td>{{ number_format($history->credit/100) }} UZS</td>
                                     </tr>
                                     <tr>
                                         <th>debit</th>
-                                        <td>{{ $history->debit }}</td>
+                                        <td>{{ number_format($history->debit/100) }} UZS</td>
                                     </tr>
                                     <tr>
                                         <th>type</th>

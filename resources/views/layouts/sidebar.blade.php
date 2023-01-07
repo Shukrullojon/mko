@@ -5,22 +5,19 @@
         <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link {{ Request::is('home*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
                 <p>Главная</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('mko') }}" class="nav-link {{ Request::is('mko*') ? "active":'' }}">
-{{--                <i class="fas fa-cog"></i>--}}
-                <i class="fas fa-id-card"></i>
-                <p>МКО</p>
+                <i class="fas fa-cog"></i>
+                <p>PAY LATER</p>
             </a>
         </li>
 
         <li class="nav-item">
             <a href="{{ route('paymentIndex') }}" class="nav-link {{ Request::is('payment*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
                 <p>@lang('cruds.payment.payment')</p>
             </a>
         </li>
@@ -28,7 +25,6 @@
         <li class="nav-item">
             <a href="{{ route('clientIndex') }}" class="nav-link {{ Request::is('client*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
                 <p>@lang('cruds.client.clients')</p>
             </a>
         </li>
@@ -36,7 +32,6 @@
         <li class="nav-item">
             <a href="{{ route('brandIndex') }}" class="nav-link {{ Request::is('brand*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
                 <p>@lang('cruds.brand.brands')</p>
             </a>
         </li>
@@ -44,7 +39,6 @@
         <li class="nav-item">
             <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
                 <i class="fas fa-cog"></i>
-                <sub><i class="fas fa-child"></i></sub>
                 <p>@lang('cruds.merchant.merchants')</p>
             </a>
         </li>
