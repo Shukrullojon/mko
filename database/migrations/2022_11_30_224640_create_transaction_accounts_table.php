@@ -15,6 +15,7 @@ class CreateTransactionAccountsTable extends Migration
     {
         Schema::create('transaction_accounts', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('transaction_id')->nullable();
             $table->unsignedBigInteger('sender_id')->index();
             $table->unsignedBigInteger('receiver_id')->index();
             $table->bigInteger('amount');

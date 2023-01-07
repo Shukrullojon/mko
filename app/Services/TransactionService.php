@@ -17,7 +17,7 @@ class TransactionService
     {
         $payments = Payment::where('is_transaction', 0)->get();
         $accountItUnisoft = Account::where('type', 3)->first();
-        $accountMko = Account::where('type',4)->first();
+        $accountMko = Account::where('type', 4)->first();
 
         foreach ($payments as $payment) {
             DB::transaction(function () use ($payment, $accountItUnisoft, $accountMko) {
@@ -28,7 +28,7 @@ class TransactionService
                     'type' => 0,
                     'account_id' => $payment->merchant->account->id,
                     'payment_id' => $payment->id,
-                    'amount' => ($payment->amount * $merchantPercentage)/100,
+                    'amount' => ($payment->amount * $merchantPercentage) / 100,
                     'percentage' => $merchantPercentage,
                     'status' => 0,
                     'is_sent' => 0,
@@ -66,50 +66,28 @@ class TransactionService
             });
         }
 
-        /*$transactions = Transaction::where('status', 0)->get();
+        $transactions = Transaction::where('status', 0)->get();
         foreach ($transactions as $transaction) {
-            if($transaction->type == 0){
-                $debitMerchant = MerchantService::debit([
-                    'merchant_id' => $transaction->payment->merchant_id,
+            $debitMerchant = MerchantService::debit([
+                'merchant_id' => $transaction->payment->merchant_id,
+                'amount' => $transaction->amount,
+            ]);
+            if ($debitMerchant) {
+                $credit = CardService::credit([
+                    'token' => $transaction->receiver_card,
                     'amount' => $transaction->amount,
                 ]);
-                if($debitMerchant){
-                    $credit = CardService::credit([
-                        'token' => $transaction->receiver_card,
-                        'amount' => $transaction->amount,
+                if ($credit) {
+                    $transaction->update([
+                        'status' => 1,
                     ]);
-                    if($credit){
-                        $transaction->update([
-                            'status' => 1,
-                        ]);
-                    }else{
-                        $transaction->update([
-                            'status' => -10,
-                        ]);
-                    }
-                }
-            }else if($transaction->type == 1){
-                $debitCard = CardService::debit([
-                    'token' => $transaction->sender_card,
-                    'amount' => $transaction->amount,
-                ]);
-                if($debitCard){
-                    $credit = CardService::credit([
-                        'token' => $transaction->receiver_card,
-                        'amount' => $transaction->amount,
+                } else {
+                    $transaction->update([
+                        'status' => -10,
                     ]);
-                    if($credit){
-                        $transaction->update([
-                            'status' => 1,
-                        ]);
-                    }else{
-                        $transaction->update([
-                            'status' => -10,
-                        ]);
-                    }
                 }
             }
-        }*/
+        }
 
     }
 
