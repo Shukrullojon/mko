@@ -5,20 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Blade\UserController;
 use App\Http\Controllers\Blade\RoleController;
 use App\Http\Controllers\Blade\PermissionController;
-use App\Http\Controllers\Blade\HomeController;
 use App\Http\Controllers\Blade\ApiUserController;
 
-/*
-|--------------------------------------------------------------------------
-| Blade (front-end) Routes
-|--------------------------------------------------------------------------
-|
-| Here is we write all routes which are related to web pages
-| like UserManagement interfaces, Diagrams and others
-|
-*/
-
-// Default laravel auth routes
 Auth::routes();
 
 Route::get('/download/{key}', function ($key){
@@ -30,9 +18,9 @@ Route::get('/download/{key}', function ($key){
 // Web pages
 Route::group(['middleware' => 'auth'],function (){
     Route::get('/', [App\Http\Controllers\Blade\HomeController::class, 'index']);
-    // there should be graphics, diagrams about total conditions
-    Route::get('/home', [HomeController::class,'index'])->name('home');
-    Route::get('/transaction', [HomeController::class,'transaction'])->name('transaction');
+    Route::get('/home', [App\Http\Controllers\Blade\HomeController::class,'index'])->name('home');
+    Route::get('/show/{id}',[App\Http\Controllers\Blade\HomeController::class,'show'])->name('homeShow');
+    //homeShow
 
     //accounts
     Route::group(['prefix'=>'account', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
@@ -131,9 +119,3 @@ Route::get('/language/{lang}',function ($lang){
     }
     return redirect()->back();
 });
-
-/*
-|--------------------------------------------------------------------------
-| This is the end of Blade (front-end) Routes
-|-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\
-*/
