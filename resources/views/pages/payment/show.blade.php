@@ -57,12 +57,7 @@
 
                                     <tr>
                                         <th>Amount</th>
-                                        <td>{{ number_format($payment->amount/100) }} so'm</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Percentage Amount</th>
-                                        <td>{{ number_format($payment->percentage_amount/100) }} so'm</td>
+                                        <td>{{ number_format($payment->amount/100) }} UZS</td>
                                     </tr>
 
                                     <tr>

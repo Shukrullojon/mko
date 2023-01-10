@@ -63,6 +63,11 @@
                             </tr>
 
                             <tr>
+                                <th>Balance</th>
+                                <td>{{ number_format($client->card->balance/100) ?? "" }} UZS</td>
+                            </tr>
+
+                            <tr>
                                 <th>Date Expiry</th>
                                 <td>{{ $client->card->expiry ?? "" }}</td>
                             </tr>

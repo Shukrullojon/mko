@@ -61,7 +61,7 @@
                                     <td>{{ $payment->period }}</td>
                                     <td>{{ $payment->percentage }}</td>
                                     <td>{{ $payment->date }}</td>
-                                    <td>{{ number_format($payment->amount/100) }}</td>
+                                    <td>{{ number_format($payment->amount/100) }} UZS</td>
                                     <td>{{ $payment->status }}</td>
                                     <td>
                                         <a href="{{ route('paymentShow',$payment->id) }}"
