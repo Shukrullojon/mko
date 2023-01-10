@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class TransactionController extends Controller
 {
     public function send($params){
-        $transaction = Transaction::where('id',$params['params']['transaction_id'])->where('type',0)->first();
+        $transaction = Transaction::where('id',$params['params']['transaction_id'])->where('type',0)->where('is_sent',0)->where('status',0)->first();
         if(empty($transaction)){
             return [
                 "error" => [
