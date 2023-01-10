@@ -59,7 +59,7 @@ class TransactionController extends Controller
         ]);*/
 
         $transaction->update([
-            'is_sent' => 1,
+            'is_sent' => 5,
         ]);
         return [];
 
