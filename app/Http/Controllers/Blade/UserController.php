@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Blade;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pages\Brand;
 use App\Models\User;
 use App\Services\LogWriter;
 use Illuminate\Http\Request;
@@ -27,14 +26,12 @@ class UserController extends Controller
         abort_if_forbidden('user.add');
         if (auth()->user()->hasRole('Super Admin')){
             $roles = Role::all();
-            $brands = Brand::all();
         }
         else
             $roles = Role::where('name','!=','Super Admin')->get();
 
         return view('pages.user.add',[
             'roles' => $roles,
-            'brands' => $brands,
         ]);
     }
 
@@ -50,8 +47,6 @@ class UserController extends Controller
 //       dd($request->all());
         $user = User::create([
             'name' => $request->get('name'),
-            'brand_id' => $request->get('brand_id'),
-            'merchant_id' => $request->get('merchant_id'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
