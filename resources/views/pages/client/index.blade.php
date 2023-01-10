@@ -50,7 +50,7 @@
                                     </td>
 
                                     <td>
-                                        {{ number_format($client->limit) }}
+                                        {{ number_format($client->limit/100) }} UZS
                                     </td>
 
                                     <td>{{ $client->card->number }}</td>
