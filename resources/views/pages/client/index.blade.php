@@ -57,7 +57,7 @@
                                     <td>{{ $client->date_expiry }}</td>
 
                                     <td>
-                                        {{ $client->status }}
+                                        @lang('cruds.status.'.$client->status)
                                     </td>
 
                                     <td>
