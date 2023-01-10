@@ -25,7 +25,7 @@
                                 <div class="col-md-3">
                                     <div class="small-box bg-info ">
                                         <div class="inner">
-                                            <h3 class="text-center">PAY LATER</h3>
+                                            <h3 class="text-center">UCOIN</h3>
                                             <p>{{ number_format($mko->balance/100) }} UZS</p>
                                         </div>
                                         <div class="icon">

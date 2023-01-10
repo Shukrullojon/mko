@@ -63,6 +63,10 @@ class ValidationHelper
             return [
                 "params.token" => "required|exists:cards,token"
             ];
+        }else if($params['method'] == "transaction.send"){
+            return [
+                "params.transaction_id" => "required|exists:transactions,id"
+            ];
         }else{
             return [
                 "method" => [
@@ -78,7 +82,8 @@ class ValidationHelper
                     partner.merchant,
                     payment.cancel,
                     merchant.balance,
-                    card.card",
+                    card.card,
+                    transaction.send,",
                 ],
             ];
         }
