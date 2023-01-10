@@ -89,7 +89,9 @@
 
                             <tr>
                                 <th>Status</th>
-                                <th>{{ $client->status }}</th>
+                                <th>
+                                    @lang('cruds.status.'.$client->status)
+                                </th>
                             </tr>
 
                             </thead>

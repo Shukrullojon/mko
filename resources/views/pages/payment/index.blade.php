@@ -33,6 +33,7 @@
                                aria-describedby="dataTable_info">
                             <thead>
                             <tr>
+                                <th>Name</th>
                                 <th>Client</th>
                                 <th>Merchant</th>
                                 <th>Period</th>
@@ -47,6 +48,7 @@
                             <tbody>
                             @foreach($payments as $payment)
                                 <tr>
+                                    <td>{{ $payment->name }}</td>
                                     <td>
                                         <a target="_blank" href="{{ route("clientShow",$payment->client->id) }}">{{ $payment->client->first_name }}</a>
                                         <br>
