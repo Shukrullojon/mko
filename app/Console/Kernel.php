@@ -26,8 +26,8 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule){
-        $schedule->command('transaction')->everyFiveMinutes();
-        $schedule->command("transaction:account")->everyFiveMinutes();
+        /*$schedule->command('transaction')->everyFiveMinutes();
+        $schedule->command("transaction:account")->everyFiveMinutes();*/
     }
 
     /**
