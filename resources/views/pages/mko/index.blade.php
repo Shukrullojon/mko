@@ -22,7 +22,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="small-box bg-info ">
                                         <div class="inner">
                                             <h3 class="text-center">Pay Later</h3>
@@ -35,8 +35,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-
+                                <div class="col-md-3">
                                     <div class="small-box bg-success">
                                         <div class="inner">
                                             <h3 class="text-center">CREDIT</h3>
@@ -49,11 +48,24 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="small-box bg-danger">
                                         <div class="inner">
                                             <h3 class="text-center">DEBIT</h3>
                                             <p>{{ number_format($info->debit/100) }} UZS</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                        <p href="#" class="small-box-footer " style="text-align: right"> </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="small-box bg-gradient-indigo">
+                                        <div class="inner">
+                                            <h3 class="text-center">LIMIT</h3>
+                                            <p>{{ number_format($limit->limit/100) }} UZS</p>
                                         </div>
                                         <div class="icon">
                                             <i class="ion ion-stats-bars"></i>
