@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:payment.index'])->only('index');
+        $this->middleware(['auth','permission:payment.show'])->only('show');
+    }
+
     public function index(Request $request)
     {
         $payments = Payment::latest()->paginate(20);

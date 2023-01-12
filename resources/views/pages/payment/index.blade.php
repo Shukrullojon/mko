@@ -50,13 +50,15 @@
                                 <tr>
                                     <td>{{ $payment->name }}</td>
                                     <td>
-                                        <a target="_blank" href="{{ route("clientShow",$payment->client->id) }}">{{ $payment->client->first_name }}</a>
+                                        <a target="_blank"
+                                           href="{{ route("clientShow",$payment->client->id) }}">{{ $payment->client->first_name }}</a>
                                         <br>
                                         <span style='font-size: 12px'>{{ $payment->client->card->number }}</span>
                                     </td>
 
                                     <td>
-                                        <a target="_blank" href="{{ route("merchantShow",$payment->merchant_id) }}">{{ $payment->merchant->name }}</a>
+                                        <a target="_blank"
+                                           href="{{ route("merchantShow",$payment->merchant_id) }}">{{ $payment->merchant->name }}</a>
                                     </td>
                                     <td>{{ $payment->period }}</td>
                                     <td>{{ $payment->percentage }}</td>
@@ -64,10 +66,12 @@
                                     <td>{{ number_format($payment->amount/100) }} UZS</td>
                                     <td>{{ $payment->status }}</td>
                                     <td>
-                                        <a href="{{ route('paymentShow',$payment->id) }}"
-                                           class="btn btn-info btn-sm">
-                                            <span class="fa fa-eye"></span>
-                                        </a>
+                                        @can('payment.show')
+                                            <a href="{{ route('paymentShow',$payment->id) }}"
+                                               class="btn btn-info btn-sm">
+                                                <span class="fa fa-eye"></span>
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

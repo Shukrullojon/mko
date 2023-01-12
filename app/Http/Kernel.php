@@ -68,5 +68,9 @@ class Kernel extends HttpKernel
         'api-auth' => \App\Http\Middleware\ApiToken::class,
         'ajax.check' => \App\Http\Middleware\ApiAjax::class,
         'apicheck' => \App\Http\Middleware\ApiCheck::class,
+
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 }

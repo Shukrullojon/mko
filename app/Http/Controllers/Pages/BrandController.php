@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Log;
 
 class BrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:brand.index'])->only('index');
+        $this->middleware(['auth','permission:brand.add'])->only('add','store');
+        $this->middleware(['auth','permission:brand.show'])->only('show');
+        $this->middleware(['auth','permission:brand.edit'])->only('edit','update');
+    }
+
     public function index(Request $request)
     {
         try {
@@ -27,10 +30,7 @@ class BrandController extends Controller
                 $brands = $brands->where('name', 'LIKE', '%' . $request->brand_name . '%');
             if ($request->filled('status'))
                 $brands = $brands->where('status', 'LIKE', '%' . $request->status . '%');
-            if (!(auth()->user()->hasRole('Super Admin')))
-                $brands = $brands->where('id', auth()->user()->brand_id);
-            $brands = $brands->orderBy('id', 'DESC')->paginate(10);
-
+            $brands = $brands->orderBy('id', 'DESC')->paginate(20);
             return view('pages.brand.index', compact('brands'));
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
@@ -135,17 +135,6 @@ class BrandController extends Controller
         $brand->is_unired = $request->is_unired;
         $brand->update();
         return redirect()->route('brandShow', $brand->id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return string
-     */
-    public function destroy(int $id)
-    {
-
     }
 
     public function getBrand(Request $request)

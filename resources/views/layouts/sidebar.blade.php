@@ -1,41 +1,52 @@
 {{--Left sidebar--}}
 <nav class="mt-2">
 
-    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link {{ Request::is('home*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <p>Главная</p>
-            </a>
-        </li>
+    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
+        data-accordion="false">
+        @can('home')
+            <li class="nav-item">
+                <a href="{{ route('home') }}" class="nav-link {{ Request::is('home*') ? "active":'' }}">
+                    <i class="fas fa-cog"></i>
+                    <p>Главная</p>
+                </a>
+            </li>
+        @endcan
 
-        <li class="nav-item">
-            <a href="{{ route('paymentIndex') }}" class="nav-link {{ Request::is('payment*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <p>@lang('cruds.payment.payment')</p>
-            </a>
-        </li>
+        @can('payment.index')
+            <li class="nav-item">
+                <a href="{{ route('paymentIndex') }}" class="nav-link {{ Request::is('payment*') ? "active":'' }}">
+                    <i class="fas fa-cog"></i>
+                    <p>@lang('cruds.payment.payment')</p>
+                </a>
+            </li>
+        @endcan
 
-        <li class="nav-item">
-            <a href="{{ route('clientIndex') }}" class="nav-link {{ Request::is('client*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <p>@lang('cruds.client.clients')</p>
-            </a>
-        </li>
+        @can('client.index')
+            <li class="nav-item">
+                <a href="{{ route('clientIndex') }}" class="nav-link {{ Request::is('client*') ? "active":'' }}">
+                    <i class="fas fa-cog"></i>
+                    <p>@lang('cruds.client.clients')</p>
+                </a>
+            </li>
+        @endcan
 
-        <li class="nav-item">
-            <a href="{{ route('brandIndex') }}" class="nav-link {{ Request::is('brand*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <p>@lang('cruds.brand.brands')</p>
-            </a>
-        </li>
+        @can('brand.index')
+            <li class="nav-item">
+                <a href="{{ route('brandIndex') }}" class="nav-link {{ Request::is('brand*') ? "active":'' }}">
+                    <i class="fas fa-cog"></i>
+                    <p>@lang('cruds.brand.brands')</p>
+                </a>
+            </li>
+        @endcan
 
-        <li class="nav-item">
-            <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
-                <i class="fas fa-cog"></i>
-                <p>@lang('cruds.merchant.merchants')</p>
-            </a>
-        </li>
+        @can('merchant.index')
+            <li class="nav-item">
+                <a href="{{ route('merchantIndex') }}" class="nav-link {{ Request::is('merchant*') ? "active":'' }}">
+                    <i class="fas fa-cog"></i>
+                    <p>@lang('cruds.merchant.merchants')</p>
+                </a>
+            </li>
+        @endcan
 
 
         @canany([

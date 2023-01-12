@@ -57,9 +57,6 @@
                                                name="brand_name">
                                     </th>
                                     <th>
-{{--                                        <input value="{{ request()->status }}" type="text"--}}
-{{--                                               placeholder="@lang('cruds.brand.status')"--}}
-{{--                                               class="clear-class form-control" name="status">--}}
                                     </th>
                                     <th>
                                     </th>
@@ -88,10 +85,13 @@
                                         <form action="" method="post">
                                             @csrf
                                             <div class="btn-group ">
-                                                <a href="{{ route('brandShow',$brand->id) }}"
-                                                   class="btn btn-info btn-sm">
-                                                    <span class="fa fa-eye"></span>
-                                                </a>
+                                                @can('brand.show')
+                                                    <a href="{{ route('brandShow',$brand->id) }}"
+                                                       class="btn btn-info btn-sm">
+                                                        <span class="fa fa-eye"></span>
+                                                    </a>
+                                                @endcan
+
                                                 @can('brand.edit')
                                                     <a href="{{ route('brandEdit',$brand->id) }}"
                                                        class="btn btn-primary btn-sm"

@@ -61,10 +61,12 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('clientShow',$client->id) }}"
-                                           class="btn btn-info btn-sm">
-                                            <span class="fa fa-eye"></span>
-                                        </a>
+                                        @can('client.show')
+                                            <a href="{{ route('clientShow',$client->id) }}"
+                                               class="btn btn-info btn-sm">
+                                                <span class="fa fa-eye"></span>
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

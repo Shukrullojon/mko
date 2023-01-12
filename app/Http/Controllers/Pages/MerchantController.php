@@ -13,7 +13,7 @@ use App\Models\Pages\MerchantTerminal;
 use App\Models\Pages\Payment;
 use App\Services\AbsService;
 use App\Services\Luhn;
-use BaconQrCode\Encoder\QrCode;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -22,11 +22,13 @@ use Illuminate\Support\Str;
 
 class MerchantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:merchant.index'])->only('index');
+        $this->middleware(['auth','permission:merchant.show'])->only('show');
+        $this->middleware(['auth','permission:merchant.add'])->only('add','store');
+    }
+
     public function index(Request $request)
     {
         try {
@@ -43,12 +45,8 @@ class MerchantController extends Controller
             if ($request->filled('merchant_address'))
                 $merchants = $merchants->where('address', 'LIKE', '%' . $request->merchant_address . '%');
 
-            if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id == null)
-                $merchants = $merchants->where('brand_id', auth()->user()->brand_id);
-            if (!(auth()->user()->hasRole('Super Admin')) and auth()->user()->merchant_id != null)
-                $merchants = $merchants->where('brand_id', auth()->user()->brand_id)
-                    ->where('id', auth()->user()->merchant_id);
             $merchants = $merchants->orderBy('id', 'DESC')->paginate(20);
+
             return view('pages.merchant.index', [
                 'merchants' => $merchants,
                 'brands' => $brands,
@@ -301,5 +299,10 @@ class MerchantController extends Controller
         } else {
             return back()->with('error', 'Could not be deleted');
         }
+    }
+
+    public function download($key){
+        QrCode::format('png')->size(250)->generate($key, public_path('images/'.$key.'.png') );
+        return response()->download(public_path('images\\'.$key.'.png'));
     }
 }
