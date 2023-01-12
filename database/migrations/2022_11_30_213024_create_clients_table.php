@@ -30,6 +30,8 @@ class CreateClientsTable extends Migration
             $table->tinyInteger('status');
             $table->tinyInteger('is_sent')->default(0);
             $table->foreign('card_id')->references('id')->on('cards');
+            $table->tinyInteger('is_sent')->nullable();
+            $table->tinyInteger('is_sent_code')->nullable();
             $table->timestamps();
         });
     }
