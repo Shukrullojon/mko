@@ -39,7 +39,7 @@ class ClientSentCommand extends Command
      */
     public function handle()
     {
-        $clients = Client::where('id', null)->get();
+        $clients = Client::where('is_sent', null)->get();
         foreach ($clients as $client){
             $response = ClientSentService::sent([
                 'client_id' => $client->id,
