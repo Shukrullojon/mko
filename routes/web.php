@@ -1,37 +1,11 @@
 <?php
-
-use chillerlan\QRCode\QRCode;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Blade\UserController;
-use App\Http\Controllers\Blade\RoleController;
-use App\Http\Controllers\Blade\PermissionController;
-use App\Http\Controllers\Blade\ApiUserController;
-
 Auth::routes();
 
-Route::get('/download/{key}', function ($key){
-    \SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(250)->generate($key, public_path('images/'.$key.'.png') );
-    return response()->download(public_path('images\\'.$key.'.png'));
-})->name('downloadSvg');
-
-
-// Web pages
 Route::group(['middleware' => 'auth'],function (){
     Route::get('/', [App\Http\Controllers\Blade\HomeController::class, 'index']);
     Route::get('/home', [App\Http\Controllers\Blade\HomeController::class,'index'])->name('home');
     Route::get('/show/{id}',[App\Http\Controllers\Blade\HomeController::class,'show'])->name('homeShow');
-    //homeShow
-
-    //accounts
-    Route::group(['prefix'=>'account', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
-        Route::get('/index', 'AccountController@index')->name('accountIndex');
-        Route::get('/account/add', 'AccountController@add')->name('accountAdd');
-        Route::post('/account/store', 'AccountController@store')->name('accountStore');
-        Route::get('/show/{id}', 'AccountController@show')->name('accountShow');
-        Route::get('/edit/{id}', 'AccountController@edit')->name('accountEdit');
-        Route::post('/update/{id}', 'AccountController@update')->name('accountUpdate');
-        Route::delete('/delete/{id}', 'AccountController@destroy')->name('accountDestroy');
-    });
 
     //merchants
     Route::group(['prefix'=>'merchant', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
@@ -44,6 +18,7 @@ Route::group(['middleware' => 'auth'],function (){
         Route::post('/getAccountDetails/', 'MerchantController@getAccountDetails')->name('getAccountDetails');
         Route::delete('/delete/{id}', 'MerchantController@destroy')->name('merchantDestroy');
         Route::post('/removeMerchant', 'MerchantController@removeMerchant')->name('removeMerchant');
+        Route::get('/download/{key}','MerchantController@download')->name("downloadQrCode");
     });
     //brands
     Route::group(['prefix'=>'brand', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
@@ -66,46 +41,37 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/index', 'ClientController@index')->name('clientIndex');
         Route::get('/show/{id}', 'ClientController@show')->name('clientShow');
     });
-    // Mko
-    Route::group(['prefix'=>'mko', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
-        Route::get('/index', 'MkoController@index')->name('mko');
-        Route::get('/show/{id}', 'MkoController@show')->name('mkoShow');
+
+    // User
+    Route::group(['prefix'=>'user', 'namespace'=>'\App\Http\Controllers\Blade'], function(){
+        Route::get('/', 'UserController@index')->name('userIndex');
+        Route::get('/add','UserController@add')->name('userAdd');
+        Route::post('/create','UserController@create')->name('userCreate');
+        Route::get('/{id}/edit','UserController@edit')->name('userEdit');
+        Route::post('/update/{id}','UserController@update')->name('userUpdate');
+        Route::delete('/delete/{id}','UserController@destroy')->name('userDestroy');
+        Route::get('/theme-set/{id}','UserController@setTheme')->name('userSetTheme');
     });
 
-    // Users
-    Route::get('/users',[UserController::class,'index'])->name('userIndex');
-    Route::get('/user/add',[UserController::class,'add'])->name('userAdd');
-    Route::post('/user/create',[UserController::class,'create'])->name('userCreate');
-    Route::get('/user/{id}/edit',[UserController::class,'edit'])->name('userEdit');
-    Route::post('/user/update/{id}',[UserController::class,'update'])->name('userUpdate');
-    Route::delete('/user/delete/{id}',[UserController::class,'destroy'])->name('userDestroy');
-    Route::get('/user/theme-set/{id}',[UserController::class,'setTheme'])->name('userSetTheme');
+    // Permission
+    Route::group(['prefix'=>'permission', 'namespace'=>'\App\Http\Controllers\Blade'], function(){
+        Route::get('/', 'PermissionController@index')->name('permissionIndex');
+        Route::get('/add','PermissionController@add')->name('permissionAdd');
+        Route::post('/create','PermissionController@create')->name('permissionCreate');
+        Route::get('/{id}/edit','PermissionController@edit')->name('permissionEdit');
+        Route::post('/update/{id}','PermissionController@update')->name('permissionUpdate');
+        Route::delete('/delete/{id}','PermissionController@destroy')->name('permissionDestroy');
+    });
 
-    // Permissions
-    Route::get('/permissions',[PermissionController::class,'index'])->name('permissionIndex');
-    Route::get('/permission/add',[PermissionController::class,'add'])->name('permissionAdd');
-    Route::post('/permission/create',[PermissionController::class,'create'])->name('permissionCreate');
-    Route::get('/permission/{id}/edit',[PermissionController::class,'edit'])->name('permissionEdit');
-    Route::post('/permission/update/{id}',[PermissionController::class,'update'])->name('permissionUpdate');
-    Route::delete('/permission/delete/{id}',[PermissionController::class,'destroy'])->name('permissionDestroy');
-
-    // Roles
-    Route::get('/roles',[RoleController::class,'index'])->name('roleIndex');
-    Route::get('/role/add',[RoleController::class,'add'])->name('roleAdd');
-    Route::post('/role/create',[RoleController::class,'create'])->name('roleCreate');
-    Route::get('/role/{role_id}/edit',[RoleController::class,'edit'])->name('roleEdit');
-    Route::post('/role/update/{role_id}',[RoleController::class,'update'])->name('roleUpdate');
-    Route::delete('/role/delete/{id}',[RoleController::class,'destroy'])->name('roleDestroy');
-
-    // ApiUsers
-    Route::get('/api-users',[ApiUserController::class,'index'])->name('api-userIndex');
-    Route::get('/api-user/add',[ApiUserController::class,'add'])->name('api-userAdd');
-    Route::post('/api-user/create',[ApiUserController::class,'create'])->name('api-userCreate');
-    Route::get('/api-user/show/{id}',[ApiUserController::class,'show'])->name('api-userShow');
-    Route::get('/api-user/{id}/edit',[ApiUserController::class,'edit'])->name('api-userEdit');
-    Route::post('/api-user/update/{id}',[ApiUserController::class,'update'])->name('api-userUpdate');
-    Route::delete('/api-user/delete/{id}',[ApiUserController::class,'destroy'])->name('api-userDestroy');
-    Route::delete('/api-user-token/delete/{id}',[ApiUserController::class,'destroyToken'])->name('api-tokenDestroy');
+    // Role
+    Route::group(['prefix'=>'role', 'namespace'=>'\App\Http\Controllers\Blade'], function(){
+        Route::get('/', 'RoleController@index')->name('roleIndex');
+        Route::get('/add','RoleController@add')->name('roleAdd');
+        Route::post('/create','RoleController@create')->name('roleCreate');
+        Route::get('/{id}/edit','RoleController@edit')->name('roleEdit');
+        Route::post('/update/{id}','RoleController@update')->name('roleUpdate');
+        Route::delete('/delete/{id}','RoleController@destroy')->name('roleDestroy');
+    });
 });
 
 // Change language session condition

@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:client.index'])->only('index');
+        $this->middleware(['auth','permission:client.show'])->only('show');
+    }
+
     public function index(Request $request)
     {
         $clients = Client::latest()->paginate(20);

@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            CardSeeder::class,
+            /*CardSeeder::class,
             ClientSeeder::class,
             AccountSeeder::class,
             AccountPartnerSeeder::class,
@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             MerchantPeriodSeeder::class,
             MerchantTerminalSeeder::class,
             PaymentSeeder::class,
-            UserSeeder::class,
+            UserSeeder::class,*/
+            //PermissionSeeder::class,
         ]);
     }
 }

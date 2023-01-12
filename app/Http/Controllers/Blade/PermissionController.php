@@ -15,7 +15,7 @@ class PermissionController extends Controller
     public function index()
     {
         abort_if_forbidden('permission.show');
-        $permissions = Permission::with('roles')->get();
+        $permissions = Permission::with('roles')->orderBy('id','DESC')->get();
         return view('pages.permissions.index',compact('permissions'));
     }
 

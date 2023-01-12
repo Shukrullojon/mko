@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-
+    @can('home.show')
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -71,4 +71,5 @@
             </div>
         </div>
     </section>
+    @endcan
 @endsection
