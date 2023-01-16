@@ -28,6 +28,8 @@ class CreatePaymentsTable extends Migration
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('merchant_id')->references('id')->on('merchants');
             $table->string('tr_id',100);
+            $table->tinyInteger('is_sent')->nullable();
+            $table->integer('is_sent_code')->nullable();
             $table->timestamps();
         });
     }
