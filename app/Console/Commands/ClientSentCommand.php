@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Pages\Client;
 use App\Services\ClientSentService;
+use App\Services\UniredService;
 use Illuminate\Console\Command;
 
 class ClientSentCommand extends Command
@@ -41,7 +42,7 @@ class ClientSentCommand extends Command
     {
         $clients = Client::where('is_sent', null)->get();
         foreach ($clients as $client){
-            $response = ClientSentService::sent([
+            $response = UniredService::clientSent([
                 'client_id' => $client->id,
                 'client_code' => $client->client_code,
                 'application_id' => $client->application_id,
@@ -58,7 +59,7 @@ class ClientSentCommand extends Command
             if($response['status']){
                 $client->update([
                     'is_sent' => 1,
-                    'is_sent_code' => $response['result']['code'],
+                    'is_sent_code' => $response['result']['code'] ?? 100,
                 ]);
             }
         }
