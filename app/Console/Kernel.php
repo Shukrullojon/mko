@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\ClientSentCommand;
+use App\Console\Commands\PaymentSentCommand;
 use App\Console\Commands\TransactionAccountCommand;
 use App\Console\Commands\TransactionCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -16,9 +17,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        /*TransactionCommand::class,
-        TransactionAccountCommand::class,*/
-        //ClientSentCommand::class,
+        TransactionCommand::class,
+        ClientSentCommand::class,
+        PaymentSentCommand::class,
     ];
 
     /**
@@ -28,9 +29,10 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule){
-        /*$schedule->command('transaction')->everyFiveMinutes();
-        $schedule->command("transaction:account")->everyFiveMinutes();*/
-        //$schedule->command("")->everyFiveMinutes();
+        $schedule->command('transaction')->everyFiveMinutes();
+        //$schedule->command("transaction:account")->everyFiveMinutes();
+        $schedule->command("clientsent")->everyMinute();
+        $schedule->command("paymentsent")->everyMinute();
     }
 
     /**
