@@ -40,7 +40,7 @@ class ClientSentCommand extends Command
      */
     public function handle()
     {
-        $clients = Client::where('is_sent', null)->get();
+        $clients = Client::where('is_sent', 0)->get();
         foreach ($clients as $client){
             $response = UniredService::clientSent([
                 'client_id' => $client->id,
