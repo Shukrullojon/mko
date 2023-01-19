@@ -163,7 +163,7 @@ if (!function_exists('info_message'))
 }
 if (!function_exists('get_graphic'))
 {
-    function get_graphic($period,$percentage,$amount)
+    function get_graphic($period,$percentage,$amount,$date)
     {
         # Initial params
         //$amount = $amount + ceil($amount/100*$percentage);
@@ -171,7 +171,7 @@ if (!function_exists('get_graphic'))
         $dailySum = intval($amount/$period);
         $residue = $amount - ($dailySum*$period);
 
-        $startDate = date('Y-m-d');
+        $startDate = $date;
         $endDate = date('Y-m-01',strtotime($startDate.' first day of +1 month'));
         $graphic = [];
 
