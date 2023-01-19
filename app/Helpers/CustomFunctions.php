@@ -166,7 +166,7 @@ if (!function_exists('get_graphic'))
     function get_graphic($period,$percentage,$amount)
     {
         # Initial params
-        $amount = $amount + ceil($amount/100*$percentage);
+        //$amount = $amount + ceil($amount/100*$percentage);
 
         $dailySum = intval($amount/$period);
         $residue = $amount - ($dailySum*$period);
