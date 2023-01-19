@@ -46,7 +46,7 @@ class MerchantController extends Controller
         $graphic = GraphicService::done([
             'period' => $mp->period,
             'percentage' => 0,
-            'amount' => $params['params']['amount'],
+            'amount' => $params['params']['amount'] * 100,
         ]);
         return $graphic;
     }
