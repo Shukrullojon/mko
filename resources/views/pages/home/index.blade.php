@@ -25,10 +25,12 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="small-box bg-info ">
-                                            <div class="inner">
-                                                <h3 class="text-center">UCOIN</h3>
-                                                <p>{{ number_format($mko->balance/100) }} UZS</p>
-                                            </div>
+                                            @if($mko)
+                                                <div class="inner">
+                                                    <h3 class="text-center">UCOIN</h3>
+                                                    <p>{{ number_format($mko->balance/100) }} UZS</p>
+                                                </div>
+                                            @endif
                                             <div class="icon">
                                                 <i class="ion ion-stats-bars"></i>
                                             </div>
@@ -38,10 +40,12 @@
 
                                     <div class="col-md-3">
                                         <div class="small-box bg-success">
-                                            <div class="inner">
-                                                <h3 class="text-center">CREDIT</h3>
-                                                <p>{{ number_format($info->credit/100) }} UZS</p>
-                                            </div>
+                                            @if($info)
+                                                <div class="inner">
+                                                    <h3 class="text-center">CREDIT</h3>
+                                                    <p>{{ number_format($info->credit/100) }} UZS</p>
+                                                </div>
+                                            @endif
                                             <div class="icon">
                                                 <i class="ion ion-stats-bars"></i>
                                             </div>
@@ -51,34 +55,39 @@
 
                                     <div class="col-md-3">
                                         <div class="small-box bg-danger">
-                                            <div class="inner">
-                                                <h3 class="text-center">DEBIT</h3>
-                                                <p>{{ number_format($info->debit/100) }} UZS</p>
-                                            </div>
+                                            @if($info)
+                                                <div class="inner">
+                                                    <h3 class="text-center">DEBIT</h3>
+                                                    <p>{{ number_format($info->debit/100) }} UZS</p>
+                                                </div>
+                                            @endif
                                             <div class="icon">
                                                 <i class="ion ion-stats-bars"></i>
                                             </div>
-                                            <p href="#" class="small-box-footer " style="text-align: right"> </p>
+                                            <p href="#" class="small-box-footer " style="text-align: right"></p>
                                         </div>
                                     </div>
 
                                     <div class="col-md-3">
                                         <div class="small-box bg-gradient-indigo">
-                                            <div class="inner">
-                                                <h3 class="text-center">LIMIT</h3>
-                                                <p>{{ number_format($limit->limit/100) }} UZS</p>
-                                            </div>
+                                            @if($limit)
+                                                <div class="inner">
+                                                    <h3 class="text-center">LIMIT</h3>
+                                                    <p>{{ number_format($limit->limit/100) }} UZS</p>
+                                                </div>
+                                            @endif
                                             <div class="icon">
                                                 <i class="ion ion-stats-bars"></i>
                                             </div>
-                                            <p href="#" class="small-box-footer " style="text-align: right"> </p>
+                                            <p href="#" class="small-box-footer " style="text-align: right"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- card-body -->
                             <div class="card-body">
-                                <table class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="dataTable_info">
+                                <table class="table table-bordered table-striped dataTable dtr-inline" role="grid"
+                                       aria-describedby="dataTable_info">
                                     <thead>
                                     <tr>
                                         <th>Дата</th>
@@ -91,19 +100,23 @@
                                     <tr class="text-center">
                                         <form action="">
                                             <th>
-                                                <input type="date" class="form-control" name="date" value="{{ request()->date }}">
+                                                <input type="date" class="form-control" name="date"
+                                                       value="{{ request()->date }}">
                                             </th>
                                             <th>
-                                                <input value="{{ request()->dtAcc }}" type="text" placeholder="account" class="clear-class form-control" name="dtAcc">
+                                                <input value="{{ request()->dtAcc }}" type="text" placeholder="account"
+                                                       class="clear-class form-control" name="dtAcc">
                                             </th>
                                             <th>
-                                                <input value="{{ request()->ctAcc }}" type="text" placeholder="account" class="clear-class form-control" name="ctAcc">
+                                                <input value="{{ request()->ctAcc }}" type="text" placeholder="account"
+                                                       class="clear-class form-control" name="ctAcc">
                                             </th>
                                             <th></th>
                                             <th></th>
                                             <th>
 
-                                                <button name="accountSearch" id="searchSubmit" class="btn btn-default" type="submit">
+                                                <button name="accountSearch" id="searchSubmit" class="btn btn-default"
+                                                        type="submit">
                                                     <span class="fa fa-search"></span>
                                                 </button>
                                                 <a href="{{ route("home") }}" class="btn btn-danger">
@@ -124,7 +137,8 @@
                                             <td>{{ number_format($history->credit/100) }}</td>
                                             @can('home.show')
                                                 <td class="text-center">
-                                                    <a href="{{ route('homeShow',$history->id) }}" class="btn btn-info btn-sm">
+                                                    <a href="{{ route('homeShow',$history->id) }}"
+                                                       class="btn btn-info btn-sm">
                                                         <span class="fa fa-eye"></span>
                                                     </a>
                                                 </td>
