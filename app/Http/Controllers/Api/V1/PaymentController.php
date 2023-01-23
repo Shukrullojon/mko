@@ -98,7 +98,7 @@ class PaymentController extends Controller
 
     public function cancel($params)
     {
-        $payment = Payment::where('tr_id', $params['params']['tr_id'])->where('status', 1)->where('is_transaction', 0)->first();
+        $payment = Payment::where('tr_id', $params['params']['tr_id'])->where('status', 1)->first();
         if (empty($payment)) {
             return [
                 'error' => [
