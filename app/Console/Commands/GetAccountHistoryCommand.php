@@ -48,7 +48,7 @@ class GetAccountHistoryCommand extends Command
         $history = History::latest()->first();
         $service = AbsService::getAccountHistory([
             'account' => $account->number,
-            'date' => $history->date ?? "01.12.2022",
+            'date' => "20.01.2023",
             'filial' => $account->filial,
         ]);
 
