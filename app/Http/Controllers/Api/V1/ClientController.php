@@ -16,7 +16,7 @@ class ClientController extends Controller
 {
     public function create($params)
     {
-        $cardLater = Card::where('type', 3)->first();
+        $cardLater = Card::where('type', 2)->first();
         if ($cardLater->balance < $params['params']['limit']) {
             return [
                 "error" => [
