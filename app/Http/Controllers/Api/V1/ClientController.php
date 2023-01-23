@@ -69,7 +69,6 @@ class ClientController extends Controller
                 });
 
                 // debit
-
                 $tr = CardTransaction::create([
                     'sender' => $cardLater->number,
                     'receiver' => $card->number,
