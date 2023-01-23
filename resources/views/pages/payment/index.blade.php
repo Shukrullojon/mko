@@ -50,10 +50,12 @@
                                 <tr>
                                     <td>{{ $payment->name }}</td>
                                     <td>
-                                        <a target="_blank"
-                                           href="{{ route("clientShow",$payment->client->id ?? "") }}">{{ $payment->client->first_name }}</a>
-                                        <br>
-                                        <span style='font-size: 12px'>{{ $payment->client->card->number }}</span>
+                                        @if($payment->client)
+                                            <a target="_blank"
+                                               href="{{ route("clientShow",$payment->client->id ) }}">{{ $payment->client->first_name }}</a>
+                                            <br>
+                                            <span style='font-size: 12px'>{{ $payment->client->card->number }}</span>
+                                        @endif
                                     </td>
 
                                     <td>
