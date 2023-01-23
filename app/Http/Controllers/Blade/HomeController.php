@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         try {
-            $mko = Card::where('type', 3)->first();
+            $mko = Card::where('type', 2)->first();
             $histories = new History();
             $info = History::select(
                 DB::raw("sum(debit) as debit"),
