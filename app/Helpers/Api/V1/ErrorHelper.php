@@ -32,4 +32,17 @@ class ErrorHelper
             ],
         ];
     }
+
+    public static function error302():array{
+        return [
+            'error' => [
+                'code' => 301,
+                "message" => [
+                    "uz" => "500 ming dan kam to'lov qilib bo'lmaydi.",
+                    "ru" => "Меньше 500 тысяч заплатить невозможно.",
+                    "en" => "It is not possible to pay less than 500 thousand.",
+                ],
+            ],
+        ];
+    }
 }
