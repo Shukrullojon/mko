@@ -31,9 +31,9 @@ class PaymentController extends Controller
             return ErrorHelper::error301();
         }
 
-        if($params['params']['amount'] < 50000000){
+        /*if($params['params']['amount'] < 50000000){
             return ErrorHelper::error302();
-        }
+        }*/
 
         $payment = Payment::create([
             'name' => $params['params']['name'] ?? null,
