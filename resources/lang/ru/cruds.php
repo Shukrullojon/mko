@@ -27,6 +27,9 @@ return [
         'status' => 'Статус',
         'is_unired' => 'Униред',
     ],
+    'report' => [
+        'report' => 'Oтчёт'
+    ],
     'status' => [
         '1' => '✅',
         '0' => '❌',

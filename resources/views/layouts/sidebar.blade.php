@@ -20,6 +20,14 @@
                 </a>
             </li>
         @endcan
+        @can('report.index')
+            <li class="nav-item">
+                <a href="{{ route('reportIndex') }}" class="nav-link {{ Request::is('report*') ? "active":'' }}">
+                    <i class="fas fa-file"></i>
+                    <p>@lang('cruds.report.report')</p>
+                </a>
+            </li>
+        @endcan
 
         @can('client.index')
             <li class="nav-item">

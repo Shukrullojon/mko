@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/index', 'PaymentController@index')->name('paymentIndex');
         Route::get('/show/{id}', 'PaymentController@show')->name('paymentShow');
     });
+    // Report
+    Route::group(['prefix'=>'report', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
+        Route::get('/index', 'ReportController@index')->name('reportIndex');
+    });
     // Clients
     Route::group(['prefix'=>'client', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
         Route::get('/index', 'ClientController@index')->name('clientIndex');

@@ -27,6 +27,9 @@ return [
         'status' => 'Status',
         'is_unired' => 'Unired',
     ],
+    'report' => [
+        'report' => 'Hisobot'
+    ],
     'status' => [
         '1' => '✅',
         '0' => '❌',
