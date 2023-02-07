@@ -10,25 +10,40 @@ use Illuminate\Support\Str;
 class LoginController extends Controller
 {
     public function login($params){
-        $user = User::where('email', $params['params']['email'])->first();
-        if($user and Hash::check($params['params']['password'], $user->password)){
-            $user->token = Str::random(80);
-            $user->save();
+        try {
+            $user = User::where('email', $params['params']['email'])->first();
+            if ($user and Hash::check($params['params']['password'], $user->password)) {
+                $user->token = Str::random(80);
+                $user->save();
+                return [
+                    'token' => $user->token
+                ];
+            }
             return [
-                'token' => $user->token
+                'error' => [
+                    'code' => 404,
+                    'message' => [
+                        'uz' => "Foydalanuvchi topilmadi",
+                        'ru' => "Пользователь не найден",
+                        'en' => "User not found"
+                    ],
+                ],
             ];
+        }catch (\Exception $exception){
+            return $this->errorException($exception);
         }
+    }
+
+    public function errorException($exception){
         return [
             'error' => [
-                'code'=>404,
+                'code' => 500,
                 'message' => [
-                    'uz' => "Foydalanuvchi topilmadi",
-                    'ru' => "Пользователь не найден",
-                    'en' => "User not found"
+                    'uz' => $exception->getMessage(),
+                    'ru' => $exception->getMessage(),
+                    'en' => $exception->getMessage(),
                 ],
             ],
         ];
-
     }
-
 }

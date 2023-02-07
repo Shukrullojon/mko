@@ -43,7 +43,6 @@ class HomeController extends Controller
                 'info' => $info,
                 'limit' => $limit,
                 'payment' => $payment,
-                
             ]);
         }catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());

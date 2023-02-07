@@ -102,62 +102,75 @@ class PaymentController extends Controller
 
     public function cancel($params)
     {
-        $payment = Payment::where('tr_id', $params['params']['tr_id'])->where('status', 1)->first();
-        if (empty($payment)) {
-            return [
-                'error' => [
-                    "code" => 400,
-                    "message" => [
-                        "uz" => "Tranzaksiyani bekor qilib bo'lmaydi",
-                        "ru" => "Транзакция не может быть отменена",
-                        "en" => "The transaction cannot be canceled",
-                    ],
-                ],
-            ];
-        }
-        // terminal debit
-        $debit = MerchantService::debit([
-            'merchant_id' => $payment->merchant_id,
-            'amount' => $payment->amount,
-        ]);
-        if ($debit) {
-            $payment->update([
-                'status' => 20,
-            ]);
-            $credit = CardService::credit([
-                'token' => $payment->sender_card,
-                'amount' => $payment->amount,
-            ]);
-            if ($credit) {
-                $payment->update([
-                    'status' => 21,
-                ]);
-                return [];
-            } else {
-                $creditTerminal = MerchantService::credit([
-                    'merchant_id' => $payment->merchant_id,
-                    'amount' => $payment->amount,
-                ]);
-                if ($creditTerminal) {
-                    $payment->update([
-                        'status' => 0
-                    ]);
-                } else {
-                    $payment->update([
-                        'status' => 22
-                    ]);
-                }
+        try {
+            $payment = Payment::where('tr_id', $params['params']['tr_id'])->where('status', 1)->first();
+            if (empty($payment)) {
                 return [
                     'error' => [
-                        'code' => 300,
+                        "code" => 400,
                         "message" => [
-                            "uz" => "Tranzaksiyani bekor qilib bo'lmadi",
+                            "uz" => "Tranzaksiyani bekor qilib bo'lmaydi",
                             "ru" => "Транзакция не может быть отменена",
                             "en" => "The transaction cannot be canceled",
                         ],
                     ],
                 ];
             }
+            // terminal debit
+            $debit = MerchantService::debit([
+                'merchant_id' => $payment->merchant_id,
+                'amount' => $payment->amount,
+            ]);
+            if ($debit) {
+                $payment->update([
+                    'status' => 20,
+                ]);
+                $credit = CardService::credit([
+                    'token' => $payment->sender_card,
+                    'amount' => $payment->amount,
+                ]);
+                if ($credit) {
+                    $payment->update([
+                        'status' => 21,
+                    ]);
+                    return [];
+                } else {
+                    $creditTerminal = MerchantService::credit([
+                        'merchant_id' => $payment->merchant_id,
+                        'amount' => $payment->amount,
+                    ]);
+                    if ($creditTerminal) {
+                        $payment->update([
+                            'status' => 0
+                        ]);
+                    } else {
+                        $payment->update([
+                            'status' => 22
+                        ]);
+                    }
+                    return [
+                        'error' => [
+                            'code' => 300,
+                            "message" => [
+                                "uz" => "Tranzaksiyani bekor qilib bo'lmadi",
+                                "ru" => "Транзакция не может быть отменена",
+                                "en" => "The transaction cannot be canceled",
+                            ],
+                        ],
+                    ];
+                }
+            }
+        }catch (\Exception $exception){
+            return [
+                'error' => [
+                    "code" => 400,
+                    "message" => [
+                        "uz" => $exception->getMessage(),
+                        "ru" => $exception->getMessage(),
+                        "en" => $exception->getMessage(),
+                    ],
+                ],
+            ];
         }
     }
 }
