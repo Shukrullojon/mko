@@ -82,6 +82,23 @@
                                             <p href="#" class="small-box-footer " style="text-align: right"></p>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-3">
+                                        <div class="small-box bg-gradient-blue">
+                                            @if($limit)
+                                                <div class="inner">
+                                                    <h3 class="text-center">PAYMENT</h3>
+                                                    <p>{{ number_format($payment->amount/100) }} UZS</p>
+                                                </div>
+                                            @endif
+                                            <div class="icon">
+                                                <i class="ion ion-stats-bars"></i>
+                                            </div>
+                                            <p href="#" class="small-box-footer " style="text-align: right"></p>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
                             <!-- card-body -->
