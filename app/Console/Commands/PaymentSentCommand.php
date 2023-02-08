@@ -42,16 +42,16 @@ class PaymentSentCommand extends Command
         $payments = Payment::where('is_sent', null)->get();
         foreach ($payments as $payment){
             $response = UniredService::paymentSent([
-                'name' => $payment->name,
-                'tr_id' => $payment->tr_id,
-                'client_id' => $payment->client_id,
-                'merchant_id' => $payment->merchant_id,
-                'period' => $payment->period,
-                'percentage' => $payment->percentage,
-                'amount' => $payment->amount,
-                'wallet_number' => $payment->client->card->number ?? "",
+                'pinfl' => $payment->client->pnfl ?? "",
+                'passport' => $payment->client->passport ?? "",
+                'first_name' => $payment->client->first_name ?? "",
+                'last_name' => $payment->client->last_name ?? "",
+                'middle_name' => $payment->client->middle_name ?? "",
                 'date' => $payment->date,
-                'status' => $payment->status,
+                'transaction_id' => $payment->id,
+                'period' => $payment->period,
+                'card_number' => $payment->client->card->number ?? "",
+                'amount' => $payment->amount,
             ]);
             if($response['status']){
                 $payment->update([
