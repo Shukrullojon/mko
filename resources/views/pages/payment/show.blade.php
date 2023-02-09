@@ -97,9 +97,13 @@
                                             <tr>
                                                 <td>
                                                     {{ $transaction->sender->number }}
+                                                    <br>
+                                                    <span style='font-size: 9px'> {{ $transaction->sender->owner ?? "" }} </span>
                                                 </td>
                                                 <td>
                                                     {{ $transaction->receiver->number }}
+                                                    <br>
+                                                    <span style='font-size: 9px'> {{ $transaction->receiver->owner ?? "" }} </span>
                                                 </td>
                                                 <td>
                                                     {{ number_format($transaction->amount/100) }}
