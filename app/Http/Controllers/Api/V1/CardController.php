@@ -9,23 +9,44 @@ use App\Models\Pages\Card;
 class CardController extends Controller
 {
     public function info($params){
-        $card = Card::where('token',$params['params']['token'])->first();
-        return [
-            'number' => $card->number,
-            'expire' => $card->expire,
-            'owner' => $card->owner,
-            'balance' => $card->balance,
-            'phone' => $card->phone,
-            'status' => $card->status,
-        ];
+        try {
+            $card = Card::where('token',$params['params']['token'])->first();
+            return [
+                'number' => $card->number,
+                'expire' => $card->expire,
+                'owner' => $card->owner,
+                'balance' => $card->balance,
+                'phone' => $card->phone,
+                'status' => $card->status,
+            ];
+        }catch (\Exception $exception){
+            return $this->errorException($exception);
+        }
     }
 
     public function card($params){
-        $card = Card::where('token',$params['params']['token'])->first();
+        try {
+            $card = Card::where('token',$params['params']['token'])->first();
+            return [
+                'limit' => (int)$card->client->limit ?? "",
+                'balance' => (int)$card->balance ?? "",
+                'transaction_amount' => (int)$card->paymentSum->amount ?? "",
+            ];
+        }catch (\Exception $exception){
+            return $this->errorException($exception);
+        }
+    }
+
+    public function errorException($exception){
         return [
-            'limit' => (int)$card->client->limit ?? "",
-            'balance' => (int)$card->balance ?? "",
-            'transaction_amount' => (int)$card->paymentSum->amount ?? "",
+            'error' => [
+                'code' => 500,
+                'message' => [
+                    'uz' => $exception->getMessage(),
+                    'ru' => $exception->getMessage(),
+                    'en' => $exception->getMessage(),
+                ],
+            ],
         ];
     }
 }

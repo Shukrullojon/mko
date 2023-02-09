@@ -28,18 +28,19 @@ class UniredService
 
     public static function paymentSent($data){
         return UniredGateway::fire([
-            "url" => "https://mko.unired.uz/api/transaction/create",
+            "url" => "https://mko.unired.uz/api/contract/create",
             "data" => [
-                "name" => $data['name'],
-                "tr_id" => $data['tr_id'],
-                "client_id" => $data['client_id'],
-                "merchant_id" => $data['merchant_id'],
-                "period" => $data['period'],
-                "percentage" => $data['percentage'],
-                "amount" => $data['amount'],
-                "wallet_number" => $data['wallet_number'],
+                "pinfl" => $data['pinfl'],
+                "passport" => $data['passport'],
+                "first_name" => $data['first_name'],
+                "last_name" => $data['last_name'],
+                "middle_name" => $data['middle_name'],
+
                 "date" => $data['date'],
-                "status" => $data['status']
+                "transaction_id" => $data['transaction_id'],
+                "period" => $data['period'],
+                "card_number" => $data['card_number'],
+                "amount" => $data['amount'],
             ]
         ]);
     }

@@ -11,7 +11,7 @@ use App\Http\Controllers\Pages\BrandController;
 | API Routes
 |--------------------------------------------------------------------------
 */
-Route::post('/v1/gw','\App\Http\Controllers\Api\V1\MainController@index');
+Route::middleware('apicheck')->post('/v1/gw','\App\Http\Controllers\Api\V1\MainController@index');
 
 # Api Clients
 Route::post('/login',[ApiAuthController::class,'login']);
