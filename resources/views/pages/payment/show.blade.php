@@ -103,7 +103,7 @@
                                                 <td>
                                                     {{ $transaction->receiver->number }}
                                                     <br>
-                                                    <span style='font-size: 9px'> {{ $transaction->receiver->owner ?? "" }} </span>
+                                                    <span style='font-size: 9px'> @if(isset($transaction->receiver->account->merchant->brand->name) and !empty($transaction->receiver->account->merchant->brand->name)){{ "(".$transaction->receiver->account->merchant->brand->name.")" }} @endif {{ $transaction->receiver->owner ?? "111" }} </span>
                                                 </td>
                                                 <td>
                                                     {{ number_format($transaction->amount/100) }}

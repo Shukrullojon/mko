@@ -19,6 +19,10 @@ class Card extends Model
         return $this->hasOne(Client::class);
     }
 
+    public function account(){
+        return $this->hasOne(Account::class);
+    }
+
     public function paymentSum()
     {
         return $this->hasOne(Payment::class, 'sender_card', 'token')->select(DB::raw("sum(amount) as amount"))->where('status',1);

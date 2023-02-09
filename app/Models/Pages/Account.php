@@ -13,6 +13,10 @@ class Account extends Model
 
     protected $guarded = [];
 
+    public function merchant(){
+        return $this->hasOne(Merchant::class);
+    }
+
     public function card(){
         return $this->belongsTo(Card::class);
     }

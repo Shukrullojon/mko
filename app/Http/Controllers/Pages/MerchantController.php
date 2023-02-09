@@ -101,7 +101,7 @@ class MerchantController extends Controller
                     'type' => 1,
                     'balance' => 0,
                     'hold_amount' => 0,
-                    'owner' => substr($request->name, 0, 100),
+                    'owner' => substr($request->filial, 0, 100),
                     'token' => Str::random(70),
                     'status' => 1,
                 ]);
@@ -166,8 +166,11 @@ class MerchantController extends Controller
      */
     public function show($id)
     {
-        $merchant = Merchant::find($id);
-        return view('pages.merchant.show', compact('merchant'));
+        return view('pages.merchant.show', [
+            'merchant' => Merchant::findOrFail($id)
+        ]);
+        /* $merchant = Merchant::find($id);
+        return view('pages.merchant.show', compact('merchant')); */
     }
 
     /**
