@@ -28,7 +28,7 @@ class UniredService
 
     public static function paymentSent($data){
         return UniredGateway::fire([
-            "url" => "https://mko.unired.uz/api/transaction/create",
+            "url" => "https://mko.unired.uz/api/contract/create",
             "data" => [
                 "pinfl" => $data['pinfl'],
                 "passport" => $data['passport'],
