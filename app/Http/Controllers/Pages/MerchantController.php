@@ -166,8 +166,11 @@ class MerchantController extends Controller
      */
     public function show($id)
     {
-        $merchant = Merchant::find($id);
-        return view('pages.merchant.show', compact('merchant'));
+        return view('pages.merchant.show', [
+            'merchant' => Merchant::findOrFail($id)
+        ]);
+        /* $merchant = Merchant::find($id);
+        return view('pages.merchant.show', compact('merchant')); */
     }
 
     /**
