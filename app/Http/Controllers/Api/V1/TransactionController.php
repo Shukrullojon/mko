@@ -24,7 +24,6 @@ class TransactionController extends Controller
                 'sender_id' => $account->id,
                 'receiver_id' => $transaction->account->id,
                 'amount' => ($transaction->amount * (100 - $bAccount->percentage)) / 100,
-                'transactionId' => "",
                 'status' => 0,
             ]);
 
@@ -33,7 +32,6 @@ class TransactionController extends Controller
                 'sender_id' => $account->id,
                 'receiver_id' => $bAccount->id,
                 'amount' => ($transaction->amount * $bAccount->percentage) / 100,
-                'transactionId' => "",
                 'status' => 0,
             ]);
 
@@ -48,23 +46,7 @@ class TransactionController extends Controller
 
                 $trAccount = TransactionAccount::where('status',0)->get();
                 foreach ($trAccount as $tr){
-                    var_dump([
-                        'type' => "101",
-                        'sender_account' => $tr->sender->number,
-                        'sender_code_filial' => $tr->sender->filial,
-                        'sender_tax' => $tr->sender->inn,
-                        'sender_name' => $tr->sender->name,
-                        'recipient_account' => $tr->receiver->number,
-                        'recipient_code_filial' => $tr->receiver->filial,
-                        'recipient_tax' => $tr->receiver->inn,
-                        'recipient_name' => $tr->receiver->name,
-                        'purpose' => [
-                            "code" => "00668",
-                            "name" => "перевод (дата: " . date("Y-m-d H:i:s") . ") " . "} ID{V" . str_pad($tr->transaction_id, 12, '0', STR_PAD_LEFT) . "V}",
-                        ],
-                        'amount' => $tr->amount,
-                    ]);
-                    /*$abs = AbsService::transaction([
+                    $abs = AbsService::transaction([
                         'type' => "101",
                         'sender_account' => $tr->sender->number,
                         'sender_code_filial' => $tr->sender->filial,
@@ -85,7 +67,7 @@ class TransactionController extends Controller
                             'status' => 1,
                             'transactionId' => $abs['data']['responseBody']['createdDocuments'][0]['transactionId'],
                         ]);
-                    }*/
+                    }
                 }
             }else{
                 $tr1->update([
