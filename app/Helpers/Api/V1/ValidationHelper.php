@@ -65,7 +65,7 @@ class ValidationHelper
             ];
         }else if($params['method'] == "transaction.send"){
             return [
-                "params.transaction_id" => "required|exists:transactions,id"
+                "params.transaction_id" => "required|exists:transactions,id,type,0,is_sent,0,status,1"
             ];
         }else{
             return [
