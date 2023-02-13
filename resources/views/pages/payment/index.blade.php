@@ -60,7 +60,7 @@
 
                                     <td>
                                         <a target="_blank"
-                                           href="{{ route("merchantShow",$payment->merchant_id) }}">{{ $payment->merchant->name }}</a>
+                                           href="{{ route("merchantShow",$payment->merchant_id) }}">{{ $payment->merchant->filial ?? "" }}</a>
                                     </td>
                                     <td>{{ $payment->period }}</td>
                                     <td>{{ $payment->percentage }}</td>
