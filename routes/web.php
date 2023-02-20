@@ -2,7 +2,10 @@
 use Illuminate\Support\Facades\Route;
 Auth::routes();
 
+
+Route::get('/testsms/{phone}', [App\Http\Controllers\PlaymobileSMSController::class, 'test']);
 Route::group(['middleware' => 'auth'],function (){
+
     Route::get('/', [App\Http\Controllers\Blade\HomeController::class, 'index']);
     Route::get('/home', [App\Http\Controllers\Blade\HomeController::class,'index'])->name('home');
     Route::get('/show/{id}',[App\Http\Controllers\Blade\HomeController::class,'show'])->name('homeShow');
@@ -38,7 +41,7 @@ Route::group(['middleware' => 'auth'],function (){
     });
     // Report
     Route::group(['prefix'=>'report', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
-        Route::get('/index', 'ReportController@index')->name('reportIndex');
+        Route::get('/report', 'ReportController@index')->name('reportIndex');
     });
     // Clients
     Route::group(['prefix'=>'client', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
