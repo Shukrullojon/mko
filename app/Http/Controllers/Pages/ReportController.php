@@ -17,7 +17,7 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $payments = new Payment();
-        if($request->has('date')){
+        if($request->has('date') and $request->date){
             $payments = $payments->where('date', $request->date);
         }
         $payments = $payments->orderBy('id', 'DESC')->paginate(20);

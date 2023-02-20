@@ -67,6 +67,18 @@ class ValidationHelper
             return [
                 "params.transaction_id" => "required|exists:transactions,id,type,0,is_sent,0,status,1"
             ];
+        }else if($params['method'] == "payment.byCard"){
+            return [
+                "params.card" => "required|exists:cards,number",
+                "params.key" => "required|exists:merchants,key",
+                "params.period_id" => "required|exists:merchant_periods,id",
+                "params.amount" => "required|numeric"
+            ];
+        }else if($params['method'] == "payment.byCardConfirm"){
+            return [
+                "params.tr_id" => "required|exists:payments,tr_id",
+                "params.code" => "required|numeric"
+            ];
         }else{
             return [
                 "method" => [
