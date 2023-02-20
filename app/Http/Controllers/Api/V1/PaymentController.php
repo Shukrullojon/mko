@@ -18,12 +18,13 @@ class PaymentController extends Controller
 {
     public function confirm($params)
     {
+        $cardLater = Card::where('type', 2)->first();
         $card = Card::where('token', $params['params']['token'])->first();
         $client = Client::where('card_id', $card->id)->first();
         $merchant = Merchant::where('key', $params['params']['key'])->first();
         $period = MerchantPeriod::where('id', $params['params']['period_id'])->where('merchant_id', $merchant->id)->first();
 
-        if (empty($card) or empty($client) or empty($merchant) or empty($period)) {
+        if (empty($card) or empty($client) or empty($merchant) or empty($period) or $cardLater->balance < $params['params']['amount']) {
             return ErrorHelper::error300();
         }
 
