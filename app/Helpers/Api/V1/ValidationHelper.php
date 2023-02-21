@@ -95,7 +95,9 @@ class ValidationHelper
                     payment.cancel,
                     merchant.balance,
                     card.card,
-                    transaction.send,",
+                    transaction.send,
+                    payment.byCard,
+                    payment.byCardConfirm,",
                 ],
             ];
         }

@@ -209,7 +209,8 @@ class PaymentController extends Controller
         $sendsms = SendUniredSms::apply($phone, rand(1000, 9999), $payment->tr_id);
 
         return [
-            'tr_id' => $payment->tr_id
+            'tr_id' => $payment->tr_id,
+            'phone' => $card->phone
         ];
 
     }
