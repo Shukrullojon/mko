@@ -217,13 +217,13 @@ class PaymentController extends Controller
     public function byCardConfirm($params) {
 
         $tr_id = $params['params']['tr_id'];
-        $payment = Payment::where('tr_id', $tr_id)->first();
-        $sms = SmsLog::where('payment_tr_id', $tr_id)->where('status', 2)->latest()->first();
-
-        $card = Card::where('token', $payment->sender_card)->first();
-        $merchant = Merchant::where('id', $payment->merchant_id)->first();
+        $payment = Payment::where('tr_id', $tr_id)->where('status', 0)->first();
+        $sms = SmsLog::where('payment_tr_id', $tr_id)
+            ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-5 minutes")))->latest()->first();
 
         if ($payment and $sms){
+            $card = Card::where('token', $payment->sender_card)->first();
+            $merchant = Merchant::where('id', $payment->merchant_id)->first();
             try {
                 $debit = CardService::debit([
                     'token' => $payment->sender_card,
@@ -276,6 +276,13 @@ class PaymentController extends Controller
                     ],
                 ];
             }
+        }else {
+            return [
+                'error' => [
+                    "code" => 3231,
+                    "message" => 'Payment error'
+                ],
+            ];
         }
 
     }
