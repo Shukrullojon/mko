@@ -17,7 +17,7 @@ class ClientController extends Controller
     public function create($params)
     {
         try {
-            $cardLater = Card::where('type', 2)->first();
+            /*$cardLater = Card::where('type', 2)->first();
             if ($cardLater->balance < $params['params']['limit']) {
                 return [
                     "error" => [
@@ -29,7 +29,7 @@ class ClientController extends Controller
                         ],
                     ],
                 ];
-            }
+            }*/
 
             $client = Client::where('passport', $params['params']['passport'])
                 ->where('pnfl', $params['params']['pnfl'])
@@ -70,43 +70,44 @@ class ClientController extends Controller
                     });
 
                     // debit
-                    $tr = CardTransaction::create([
+                    /*$tr = CardTransaction::create([
                         'sender' => $cardLater->number,
                         'receiver' => $card->number,
                         'amount' => $params['params']['limit'],
                         'status' => 0,
-                    ]);
-                    $debit = CardService::debit([
+                    ]);*/
+                    /*$debit = CardService::debit([
                         'token' => $cardLater->token,
                         'amount' => $params['params']['limit'],
+                    ]);*/
+                    $credit = CardService::credit([
+                        'token' => $card->token,
+                        'amount' => $params['params']['limit'],
                     ]);
-                    if ($debit) {
+                    if ($credit) {
+                        /*$tr->update([
+                            'status' => 2
+                        ]);*/
+                        $card->update([
+                            'status' => 1,
+                            'balance' => $params['params']['limit'],
+                        ]);
+                        return [
+                            'number' => $card->number,
+                            'expire' => $card->expire,
+                            'phone' => $card->phone,
+                            'balance' => (int)$card->balance,
+                            'owner' => $card->owner,
+                            'token' => $card->token,
+                            'status' => 1,
+                        ];
+                    }
+                    /*if ($debit) {
                         $tr->update([
                             "status" => 1
                         ]);
-                        $credit = CardService::credit([
-                            'token' => $card->token,
-                            'amount' => $params['params']['limit'],
-                        ]);
-                        if ($credit) {
-                            $tr->update([
-                                'status' => 2
-                            ]);
-                            $card->update([
-                                'status' => 1,
-                                'balance' => $params['params']['limit'],
-                            ]);
-                            return [
-                                'number' => $card->number,
-                                'expire' => $card->expire,
-                                'phone' => $card->phone,
-                                'balance' => (int)$card->balance,
-                                'owner' => $card->owner,
-                                'token' => $card->token,
-                                'status' => 1,
-                            ];
-                        }
-                    }
+
+                    }*/
 
                     return [
                         "error" => [
