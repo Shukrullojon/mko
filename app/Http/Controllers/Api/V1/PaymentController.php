@@ -20,12 +20,13 @@ class PaymentController extends Controller
 {
     public function confirm($params)
     {
+        $cardLater = Card::where('type', 2)->first();
         $card = Card::where('token', $params['params']['token'])->first();
         $client = Client::where('card_id', $card->id)->first();
         $merchant = Merchant::where('key', $params['params']['key'])->first();
         $period = MerchantPeriod::where('id', $params['params']['period_id'])->where('merchant_id', $merchant->id)->first();
 
-        if (empty($card) or empty($client) or empty($merchant) or empty($period)) {
+        if (empty($card) or empty($client) or empty($merchant) or empty($period) or $cardLater->balance < $params['params']['amount']) {
             return ErrorHelper::error300();
         }
 
@@ -206,9 +207,9 @@ class PaymentController extends Controller
 
         $phone = substr($card->phone, -9);
         $sendsms = SendUniredSms::apply($phone, rand(1000, 9999), $payment->tr_id);
-
         return [
-            'tr_id' => $payment->tr_id
+            'tr_id' => $payment->tr_id,
+            'phone' => $card->phone
         ];
 
     }
@@ -217,13 +218,13 @@ class PaymentController extends Controller
     public function byCardConfirm($params) {
 
         $tr_id = $params['params']['tr_id'];
-        $payment = Payment::where('tr_id', $tr_id)->first();
-        $sms = SmsLog::where('payment_tr_id', $tr_id)->where('status', 2)->latest()->first();
-
-        $card = Card::where('token', $payment->sender_card)->first();
-        $merchant = Merchant::where('id', $payment->merchant_id)->first();
-
+        $payment = Payment::where('tr_id', $tr_id)->where('status', 0)->first();
+        $sms = SmsLog::where('payment_tr_id', $tr_id)->where('status', 2)
+            ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-20 minutes")))->latest()->first();
+        
         if ($payment and $sms){
+            $card = Card::where('token', $payment->sender_card)->first();
+            $merchant = Merchant::where('id', $payment->merchant_id)->first();
             try {
                 $debit = CardService::debit([
                     'token' => $payment->sender_card,
@@ -276,6 +277,13 @@ class PaymentController extends Controller
                     ],
                 ];
             }
+        }else {
+            return [
+                'error' => [
+                    "code" => 3231,
+                    "message" => 'Payment error'
+                ],
+            ];
         }
 
     }
