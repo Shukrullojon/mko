@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use PlayMobile\SMS\SmsService;
-use PlayMobile\SMS\Models\SmsLog;
+use App\Models\Pages\SmsLog;
 
 class SendUniredSms
 {

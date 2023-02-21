@@ -14,7 +14,7 @@ use App\Services\CardService;
 use App\Services\MerchantService;
 use App\Services\SendUniredSms;
 use Illuminate\Support\Str;
-use PlayMobile\SMS\Models\SmsLog;
+use App\Models\Pages\SmsLog;
 
 class PaymentController extends Controller
 {
