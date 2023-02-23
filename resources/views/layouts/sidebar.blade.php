@@ -22,9 +22,9 @@
         @endcan
         @can('report.index')
             <li class="nav-item">
-                <a href="{{ route('reportIndex') }}" class="nav-link {{ Request::is('report*') ? "active":'' }}">
-                    <i class="fas fa-file"></i>
-                    <p>@lang('cruds.report.report')</p>
+                <a href="{{ route('distributeIndex') }}" class="nav-link {{ Request::is('distribute*') ? "active":'' }}">
+                    <i class="fas fa-file-alt"></i>
+                    <p>distribute</p>
                 </a>
             </li>
         @endcan
@@ -55,7 +55,14 @@
                 </a>
             </li>
         @endcan
-
+            @can('report.index')
+                <li class="nav-item">
+                    <a href="{{ route('reportIndex') }}" class="nav-link {{ Request::is('report*') ? "active":'' }}">
+                        <i class="fas fa-file-archive"></i>
+                        <p>@lang('cruds.report.report')</p>
+                    </a>
+                </li>
+            @endcan
 
         @canany([
   'permission.show',

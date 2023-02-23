@@ -3,18 +3,29 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pages\Payment;
+use App\Models\Pages\Transaction;
 use Illuminate\Http\Request;
 
-class ReportController extends Controller
+class DistributeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.report.index');
+        $payments = new Payment();
+        if($request->has('date') and $request->date){
+            $payments = $payments->where('date', $request->date);
+        }
+        $payments = $payments->orderBy('id', 'DESC')->paginate(20);
+        $transactions = Transaction::all();
+        return view('pages.distribute.index', [
+            'payments' => $payments,
+            'transactions' => $transactions
+        ]);
     }
 
     /**

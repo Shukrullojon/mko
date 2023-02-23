@@ -28,7 +28,15 @@ return [
         'is_unired' => 'Униред',
     ],
     'report' => [
-        'report' => 'Oтчёт'
+        'report' => 'Oтчёты',
+        'posting_date' => 'Дата проводки',
+        'operation_day_dates' => 'Дата операционного дня',
+        'transaction_number' => 'Номер транзакции',
+        'sender_name' => 'Наименования отправителя',
+        'recipient' => 'Получателя денежных средств',
+        'purpose_text' => 'Назначение платежа',
+        'debit' => 'Дебет',
+        'credit' => 'Кредит'
     ],
     'status' => [
         '1' => '✅',

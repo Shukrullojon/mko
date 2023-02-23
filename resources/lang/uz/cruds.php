@@ -28,7 +28,15 @@ return [
         'is_unired' => 'Unired',
     ],
     'report' => [
-        'report' => 'Hisobot'
+        'report' => 'Hisobotlar',
+        'posting_date' => 'To\'lov sanasi',
+        'operation_day_dates' => 'To\'lov amalga oshirilgan sanalar',
+        'transaction_number' => 'Tranzaksiya nomeri',
+        'sender_name' => 'Sender',
+        'recipient' => 'Merchant',
+        'purpose_text' => 'Purpose',
+        'debit' => 'Debet',
+        'credit' => 'Kredit'
     ],
     'status' => [
         '1' => '✅',
