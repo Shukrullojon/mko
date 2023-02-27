@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'],function (){
     // Report
     Route::group(['prefix'=>'report', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
         Route::get('/report', 'ReportController@index')->name('reportIndex');
+        Route::get('/report/show/{id}', 'ReportController@show')->name('reportShow');
+        Route::get('/report/export', 'ReportController@export')->name('reportExport');
     });
     // Clients
     Route::group(['prefix'=>'client', 'namespace'=>'\App\Http\Controllers\Pages'], function(){

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Exports\ReportExport;
 use App\Http\Controllers\Controller;
+use App\Models\Pages\Payment;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -12,9 +15,22 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.report.index');
+        $paymentsQuery = Payment::query();
+        if ($request->has('fromDate') and $request->fromDate) {
+            $paymentsQuery->where('date', '>=', $request->fromDate);
+        }
+        if ($request->has('toDate') and $request->toDate) {
+            $paymentsQuery->where('date', '<=', $request->toDate);
+
+        }
+        $payments = $paymentsQuery->with('merchant:id,name',
+            'client:id,first_name,middle_name,last_name',
+            'transactions')->paginate(10);
+        return view('pages.report.index', [
+            'payments' => $payments,
+        ]);
     }
 
     /**
@@ -46,7 +62,9 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('pages.report.show', [
+            'payment' => Payment::findOrFail($id)
+        ]);
     }
 
     /**
@@ -55,9 +73,18 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function export(Request $request)
     {
-        //
+        $fromDate = '';
+        $toDate = '';
+        if ($request->has('fromDate') and $request->fromDate) {
+            $fromDate = $request->fromDate;
+        }
+        if ($request->has('toDate') and $request->toDate) {
+            $toDate = $request->toDate;
+        }
+
+        return Excel::download(new ReportExport($fromDate, $toDate), 'reportExcel.xlsx');
     }
 
     /**

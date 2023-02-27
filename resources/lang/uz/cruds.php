@@ -36,7 +36,16 @@ return [
         'recipient' => 'Merchant',
         'purpose_text' => 'Purpose',
         'debit' => 'Debet',
-        'credit' => 'Kredit'
+        'credit' => 'Kredit',
+        'transaction_report' => 'Tranzaksiya hisoboti',
+        'date_issue' => 'Berilgan sana',
+        'transaction_amount' => 'Tranzaksiya summasi',
+        'merchant_name' => 'Merchant nomi',
+        'fio' => 'FIO',
+        'client_id' => 'Klient Id',
+        'comission_paylater' => 'Paylater hissasi',
+        'vat' => 'QQS 12%',
+        'comission_it_unisoft' => 'IT Unisoft hissasi',
     ],
     'status' => [
         '1' => '✅',

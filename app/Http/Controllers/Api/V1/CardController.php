@@ -23,6 +23,25 @@ class CardController extends Controller
             return $this->errorException($exception);
         }
     }
+    /* - */
+    public function getCard($params){
+            $cards = Card::where('phone', $params['params']['phone'])->get();
+            $arr = [];
+            if($cards) {
+                foreach ($cards as $card) {
+                    $arr[] = $card->number;
+                }
+
+            }else {
+                return [
+                    'msg' => 'Card not found'
+                ];
+            }
+        return [
+            'cards' => $arr
+        ];
+
+    }
 
     public function card($params){
         try {

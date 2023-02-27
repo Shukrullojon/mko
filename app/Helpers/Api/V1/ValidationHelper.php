@@ -79,6 +79,10 @@ class ValidationHelper
                 "params.tr_id" => "required|exists:payments,tr_id",
                 "params.code" => "required|numeric"
             ];
+        }else if($params['method'] == "card.getCard"){
+            return [
+                "params.phone" => "required|string"
+            ];
         }else{
             return [
                 "method" => [
@@ -97,7 +101,8 @@ class ValidationHelper
                     card.card,
                     transaction.send,
                     payment.byCard,
-                    payment.byCardConfirm,",
+                    payment.byCardConfirm,
+                    card.getCard",
                 ],
             ];
         }

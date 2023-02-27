@@ -19,60 +19,153 @@
     </section>
     <!-- Main content -->
     <section class="content">
-        <div class="container-fluid">
-            <!-- /.card -->
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                </div>
-                <div class="card-body">
-                    <h4>Custom Content Below</h4>
-                    <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill"
-                               href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home"
-                               aria-selected="true">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill"
-                               href="#custom-content-below-profile" role="tab"
-                               aria-controls="custom-content-below-profile" aria-selected="false">Profile</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="custom-content-below-tabContent">
-                        <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel"
-                             aria-labelledby="custom-content-below-home-tab">
-                            <div class="card">
-                                <div class="card-header">
-                                    <tr>
-                                        <th>@lang('cruds.report.posting_date')</th>
-                                        <th>@lang('cruds.report.operation_day_dates')</th>
-                                        <th>@lang('cruds.report.operation_day_dates')</th>
-                                        <th>@lang('cruds.report.operation_day_dates')</th>
-                                        <th>@lang('cruds.report.operation_day_dates')</th>
-                                    </tr>
-                                </div>
-                                <div class="card-body">
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+        <div class="row">
+            <div class="col-12">
+                <div class="container-fluid">
+                    <!-- /.card -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home1" data-toggle="pill"
+                                       href="#home" role="tab" aria-controls="custom-content-below-home"
+                                       aria-selected="true">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile1" data-toggle="pill" href="#profile" role="tab"
+                                       aria-controls="custom-content-above-transaction_report"
+                                       aria-selected="false">@lang('cruds.report.transaction_report')</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="home">
+                                <div class="tab-pane fade show active home" id="home" role="tabpanel"
+                                     aria-labelledby="custom-content-below-home-tab">
+                                    <table class="table table-bordered table-striped dataTable dtr-inline">
+                                        <thead>
+                                        <tr>
+                                            <th>@lang('cruds.report.posting_date')</th>
+                                            <th>@lang('cruds.report.operation_day_dates')</th>
+                                            <th>@lang('cruds.report.transaction_number')</th>
+                                            <th>@lang('cruds.report.sender_name')/<br>@lang('cruds.report.recipient')
+                                                /<br>@lang('cruds.report.purpose_text')</th>
+                                            <th>@lang('cruds.report.debit')</th>
+                                            <th>@lang('cruds.report.credit')</th>
+                                            <th>@lang('global.action')</th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                            <div class="tab-pane fade profile" id="profile" role="tabpanel"
+                                 aria-labelledby="custom-content-above-transaction_report-tab">
+                                <button class="btn btn-sm btn-success"><i class="fa fa-file-excel"></i></button>
+                                <table class="table table-bordered table-striped dataTable dtr-inline">
+                                    <thead>
+                                    <tr>
+                                        <th>@lang('cruds.report.date_issue')</th>
+                                        <th>@lang('cruds.report.transaction_number')</th>
+                                        <th>@lang('cruds.report.transaction_amount')</th>
+                                        <th>@lang('cruds.report.merchant_name')</th>
+                                        <th>@lang('cruds.report.fio')</th>
+                                        <th>@lang('cruds.report.client_id')</th>
+                                        <th>@lang('cruds.report.comission_paylater')</th>
+                                        <th>@lang('cruds.report.vat')</th>
+                                        <th>@lang('cruds.report.comission_it_unisoft')</th>
+                                        <th>@lang('global.action')</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">
+                                            <input type="date" class="form-control" name="fromDate"
+                                                   value="{{ request()->input('fromDate') }}">
+                                        </th>
+                                        <th colspan="3">
+                                            <input type="date" class="form-control" name="toDate"
+                                                   value="{{ request()->input('toDate') }}">
+                                        </th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th style="white-space: nowrap">
+                                            <button name="accountSearch" class="btn btn-default" type="submit">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                            <a href="{{ route("reportIndex") }}" class="btn btn-danger">
+                                                <span class="fa fa-reply"></span>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($payments as $payment)
+                                        <tr>
+                                            <td style="min-width: 50px">{{ $payment->date }}</td>
+                                            <td>{{ $payment->tr_id }}</td>
+                                            <td>{{ number_format($payment->amount/100) }} UZS</td>
+                                            <td>{{ $payment->merchant->name }}</td>
+                                            <td>{{ $payment->client->first_name.' '.$payment->client->middle_name.' '.$payment->client->last_name }}</td>
+                                            <td>{{ $payment->client->id }}</td>
+                                            <td>
+                                                @foreach($payment->transactions as $trans)
+                                                    @if ($trans->percentage == 21)
+                                                        {{ number_format($trans->amount/100) }} UZS
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                @foreach($payment->transactions as $trans)
+                                                    @if ($trans->percentage == 2)
+                                                        {{ number_format($trans->amount/100) }} UZS
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td></td>
+                                            {{--                                    <td><a href="{{ route('reportShow', $payment->id) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a></td>--}}
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    <br>
+                                </table>
+                                {{ $payments->links() }}
+                            </div>
+                            <div class="tab-custom-content">
+                                <p class="lead mb-0">Custom Content goes here</p>
+                            </div>
+
                         </div>
-
+                        <!-- /.card -->
                     </div>
-                    <div class="tab-custom-content">
-                        <p class="lead mb-0">Custom Content goes here</p>
-                    </div>
-
                 </div>
-                <!-- /.card -->
             </div>
             <!-- /.card -->
         </div>
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+@endsection
+@section('scripts')
+    <script>
+        const home1 = document.getElementById("home1");
+        const home = document.getElementById("home");
+        const profile1 = document.getElementById("profile1");
+        const profile = document.getElementById("profile");
+        // console.log(profile1)
+        home1.addEventListener('click', (e) => {
+            if (home.classList.contains('d-none')) {
+                home.classList.remove('d-none')
+            }
+            profile.classList.add('d-none')
+        })
+        profile1.addEventListener('click', (e) => {
+            if (profile.classList.contains('d-none')) {
+                profile.classList.remove('d-none')
+            }
+            home.classList.add('d-none')
+        })
+    </script>
 @endsection

@@ -36,7 +36,16 @@ return [
         'recipient' => 'Получателя денежных средств',
         'purpose_text' => 'Назначение платежа',
         'debit' => 'Дебет',
-        'credit' => 'Кредит'
+        'credit' => 'Кредит',
+        'transaction_report' => 'Oтчет по транзакциям',
+        'date_issue' => 'Дата выдачи',
+        'transaction_amount' => 'Сумма транзаксии ',
+        'merchant_name' => 'Наименование мерчанта',
+        'fio' => 'ФИО клиента',
+        'client_id' => 'Ид клиента ',
+        'comission_paylater' => 'Kомиссия пайлатер',
+        'vat' => 'HДС 12%',
+        'comission_it_unisoft' => 'Kомиссия IT Unisoft',
     ],
     'status' => [
         '1' => '✅',
