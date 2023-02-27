@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Exports\ReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Payment;
+use App\Models\Pages\Transaction;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
-class ReportController extends Controller
+class DistributeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,19 +16,15 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $paymentsQuery = Payment::query();
-        if ($request->has('fromDate') and $request->fromDate) {
-            $paymentsQuery->where('date', '>=', $request->fromDate);
+        $payments = new Payment();
+        if($request->has('date') and $request->date){
+            $payments = $payments->where('date', $request->date);
         }
-        if ($request->has('toDate') and $request->toDate) {
-            $paymentsQuery->where('date', '<=', $request->toDate);
-
-        }
-        $payments = $paymentsQuery->with('merchant:id,name',
-            'client:id,first_name,middle_name,last_name',
-            'transactions')->paginate(10);
-        return view('pages.report.index', [
+        $payments = $payments->orderBy('id', 'DESC')->paginate(20);
+        $transactions = Transaction::all();
+        return view('pages.distribute.index', [
             'payments' => $payments,
+            'transactions' => $transactions
         ]);
     }
 
@@ -62,9 +57,7 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        return view('pages.report.show', [
-            'payment' => Payment::findOrFail($id)
-        ]);
+        //
     }
 
     /**
@@ -73,18 +66,9 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function export(Request $request)
+    public function edit($id)
     {
-        $fromDate = '';
-        $toDate = '';
-        if ($request->has('fromDate') and $request->fromDate) {
-            $fromDate = $request->fromDate;
-        }
-        if ($request->has('toDate') and $request->toDate) {
-            $toDate = $request->toDate;
-        }
-
-        return Excel::download(new ReportExport($fromDate, $toDate), 'reportExcel.xlsx');
+        //
     }
 
     /**
