@@ -24,6 +24,7 @@ return [
         'brands' => 'Brendlar',
         'brand_name' => 'Brend',
         'logo' => 'Logotip',
+        'purpose' => 'Purpos',
         'status' => 'Status',
         'is_unired' => 'Unired',
     ],

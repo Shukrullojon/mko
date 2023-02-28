@@ -24,6 +24,7 @@ return [
         'brands' => 'Бренды',
         'brand_name' => 'Бренд',
         'logo' => 'Логотип',
+        'purpose' => 'Назначение',
         'status' => 'Статус',
         'is_unired' => 'Униред',
     ],
