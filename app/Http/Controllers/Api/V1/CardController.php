@@ -8,9 +8,10 @@ use App\Models\Pages\Card;
 
 class CardController extends Controller
 {
-    public function info($params){
+    public function info($params)
+    {
         try {
-            $card = Card::where('token',$params['params']['token'])->first();
+            $card = Card::where('token', $params['params']['token'])->first();
             return [
                 'number' => $card->number,
                 'expire' => $card->expire,
@@ -19,44 +20,44 @@ class CardController extends Controller
                 'phone' => $card->phone,
                 'status' => $card->status,
             ];
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return $this->errorException($exception);
         }
     }
+    
     /* - */
-    public function getCard($params){
-            $cards = Card::where('phone', $params['params']['phone'])->get();
-            $arr = [];
-            if($cards) {
-                foreach ($cards as $card) {
-                    $arr[] = $card->number;
-                }
-
-            }else {
-                return [
-                    'msg' => 'Card not found'
-                ];
-            }
-        return [
-            'cards' => $arr
-        ];
+    public function getCard($params)
+    {
+        $card = Card::where('phone', $params['params']['phone'])->first();
+        if ($card) {
+            return [
+                'card' => $card->number,
+                'balance' => $card->balance
+            ];
+        } else {
+            return [
+                'msg' => 'Card not found'
+            ];
+        }
 
     }
 
-    public function card($params){
+    public function card($params)
+    {
         try {
-            $card = Card::where('token',$params['params']['token'])->first();
+            $card = Card::where('token', $params['params']['token'])->first();
             return [
                 'limit' => (int)$card->client->limit ?? "",
                 'balance' => (int)$card->balance ?? "",
                 'transaction_amount' => (int)$card->paymentSum->amount ?? "",
             ];
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return $this->errorException($exception);
         }
     }
 
-    public function errorException($exception){
+    public function errorException($exception)
+    {
         return [
             'error' => [
                 'code' => 500,
