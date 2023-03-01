@@ -44,7 +44,6 @@ class PaymentSentCommand extends Command
     public function handle()
     {
         $transaction = Transaction::where('type', 0)->first();
-        dd($transaction);
         $card = Card::where('token', $transaction->receiver_card)->first();
         $account = Account::where('card_id', $card->id)->first();
         $merchant = Merchant::where('account_id', $account->id)->first();
