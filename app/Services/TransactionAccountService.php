@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Pages\Account;
+use App\Models\Pages\Brand;
+use App\Models\Pages\Card;
 use App\Models\Pages\Transaction;
 use App\Models\Pages\TransactionAccount;
 
@@ -15,7 +17,7 @@ class TransactionAccountService
         $bAccount = Account::where('type',5)->first();
         foreach ($transactions as $transaction) {
             if($transaction->type == 1){
-                //continue;
+                continue;
                 $abs = AbsService::transaction([
                     'type' => "101",
                     'sender_account' => $account->number,
@@ -49,8 +51,7 @@ class TransactionAccountService
                         'status' => 1,
                     ]);
                 }
-            }
-            else if($transaction->type == 0){
+            }else if($transaction->type == 0){
                 $abs = AbsService::transaction([
                     'type' => "101",
                     'sender_account' => $account->number,
@@ -63,7 +64,7 @@ class TransactionAccountService
                     'recipient_name' => $transaction->account->name,
                     'purpose' => [
                         "code" => "00668",
-                        "name" => "перевод (дата: " . date("Y-m-d H:i:s") . ") "."} ID{V".str_pad($transaction->id,12,'0',STR_PAD_LEFT)."V}",
+                        "name" => $transaction->payment->merchant->brand->purpose ?? " "." "."перевод (дата: " . date("Y-m-d H:i:s") . ") "."} ID{V".str_pad($transaction->id,12,'0',STR_PAD_LEFT)."V}",
                     ],
                     'amount' => ($transaction->amount * (100 - $bAccount->percentage))/100,
                 ]);
