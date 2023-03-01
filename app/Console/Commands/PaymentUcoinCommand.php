@@ -41,7 +41,7 @@ class PaymentUcoinCommand extends Command
      */
     public function handle()
     {
-        $payments = Payment::where('is_ucoin',null)->get();
+        $payments = Payment::where('is_ucoin',null)->where('status',1)->get();
         $card = Card::where('type',2)->first();
         foreach ($payments as $payment){
             $debit = CardService::debit([
