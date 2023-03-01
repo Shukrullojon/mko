@@ -17,6 +17,7 @@ class CreateBrandesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('logo');
+            $table->text('pupose');
             $table->boolean('is_unired');
             $table->boolean('status');
             $table->timestamps();

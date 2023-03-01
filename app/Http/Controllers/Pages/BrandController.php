@@ -71,6 +71,7 @@ class BrandController extends Controller
             $brand = Brand::create([
                 'name' => $request->brand_name,
                 'logo' => asset('/').'/images/'.$fileName,
+                'purpose' => $request->purpose,
                 'status' => $request->status,
                 'is_unired' => $request->is_unired,
             ]);

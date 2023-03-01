@@ -56,6 +56,16 @@
                                         <span class="error invalid-feedback">{{ $errors->first('logo') }}</span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label>@lang('cruds.brand.purpose')</label>
+                                    <label for="*" style="color:red">*</label>
+                                    <input type="text" name="purpose" value="{{ old('purpose') }}"
+                                           class="form-control {{ $errors->has('purpose') ? "is-invalid":"" }}"
+                                           autocomplete="off" required>
+                                    @if($errors->has('purpose'))
+                                        <span class="error invalid-feedback">{{ $errors->first('purpose') }}</span>
+                                    @endif
+                                </div>
 
                                 <div class="form-group">
                                     <label>@lang('cruds.brand.status')</label>

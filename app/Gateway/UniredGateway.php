@@ -6,11 +6,11 @@ class UniredGateway
 {
     public static function fire($data)
     {
-        //$url = https://mko.unired.uz/api/client/create
         $ch = curl_init($data['url']);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Content-Type: application/json',
                 "Accept: application/json",
+                "Authorization: Bearer mq21GX4GJ612v6CCdSTU0hbakJSuc31DuC6UN38JW4vUWxe7ul4Imvf52tcmZjo0P0ejxZ",
             )
         );
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);

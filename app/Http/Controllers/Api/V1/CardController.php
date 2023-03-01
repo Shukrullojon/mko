@@ -24,7 +24,7 @@ class CardController extends Controller
             return $this->errorException($exception);
         }
     }
-    
+
     /* - */
     public function getCard($params)
     {

@@ -16,6 +16,7 @@ class ClientController extends Controller
 {
     public function create($params)
     {
+//        dd("Комиссия согласно договору (M-1) от (27.12.2022){'ЯТТ Mirazaxmatov E.M'} перевод (дата: " . date("Y-m-d H:i:s") . ") "."} ID{V".str_pad(10,12,'0',STR_PAD_LEFT)."V}");
         try {
             /*$cardLater = Card::where('type', 2)->first();
             if ($cardLater->balance < $params['params']['limit']) {
@@ -80,11 +81,11 @@ class ClientController extends Controller
                         'token' => $cardLater->token,
                         'amount' => $params['params']['limit'],
                     ]);*/
-                    $credit = CardService::credit([
+                    /*$credit = CardService::credit([
                         'token' => $card->token,
                         'amount' => $params['params']['limit'],
-                    ]);
-                    if ($credit) {
+                    ]);*/
+//                    if ($credit) {
                         /*$tr->update([
                             'status' => 2
                         ]);*/
@@ -101,14 +102,14 @@ class ClientController extends Controller
                             'token' => $card->token,
                             'status' => 1,
                         ];
-                    }
-                    /*if ($debit) {
-                        $tr->update([
-                            "status" => 1
-                        ]);
 
-                    }*/
+                        /*if ($debit) {
+                            $tr->update([
+                                "status" => 1
+                            ]);
 
+                        }*/
+//                    }
                     return [
                         "error" => [
                             "code" => 424,

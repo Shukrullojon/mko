@@ -35,7 +35,7 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>@lang('cruds.brand.brand_name')</label>
                                             <label for="*" style="color:red">*</label>
@@ -48,7 +48,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>@lang('cruds.brand.status')</label>
                                             <label for="*" style="color:red">*</label>
@@ -60,6 +60,18 @@
                                             </select>
                                         </div>
 
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>@lang('cruds.brand.is_unired')</label>
+                                            <label for="*" style="color:red">*</label>
+                                            <select name="is_unired" id="" class="form-control">
+                                                <option value="1"
+                                                        @if($brand->is_unired) selected @endif>@lang('cruds.status.1')</option>
+                                                <option value="0"
+                                                        @if(!$brand->is_unired) selected @endif>@lang('cruds.status.0')</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -77,14 +89,15 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>@lang('cruds.brand.is_unired')</label>
+                                            <label>@lang('cruds.brand.purpose')</label>
                                             <label for="*" style="color:red">*</label>
-                                            <select name="is_unired" id="" class="form-control">
-                                                <option value="1"
-                                                        @if($brand->is_unired) selected @endif>@lang('cruds.status.1')</option>
-                                                <option value="0"
-                                                        @if(!$brand->is_unired) selected @endif>@lang('cruds.status.0')</option>
-                                            </select>
+                                            <input type="text" name="purpose"
+                                                   class="form-control {{ $errors->has('purpose') ? "is-invalid":"" }}"
+                                                   value="{{ old('purpose',$brand->name) }}" required>
+                                            @if($errors->has('purpose') || 1)
+                                                <span
+                                                    class="error invalid-feedback">{{ $errors->first('purpose') }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
