@@ -9,7 +9,7 @@ class UniredService
     public static function clientSent($data)
     {
         return UniredGateway::fire([
-            "url" => "https://mko.unired.uz/api/client/create",
+            "url" => "https://mko.unired.uz/api/contract/create",
             "data" => [
                 "client_id" => $data['client_id'],
                 "client_code" => $data['client_code'],

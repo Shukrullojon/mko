@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Pages\Account;
+use App\Models\Pages\Brand;
+use App\Models\Pages\Card;
 use App\Models\Pages\Transaction;
 use App\Models\Pages\TransactionAccount;
 
@@ -49,6 +51,10 @@ class TransactionAccountService
                     ]);
                 }
             }else if($transaction->type == 0){
+//                $card = Card::where('token', $transaction->receiver_card)->first();
+//                $account = Account::where('card_id', $card->id)->first();
+//                $merchant = Merchant::where('account_id', $account->id)->first();
+//                $brand = Brand::where('id', $merchant->brand_id)->first();
                 $abs = AbsService::transaction([
                     'type' => "101",
                     'sender_account' => $account->number,
