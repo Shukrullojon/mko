@@ -15,7 +15,7 @@ class TransactionAccountService
         $bAccount = Account::where('type',5)->first();
         foreach ($transactions as $transaction) {
             if($transaction->type == 1){
-                continue;
+                //continue;
                 $abs = AbsService::transaction([
                     'type' => "101",
                     'sender_account' => $account->number,
@@ -49,7 +49,8 @@ class TransactionAccountService
                         'status' => 1,
                     ]);
                 }
-            }else if($transaction->type == 0){
+            }
+            else if($transaction->type == 0){
                 $abs = AbsService::transaction([
                     'type' => "101",
                     'sender_account' => $account->number,
