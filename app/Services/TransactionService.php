@@ -15,7 +15,7 @@ class TransactionService
 {
     public static function transaction()
     {
-        $payments = Payment::where('is_transaction', 0)->get();
+        $payments = Payment::where('is_transaction', 0)->where('status',1)->get();
         $accountItUnisoft = Account::where('type', 3)->first();
         $accountMko = Account::where('type', 4)->first();
 
