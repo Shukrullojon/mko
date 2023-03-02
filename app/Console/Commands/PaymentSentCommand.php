@@ -54,6 +54,7 @@ class PaymentSentCommand extends Command
             $response = UniredService::paymentSent([
                 'amount' => $payment->amount,
                 'transaction_id' => $payment->id,
+                'merchant_id' => $payment->merchant_id,
                 'period' => $payment->period,
                 'card_number' => $payment->client->card->number ?? "",
                 'date' => $payment->date ?? "",

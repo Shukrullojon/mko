@@ -8,6 +8,9 @@ return [
     'client' => [
         'clients' => "Клиенты",
     ],
+    'paylater' => [
+        'index' => "PAY LATER 21%",
+    ],
     'account' => [
         'account' => 'Счета',
         'type' => 'Тип',

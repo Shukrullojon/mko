@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\ClientSentCommand;
 use App\Console\Commands\GetAccountHistoryCommand;
 use App\Console\Commands\PaymentSentCommand;
+use App\Console\Commands\PaymentUcoinCommand;
 use App\Console\Commands\TransactionAccountCommand;
 use App\Console\Commands\TransactionCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         ClientSentCommand::class,
         PaymentSentCommand::class,
         GetAccountHistoryCommand::class,
+        PaymentUcoinCommand::class,
     ];
 
     /**
@@ -36,6 +38,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command("clientsent")->everyMinute();
         $schedule->command("paymentsent")->everyMinute();
         $schedule->command("getaccounthistory")->everyFiveMinutes();
+        $schedule->command("paymentucoin")->everyFiveMinutes();
     }
 
     /**
