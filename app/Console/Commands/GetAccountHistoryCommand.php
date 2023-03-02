@@ -27,7 +27,8 @@ class GetAccountHistoryCommand extends Command
      */
     protected $description = 'Transaction account description';
 
-    /**
+
+     /**
      * Create a new command instance.
      *
      * @return void
