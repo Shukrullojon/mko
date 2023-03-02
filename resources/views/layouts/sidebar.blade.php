@@ -22,7 +22,8 @@
         @endcan
         @can('report.index')
             <li class="nav-item">
-                <a href="{{ route('distributeIndex') }}" class="nav-link {{ Request::is('distribute*') ? "active":'' }}">
+                <a href="{{ route('distributeIndex') }}"
+                   class="nav-link {{ Request::is('distribute*') ? "active":'' }}">
                     <i class="fas fa-file-alt"></i>
                     <p>distribute</p>
                 </a>
@@ -55,14 +56,24 @@
                 </a>
             </li>
         @endcan
-            @can('report.index')
-                <li class="nav-item">
-                    <a href="{{ route('reportIndex') }}" class="nav-link {{ Request::is('report*') ? "active":'' }}">
-                        <i class="fas fa-file-archive"></i>
-                        <p>@lang('cruds.report.report')</p>
-                    </a>
-                </li>
-            @endcan
+
+        @can('report.index')
+            <li class="nav-item">
+                <a href="{{ route('reportIndex') }}" class="nav-link {{ Request::is('report*') ? "active":'' }}">
+                    <i class="fas fa-file-archive"></i>
+                    <p>@lang('cruds.report.report')</p>
+                </a>
+            </li>
+        @endcan
+
+        @can('paylater.index')
+            <li class="nav-item">
+                <a href="{{ route('laterIndex') }}" class="nav-link {{ Request::is('later*') ? "active":'' }}">
+                    <i class="fas fa-cog"></i>
+                    <p>@lang('cruds.paylater.index')</p>
+                </a>
+            </li>
+        @endcan
 
         @canany([
   'permission.show',

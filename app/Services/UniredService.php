@@ -35,7 +35,7 @@ class UniredService
                 "first_name" => $data['first_name'],
                 "last_name" => $data['last_name'],
                 "middle_name" => $data['middle_name'],
-
+                "merchant_id" => $data['merchant_id'],
                 "date" => $data['date'],
                 "transaction_id" => $data['transaction_id'],
                 "period" => $data['period'],
