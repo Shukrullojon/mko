@@ -24,7 +24,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">@lang('cruds.paylater.index')</h3>
+
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -44,16 +44,27 @@
                             @foreach($transactions as $transaction)
                                 <tr>
                                     <td>
-                                        {{ $transaction->payment->client->first_name ?? "" }}
-                                        {{ $transaction->payment->client->last_name ?? "" }}</td>
-                                    <td>
-                                        {{ number_format($transaction->amount/100) }}
+                                        <a href="{{ route("clientShow",$transaction->payment->client->id) }}">
+                                            {{ $transaction->payment->client->first_name ?? "" }}
+                                            {{ $transaction->payment->client->last_name ?? "" }}
+                                        </a>
                                     </td>
                                     <td>
-                                        {{ $transaction->is_sent }}
+                                        {{ number_format($transaction->amount/100) }} UZS
                                     </td>
                                     <td>
-                                        <a href="{{ route("laterSent",$transaction->id) }}" class="btn btn-success">Sent</a>
+                                        @if($transaction->is_sent == 1)
+                                            ✅
+                                        @elseif($transaction->is_sent == 0)
+                                            ❌
+                                        @else
+
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($transaction->is_sent != 1)
+                                            <a href="{{ route("laterSent",$transaction->id) }}" onclick="return confirm('Вы уверены?')" class="btn btn-success">Sent</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
