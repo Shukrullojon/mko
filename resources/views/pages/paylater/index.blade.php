@@ -44,7 +44,7 @@
                             @foreach($transactions as $transaction)
                                 <tr>
                                     <td>
-                                        <a href="{{ route("clientShow",$transaction->payment->client->id) }}">
+                                        <a href="{{ route("clientShow",$transaction->payment->client->id) }}" target="_blank">
                                             {{ $transaction->payment->client->first_name ?? "" }}
                                             {{ $transaction->payment->client->last_name ?? "" }}
                                         </a>
