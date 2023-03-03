@@ -53,7 +53,7 @@
                                         {{ $transaction->is_sent }}
                                     </td>
                                     <td>
-                                        <a class="btn btn-success">Sent</a>
+                                        <a href="{{ route("laterSent",$transaction->id) }}" class="btn btn-success">Sent</a>
                                     </td>
                                 </tr>
                             @endforeach
