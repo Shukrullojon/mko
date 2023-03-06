@@ -16,7 +16,6 @@ class ClientController extends Controller
 {
     public function create($params)
     {
-//        dd("Комиссия согласно договору (M-1) от (27.12.2022){'ЯТТ Mirazaxmatov E.M'} перевод (дата: " . date("Y-m-d H:i:s") . ") "."} ID{V".str_pad(10,12,'0',STR_PAD_LEFT)."V}");
         try {
             /*$cardLater = Card::where('type', 2)->first();
             if ($cardLater->balance < $params['params']['limit']) {

@@ -43,6 +43,11 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>@lang('cruds.brand.purpose')</th>
+                                    <td>{{ $brand->purpose }}</td>
+                                </tr>
+
+                                <tr>
                                     <th>@lang('cruds.brand.status')</th>
                                     <td>@lang('cruds.status.'.$brand->status)</td>
                                 </tr>

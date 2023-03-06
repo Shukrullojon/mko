@@ -84,7 +84,11 @@ class ValidationHelper
                 "params.phone" => "required|string"
             ];
         }else if($params['method'] == "transfer.account"){
-            return [];
+            return [
+                "params.sender" => "required|exists:cards,token",
+                "params.receiver" => "required|exists:accounts,number",
+                "params.amount" => "required|integer|min:1",
+            ];
         }else if($params['method'] == "transfer.ucoin"){
             return [
                 "params.sender" => "required|exists:cards,token",

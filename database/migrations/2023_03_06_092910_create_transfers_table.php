@@ -22,6 +22,7 @@ class CreateTransfersTable extends Migration
             $table->string('receiver')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->string('uuid')->nullable();
+            $table->string('transactionId',30)->nullable();
             $table->timestamps();
         });
     }
