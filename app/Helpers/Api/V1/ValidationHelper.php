@@ -92,7 +92,9 @@ class ValidationHelper
                 "params.amount" => "required|integer|min:1",
             ];
         }else if($params['method'] == "transfer.state"){
-
+            return [
+                "params.tr_id" => "required|exists:transfers,uuid",
+            ];
         }else{
             return [
                 "method" => [
