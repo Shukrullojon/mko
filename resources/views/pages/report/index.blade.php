@@ -79,25 +79,27 @@
                                         <th>@lang('global.action')</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">
-                                            <input type="date" class="form-control" name="fromDate"
-                                                   value="{{ request()->input('fromDate') }}">
-                                        </th>
-                                        <th colspan="3">
-                                            <input type="date" class="form-control" name="toDate"
-                                                   value="{{ request()->input('toDate') }}">
-                                        </th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th style="white-space: nowrap">
-                                            <button name="accountSearch" class="btn btn-default" type="submit">
-                                                <span class="fa fa-search"></span>
-                                            </button>
-                                            <a href="{{ route("reportIndex") }}" class="btn btn-danger">
-                                                <span class="fa fa-reply"></span>
-                                            </a>
-                                        </th>
+                                        <form action="" method="get">
+                                            <th colspan="3">
+                                                <input type="date" class="form-control" name="fromDate"
+                                                       value="{{ request()->input('fromDate') }}">
+                                            </th>
+                                            <th colspan="3">
+                                                <input type="date" class="form-control" name="toDate"
+                                                       value="{{ request()->input('toDate') }}">
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th style="white-space: nowrap">
+                                                <button name="accountSearch" class="btn btn-default" type="submit">
+                                                    <span class="fa fa-search"></span>
+                                                </button>
+                                                <a href="{{ route("reportIndex") }}" class="btn btn-danger">
+                                                    <span class="fa fa-reply"></span>
+                                                </a>
+                                            </th>
+                                        </form>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -149,23 +151,31 @@
     <!-- /.content -->
 @endsection
 @section('scripts')
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
     <script>
-        const home1 = document.getElementById("home1");
-        const home = document.getElementById("home");
-        const profile1 = document.getElementById("profile1");
-        const profile = document.getElementById("profile");
-        // console.log(profile1)
-        home1.addEventListener('click', (e) => {
-            if (home.classList.contains('d-none')) {
-                home.classList.remove('d-none')
-            }
-            profile.classList.add('d-none')
-        })
-        profile1.addEventListener('click', (e) => {
-            if (profile.classList.contains('d-none')) {
-                profile.classList.remove('d-none')
-            }
-            home.classList.add('d-none')
-        })
+        // const home1 = document.getElementById("home1");
+        // const home = document.getElementById("home");
+        // const profile1 = document.getElementById("profile1");
+        // const profile = document.getElementById("profile");
+        // // console.log(profile1)
+        // home1.addEventListener('click', (e) => {
+        //     if (home.classList.contains('d-none')) {
+        //         home.classList.remove('d-none')
+        //     }
+        //     profile.classList.add('d-none')
+        // });
+        // profile1.addEventListener('click', (e) => {
+        //     if (profile.classList.contains('d-none')) {
+        //         profile.classList.remove('d-none')
+        //     }
+        //     home.classList.add('d-none')
+        // });
+
+        $(document).on('pagebeforeshow', '#home', function () {
+        });
+        $(document).on('pagebeforeshow', '#profile', function () {
+        });
+
     </script>
 @endsection

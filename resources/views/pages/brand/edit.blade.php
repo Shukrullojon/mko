@@ -93,7 +93,7 @@
                                             <label for="*" style="color:red">*</label>
                                             <input type="text" name="purpose"
                                                    class="form-control {{ $errors->has('purpose') ? "is-invalid":"" }}"
-                                                   value="{{ old('purpose',$brand->name) }}" required>
+                                                   value="{{ old('purpose',$brand->purpose) }}" required>
                                             @if($errors->has('purpose') || 1)
                                                 <span
                                                     class="error invalid-feedback">{{ $errors->first('purpose') }}</span>

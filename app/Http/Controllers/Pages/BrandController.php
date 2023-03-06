@@ -132,6 +132,7 @@ class BrandController extends Controller
         }
 
         $brand->name = $request->brand_name;
+        $brand->purpose = $request->purpose;
         $brand->status = $request->status;
         $brand->is_unired = $request->is_unired;
         $brand->update();
