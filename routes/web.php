@@ -39,6 +39,13 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/index', 'PaymentController@index')->name('paymentIndex');
         Route::get('/show/{id}', 'PaymentController@show')->name('paymentShow');
     });
+
+    //paylater
+    Route::group(['prefix'=>'later', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
+        Route::get('/index', 'LaterController@index')->name('laterIndex');
+        Route::get('/sent/{id}', 'LaterController@sent')->name('laterSent');
+    });
+
     // distribute
     Route::group(['prefix'=>'distribute', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
         Route::get('/distribute', 'DistributeController@index')->name('distributeIndex');

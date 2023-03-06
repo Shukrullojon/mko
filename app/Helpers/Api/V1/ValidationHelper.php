@@ -37,7 +37,7 @@ class ValidationHelper
                 "params.token" => "required|exists:cards,token",
                 "params.key" => "required|exists:merchants,key",
                 "params.period_id" => "required|exists:merchant_periods,id",
-                "params.amount" => "required",
+                "params.amount" => "required|integer|min:1",
             ];
         }else if($params['method'] == "card.info"){
             return [
@@ -83,6 +83,18 @@ class ValidationHelper
             return [
                 "params.phone" => "required|string"
             ];
+        }else if($params['method'] == "transfer.account"){
+            return [];
+        }else if($params['method'] == "transfer.ucoin"){
+            return [
+                "params.sender" => "required|exists:cards,token",
+                "params.receiver" => "required|exists:cards,token",
+                "params.amount" => "required|integer|min:1",
+            ];
+        }else if($params['method'] == "transfer.state"){
+            return [
+                "params.tr_id" => "required|exists:transfers,uuid",
+            ];
         }else{
             return [
                 "method" => [
@@ -102,7 +114,11 @@ class ValidationHelper
                     transaction.send,
                     payment.byCard,
                     payment.byCardConfirm,
-                    card.getCard",
+                    card.getCard,
+                    transfer.account,
+                    transfer.ucoin,
+                    transfer.state,
+                    ",
                 ],
             ];
         }

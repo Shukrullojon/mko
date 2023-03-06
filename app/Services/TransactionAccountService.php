@@ -17,23 +17,26 @@ class TransactionAccountService
         $bAccount = Account::where('type',5)->first();
         foreach ($transactions as $transaction) {
             if($transaction->type == 1){
-                continue;
-                $abs = AbsService::transaction([
-                    'type' => "101",
-                    'sender_account' => $account->number,
-                    'sender_code_filial' => $account->filial,
-                    'sender_tax' => $account->inn,
-                    'sender_name' => $account->name,
-                    'recipient_account' => $transaction->account->number,
-                    'recipient_code_filial' => $transaction->account->filial,
-                    'recipient_tax' => $transaction->account->inn,
-                    'recipient_name' => $transaction->account->name,
-                    'purpose' => [
-                        "code" => "00668",
-                        "name" => "перевод (дата: " . date("Y-m-d H:i:s") . ") "."} ID{V".str_pad($transaction->id,12,'0',STR_PAD_LEFT)."V}",
-                    ],
-                    'amount' => $transaction->amount,
-                ]);
+                if($transaction->account->type == 4){
+                    $abs = AbsService::transaction([
+                        'type' => "101",
+                        'sender_account' => $account->number,
+                        'sender_code_filial' => $account->filial,
+                        'sender_tax' => $account->inn,
+                        'sender_name' => $account->name,
+                        'recipient_account' => $transaction->account->number,
+                        'recipient_code_filial' => $transaction->account->filial,
+                        'recipient_tax' => $transaction->account->inn,
+                        'recipient_name' => $transaction->account->name,
+                        'purpose' => [
+                            "code" => "00668",
+                            "name" => $transaction->payment->merchant->brand->purpose."перевод (дата: " . date("Y-m-d H:i:s") . ") "."} ID{V".str_pad($transaction->id,12,'0',STR_PAD_LEFT)."V}",
+                        ],
+                        'amount' => $transaction->amount,
+                    ]);
+                }else{
+                    continue;
+                }
                 if (isset($abs['status']) and $abs['status']) {
                     $debit = CardService::debit([
                         'token' => $transaction->receiver_card,
@@ -52,10 +55,6 @@ class TransactionAccountService
                     ]);
                 }
             }else if($transaction->type == 0){
-//                $card = Card::where('token', $transaction->receiver_card)->first();
-//                $account = Account::where('card_id', $card->id)->first();
-//                $merchant = Merchant::where('account_id', $account->id)->first();
-//                $brand = Brand::where('id', $merchant->brand_id)->first();
                 $abs = AbsService::transaction([
                     'type' => "101",
                     'sender_account' => $account->number,
@@ -85,7 +84,7 @@ class TransactionAccountService
                     'recipient_name' => $bAccount->name,
                     'purpose' => [
                         "code" => "00668",
-                        "name" => "перевод (дата: " . date("Y-m-d H:i:s") . ") "."} ID{V".str_pad($transaction->id,12,'0',STR_PAD_LEFT)."V}",
+                        "name" => $transaction->payment->merchant->filial." summa ".$transaction->amount." ".$bAccount->percentage." % дата".date("Y-m-d H:i:s")." ID{V".str_pad($transaction->id,12,'0',STR_PAD_LEFT)."V}",
                     ],
                     'amount' => ($transaction->amount*$bAccount->percentage) / 100,
                 ]);
@@ -116,6 +115,7 @@ class TransactionAccountService
                     ]);
                 }
             }
+
         }
     }
 
