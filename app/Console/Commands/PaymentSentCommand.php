@@ -43,14 +43,7 @@ class PaymentSentCommand extends Command
      */
     public function handle()
     {
-        $transaction = Transaction::where('type', 0)->first();
-        dd($transaction);
-        $card = Card::where('token', $transaction->receiver_card)->first();
-        $account = Account::where('card_id', $card->id)->first();
-        $merchant = Merchant::where('account_id', $account->id)->first();
-        $brand = Brand::where('id', $merchant->brand_id)->first();
-
-        $payments = Payment::where('is_sent', 0)->get();
+        $payments = Payment::where('is_sent', null)->get();
         foreach ($payments as $payment){
             $response = UniredService::paymentSent([
                 'amount' => $payment->amount,
