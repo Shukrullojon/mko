@@ -36,7 +36,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile1" data-toggle="pill" href="#profile" role="tab"
                                        aria-controls="custom-content-above-transaction_report"
-                                       aria-selected="false">@lang('cruds.report.transaction_report')</a>
+                                       aria-selected="false" name="profile">@lang('cruds.report.transaction_report')</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="home">
@@ -154,27 +154,22 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
     <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
     <script>
-        // const home1 = document.getElementById("home1");
-        // const home = document.getElementById("home");
-        // const profile1 = document.getElementById("profile1");
-        // const profile = document.getElementById("profile");
-        // // console.log(profile1)
-        // home1.addEventListener('click', (e) => {
-        //     if (home.classList.contains('d-none')) {
-        //         home.classList.remove('d-none')
-        //     }
-        //     profile.classList.add('d-none')
-        // });
-        // profile1.addEventListener('click', (e) => {
-        //     if (profile.classList.contains('d-none')) {
-        //         profile.classList.remove('d-none')
-        //     }
-        //     home.classList.add('d-none')
-        // });
-
-        $(document).on('pagebeforeshow', '#home', function () {
+        const home1 = document.getElementById("home1");
+        const home = document.getElementById("home");
+        const profile1 = document.getElementById("profile1");
+        const profile = document.getElementById("profile");
+        // console.log(profile1)
+        home1.addEventListener('click', (e) => {
+            if (home.classList.contains('d-none')) {
+                home.classList.remove('d-none')
+            }
+            profile.classList.add('d-none')
         });
-        $(document).on('pagebeforeshow', '#profile', function () {
+        profile1.addEventListener('click', (e) => {
+            if (profile.classList.contains('d-none')) {
+                profile.classList.remove('d-none')
+            }
+            home.classList.add('d-none')
         });
 
     </script>
