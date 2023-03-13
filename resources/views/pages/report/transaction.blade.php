@@ -38,13 +38,13 @@
                             <tr>
                                 <th>@lang('cruds.report.date_issue')</th>
                                 <th>@lang('cruds.report.transaction_number')</th>
-                                <th>@lang('cruds.report.transaction_amount')</th>
+                                <th>@lang('cruds.report.transaction_amount')<br> (UZS)</th>
                                 <th>@lang('cruds.report.merchant_name')</th>
                                 <th>@lang('cruds.report.fio')</th>
                                 <th>@lang('cruds.report.client_id')</th>
-                                <th>@lang('cruds.report.comission_paylater')</th>
-                                <th>@lang('cruds.report.vat')</th>
-                                <th>@lang('cruds.report.comission_it_unisoft')</th>
+                                <th>@lang('cruds.report.comission_paylater')<br> (UZS)</th>
+                                <th>@lang('cruds.report.vat')<br> UZS</th>
+                                <th>@lang('cruds.report.comission_it_unisoft')<br> (UZS)</th>
                                 <th>@lang('global.action')</th>
                             </tr>
                             <tr>
@@ -76,28 +76,21 @@
                                 <tr>
                                     <td style="min-width: 50px">{{ $payment->date }}</td>
                                     <td>{{ $payment->tr_id }}</td>
-                                    <td>{{ number_format($payment->amount/100) }} UZS</td>
-                                    <td>{{ $payment->merchant->name }}</td>
+                                    <td>{{ number_format($payment->amount/100) }}</td>
+                                    <td>{{ $payment->merchant->filial }}</td>
                                     <td>{{ $payment->client->first_name.' '.$payment->client->middle_name.' '.$payment->client->last_name }}</td>
                                     <td>{{ $payment->client->id }}</td>
                                     <td>
-                                        {{ number_format($payment->amount*0.23/100) }} UZS
-{{--                                        @foreach($payment->transactions as $trans)--}}
-{{--                                            @if ($trans->percentage == 21)--}}
-{{--                                                {{ number_format($trans->amount/100) }} UZS--}}
-{{--                                            @endif--}}
-{{--                                        @endforeach--}}
+                                        {{ number_format($payment->amount*0.23/100) }}
+                                        {{--                                        @foreach($payment->transactions as $trans)--}}
+                                        {{--                                            @if ($trans->percentage == 21)--}}
+                                        {{--                                                {{ number_format($trans->amount/100) }} UZS--}}
+                                        {{--                                            @endif--}}
+                                        {{--                                        @endforeach--}}
                                     </td>
-                                    <td>{{ number_format($payment->amount*0.23*12/11200) }} UZS</td>
-                                    <td>
-                                        @foreach($payment->transactions as $trans)
-                                            @if ($trans->percentage == 2)
-                                                {{ number_format($trans->amount/100) }} UZS
-                                            @endif
-                                        @endforeach
-                                    </td>
+                                    <td>{{ number_format($payment->amount*0.23*12/11200) }}</td>
+                                    <td>{{ number_format($payment->amount*0.02) }}</td>
                                     <td></td>
-                                    {{--                                    <td><a href="{{ route('reportShow', $payment->id) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a></td>--}}
                                 </tr>
                             @endforeach
                             </tbody>

@@ -32,7 +32,7 @@ class ReportExport implements FromView
         if ($this->toDate && !empty($this->toDate)) {
             $paymentsQuery->where('date', '<=', $this->toDate);
         }
-        $payments = $paymentsQuery->paginate(10);
+        $payments = $paymentsQuery->orderBy('date', 'DESC')->paginate(4);
 //        dd($this->fromDate, $this->toDate, $payments);
         return view('pages.report.exports.reportExport', [
             'payments' => $payments,
