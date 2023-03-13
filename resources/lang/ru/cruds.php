@@ -32,7 +32,9 @@ return [
         'is_unired' => 'Униред',
     ],
     'report' => [
-        'report' => 'Oтчёты',
+        'title' => 'Oтчёты',
+        'transaction' => 'Oтчет по транзакциям',
+        'wallet' => 'Выписка с электронного кошелька',
         'posting_date' => 'Дата проводки',
         'operation_day_dates' => 'Дата операционного дня',
         'transaction_number' => 'Номер транзакции',
