@@ -1,15 +1,15 @@
 <table class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
     <tr>
-        <th>@lang('cruds.report.date_issue')</th>
-        <th>@lang('cruds.report.transaction_number')</th>
-        <th>@lang('cruds.report.transaction_amount')</th>
-        <th>@lang('cruds.report.merchant_name')</th>
-        <th>@lang('cruds.report.fio')</th>
-        <th>@lang('cruds.report.client_id')</th>
-        <th>@lang('cruds.report.comission_paylater')</th>
-        <th>@lang('cruds.report.vat')</th>
-        <th>@lang('cruds.report.comission_it_unisoft')</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.date_issue')</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.transaction_number')</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.transaction_amount')<br> (tiyin)</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.merchant_name')</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.fio')</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.client_id')</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.comission_paylater')<br> (tiyin)</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.vat')<br> (tiyin)</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.comission_it_unisoft')<br> (tiyin)</th>
     </tr>
     </thead>
     <tbody>
@@ -17,25 +17,14 @@
         <tr>
             <td style="min-width: 90px">{{ $payment->date }}</td>
             <td>{{ $payment->tr_id }}</td>
-            <td>{{ number_format($payment->amount/100) }} UZS</td>
-            <td>{{ $payment->merchant->name }}</td>
-            <td>{{ $payment->merchant->name }}</td>
+            <td>{{ $payment->amount }}</td>
+            <td>{{ $payment->merchant->filial }}</td>
             <td>{{ $payment->client->first_name.' '.$payment->client->middle_name.' '.$payment->client->last_name }}</td>
-            <td>
-                @foreach($payment->transactions as $trans)
-                    @if ($trans->percentage == 21)
-                        {{ number_format($trans->amount/100) }} UZS
-                    @endif
-                @endforeach
+            <td>{{ $payment->client->id }}
+            <td>{{ $payment->amount*0.23 }}
             </td>
-            <td></td>
-            <td>
-                @foreach($payment->transactions as $trans)
-                    @if ($trans->percentage == 2)
-                        {{ number_format($trans->amount/100) }} UZS
-                    @endif
-                @endforeach
-            </td>
+            <td>{{ $payment->amount*0.23*12/112 }} </td>
+            <td>{{ $payment->amount*2 }}</td>
         </tr>
     @endforeach
     </tbody>
