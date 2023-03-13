@@ -47,12 +47,13 @@ class GetAccountHistoryCommand extends Command
     {
         $account = Account::where('type', 2)->first();
         $history = History::latest()->first();
+        $getAccInfo = AbsService::getAccountDetails(['account'=>$account->number]);
+        dd($getAccInfo);
         $service = AbsService::getAccountHistory([
             'account' => $account->number,
             'date' => "20.01.2023",
             'filial' => $account->filial,
         ]);
-
         if (isset($service['result']['responseBody']['response']) and $service['result']['responseBody']['response']) {
             foreach ($service['result']['responseBody']['response'] as $d){
                 History::firstOrCreate(
@@ -60,7 +61,7 @@ class GetAccountHistoryCommand extends Command
                         'numberTrans' => $d['numberTrans']
                     ],
                     [
-                        'date' => $d['date'],
+                        'date' => date('Y-m-d', strtotime($d['date'])),
                         'dtAcc' => $d['dtAcc'],
                         'dtAccName' => $d['dtAccName'],
                         'dtMfo' => $d['dtMfo'],

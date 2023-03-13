@@ -20,15 +20,15 @@
                 </a>
             </li>
         @endcan
-        @can('report.index')
-            <li class="nav-item">
-                <a href="{{ route('distributeIndex') }}"
-                   class="nav-link {{ Request::is('distribute*') ? "active":'' }}">
-                    <i class="fas fa-file-alt"></i>
-                    <p>distribute</p>
-                </a>
-            </li>
-        @endcan
+        {{--        @can('report.index')--}}
+        {{--            <li class="nav-item">--}}
+        {{--                <a href="{{ route('distributeIndex') }}"--}}
+        {{--                   class="nav-link {{ Request::is('distribute*') ? "active":'' }}">--}}
+        {{--                    <i class="fas fa-file-alt"></i>--}}
+        {{--                    <p>distribute</p>--}}
+        {{--                </a>--}}
+        {{--            </li>--}}
+        {{--        @endcan--}}
 
         @can('client.index')
             <li class="nav-item">
@@ -57,14 +57,42 @@
             </li>
         @endcan
 
-        @can('report.index')
-            <li class="nav-item">
-                <a href="{{ route('reportIndex') }}" class="nav-link {{ Request::is('report*') ? "active":'' }}">
+        @canany([
+    'report.wallet',
+    'report.transaction'
+])
+            <li class="nav-item has-treeview">
+                <a href="#"
+                   class="nav-link {{ (Request::is('report/transaction*') || Request::is('report/wallet*')) ? 'active':''}}">
                     <i class="fas fa-file-archive"></i>
-                    <p>@lang('cruds.report.report')</p>
+                    <p>
+                        @lang('cruds.report.title')
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
                 </a>
+                <ul class="nav nav-treeview"
+                    style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*')) ? 'block':'none'}};">
+                    @can('report.transaction')
+                        <li class="nav-item">
+                            <a href="{{ route('reportTransaction') }}"
+                               class="nav-link {{ Request::is('report/transaction*') ? "active":'' }}">
+                                <i class="fas fa-file-archive"></i>
+                                <p>@lang('cruds.report.transaction')</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('report.wallet')
+                        <li class="nav-item">
+                            <a href="{{ route('reportWallet') }}"
+                               class="nav-link {{ Request::is('report/wallet*') ? "active":'' }}">
+                                <i class="fas fa-file-archive"></i>
+                                <p>@lang('cruds.report.wallet')</p>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
             </li>
-        @endcan
+            @endcanany
 
         @can('paylater.index')
             <li class="nav-item">
