@@ -48,8 +48,9 @@ return [
         'fio' => 'FIO',
         'client_id' => 'Klient Id',
         'comission_paylater' => 'Paylater hissasi',
-        'vat' => 'QQS 12%',
-        'comission_it_unisoft' => 'IT Unisoft hissasi',
+        'paylater_vat' => 'PAYLATER QQS 12%',
+        'comission_itunisoft' => 'IT Unisoft hissasi',
+        'itunisoft_vat' => 'IT UNISOFT QQS 12%',
     ],
     'status' => [
         '1' => '✅',

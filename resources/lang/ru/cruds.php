@@ -50,8 +50,9 @@ return [
         'fio' => 'ФИО клиента',
         'client_id' => 'Ид клиента ',
         'comission_paylater' => 'Kомиссия пайлатер',
-        'vat' => 'HДС 12%',
-        'comission_it_unisoft' => 'Kомиссия IT Unisoft',
+        'paylater_vat' => 'Пайлатер HДС 12%',
+        'comission_itunisoft' => 'Kомиссия IT Unisoft',
+        'itunisoft_vat' => 'IT Unisoft HДС 12%',
     ],
     'status' => [
         '1' => '✅',
