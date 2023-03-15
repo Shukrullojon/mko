@@ -32,7 +32,9 @@ return [
         'is_unired' => 'Униред',
     ],
     'report' => [
-        'report' => 'Oтчёты',
+        'title' => 'Oтчёты',
+        'transaction' => 'Oтчет по транзакциям',
+        'wallet' => 'Выписка с электронного кошелька',
         'posting_date' => 'Дата проводки',
         'operation_day_dates' => 'Дата операционного дня',
         'transaction_number' => 'Номер транзакции',
@@ -48,8 +50,9 @@ return [
         'fio' => 'ФИО клиента',
         'client_id' => 'Ид клиента ',
         'comission_paylater' => 'Kомиссия пайлатер',
-        'vat' => 'HДС 12%',
-        'comission_it_unisoft' => 'Kомиссия IT Unisoft',
+        'paylater_vat' => 'Пайлатер HДС 12%',
+        'comission_itunisoft' => 'Kомиссия IT Unisoft',
+        'itunisoft_vat' => 'IT Unisoft HДС 12%',
     ],
     'status' => [
         '1' => '✅',

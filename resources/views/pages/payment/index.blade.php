@@ -60,7 +60,8 @@
 
                                     <td>
                                         <a target="_blank"
-                                           href="{{ route("merchantShow",$payment->merchant_id) }}">{{ $payment->merchant->filial ?? "" }}</a>
+                                           href="{{ route("merchantShow",$payment->merchant_id) }}">{{ $payment->merchant->filial ?? "" }}</a><br>
+                                            <a target="_blank" href="{{ route('brandShow', $payment->merchant->brand->id ?? "") }}"><span style="font-size: 12px; font-style: oblique">{{ '('.$payment->merchant->brand->name.')' ?? "" }}</span></a>
                                     </td>
                                     <td>{{ $payment->period }}</td>
                                     <td>{{ $payment->percentage }}</td>
