@@ -48,7 +48,7 @@ class GetAccountHistoryCommand extends Command
         $account = Account::where('type', 2)->first();
         $history = History::latest()->first();
         $getAccInfo = AbsService::getAccountDetails(['account'=>$account->number]);
-        dd($getAccInfo);
+        
         $service = AbsService::getAccountHistory([
             'account' => $account->number,
             'date' => "20.01.2023",
