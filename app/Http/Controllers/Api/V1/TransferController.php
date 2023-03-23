@@ -14,6 +14,16 @@ class TransferController extends Controller
 {
     public function account($params)
     {
+        return [
+            'error' => [
+                'code' => 500,
+                'message' => [
+                    'uz' => "Bu xizmat o'chiriladi",
+                    'ru' => "Bu xizmat o'chiriladi",
+                    'en' => "Bu xizmat o'chiriladi",
+                ],
+            ],
+        ];
         $transfer = Transfer::create([
             'method' => 'transfer.ucoin',
             'status' => 0,
@@ -65,6 +75,16 @@ class TransferController extends Controller
 
     public function ucoin($params)
     {
+        return [
+            'error' => [
+                'code' => 500,
+                'message' => [
+                    'uz' => "Bu xizmat o'chiriladi",
+                    'ru' => "Bu xizmat o'chiriladi",
+                    'en' => "Bu xizmat o'chiriladi",
+                ],
+            ],
+        ];
         $transfer = Transfer::create([
             'method' => 'transfer.ucoin',
             'status' => 0,
