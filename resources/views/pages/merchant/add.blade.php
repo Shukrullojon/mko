@@ -271,7 +271,7 @@
                 success:function(data) {
                     if(data['status']) {
                         $("#account_filial").val(data['data']['codeFilial']);
-                        $("#account_name").val(data['data']['nameFilial']);
+                        $("#account_name").val(data['data']['nameAcc']);
                         $("#account_inn").val(data['data']['inn']);
                     }
                 }
