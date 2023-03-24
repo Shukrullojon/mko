@@ -44,18 +44,6 @@ class GetAccountBalanceCommand extends Command
      */
     public function handle()
     {
-        $accounts = Account::get();
-        foreach ($accounts as $account){
-            $getAccInfo = AbsService::getAccountDetails([
-                'account'=>$account->number
-            ]);
-            $account->update([
-                'name' => $getAccInfo['data']['responseBody']['nameAcc'],
-                'inn' => $getAccInfo['data']['responseBody']['inn'],
-            ]);
-        }
-
-        dd("qwerty");
 
         $history = History::where('dtAcc', '22640000900001186005')->latest('date')->orderBy('id', 'DESC')->first();
         $getAccInfo = AbsService::getAccountDetails(['account'=>$history->dtAcc]);
