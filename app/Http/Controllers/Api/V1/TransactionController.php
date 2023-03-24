@@ -60,7 +60,7 @@ class TransactionController extends Controller
                             'recipient_name' => $tr->receiver->name,
                             'purpose' => [
                                 "code" => "00668",
-                                "name" => "UCOIN ".$tr->transaction->payment->senderCard->number.", ФИО ".$tr->transaction->payment->senderCard->owner." Оплата Сумма ".number_format($tr->transaction->payment->amount/100)." сум, Зависним комиссия ".$tr->transaction->percentage.", (дата: " .$tr->transaction->payment->date. ") "." ID{V" . str_pad($tr->transaction->payment->id, 12, '0', STR_PAD_LEFT) . "V}",
+                                "name" => "UCOIN ".$tr->transaction->payment->senderCard->number.", ФИО ".$tr->transaction->payment->senderCard->owner." Оплата Сумма ".number_format($tr->transaction->payment->amount/100)." сум, Зависним комиссия ".$tr->transaction->percentage." %, (дата: " .$tr->transaction->payment->date. ") "." ID{V" . str_pad($tr->transaction->payment->id, 12, '0', STR_PAD_LEFT) . "V}",
                             ],
                             'amount' => $tr->amount,
                         ]);
@@ -71,6 +71,7 @@ class TransactionController extends Controller
                             ]);
                         }
                     }
+                    return [];
                 }else{
                     $tr1->update([
                         'status' => 11,
