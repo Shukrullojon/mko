@@ -18,9 +18,9 @@ class TransferController extends Controller
             'error' => [
                 'code' => 500,
                 'message' => [
-                    'uz' => "Bu xizmat o'chiriladi",
-                    'ru' => "Bu xizmat o'chiriladi",
-                    'en' => "Bu xizmat o'chiriladi",
+                    'uz' => "Bu xizmat o'chirildi",
+                    'ru' => "Bu xizmat o'chirildi",
+                    'en' => "Bu xizmat o'chirildi",
                 ],
             ],
         ];
@@ -79,9 +79,9 @@ class TransferController extends Controller
             'error' => [
                 'code' => 500,
                 'message' => [
-                    'uz' => "Bu xizmat o'chiriladi",
-                    'ru' => "Bu xizmat o'chiriladi",
-                    'en' => "Bu xizmat o'chiriladi",
+                    'uz' => "Bu xizmat o'chirildi",
+                    'ru' => "Bu xizmat o'chirildi",
+                    'en' => "Bu xizmat o'chirildi",
                 ],
             ],
         ];
