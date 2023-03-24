@@ -60,7 +60,7 @@ class TransactionController extends Controller
                             'recipient_name' => $tr->receiver->name,
                             'purpose' => [
                                 "code" => "00668",
-                                "name" => "UCOIN ".$tr->transaction->payment->senderCard->number.", ".$tr->transaction->payment->senderCard->owner." Оплата ".number_format($tr->transaction->payment->amount/100)." сум, Завичитим комиссия ".$tr->transaction->percentage." % + 1,5 %, (дата: " .$tr->transaction->payment->date. ") "." ID{V" . str_pad($tr->transaction->payment->id, 12, '0', STR_PAD_LEFT) . "V}",
+                                "name" => "UCOIN ".$tr->transaction->payment->senderCard->number.", ".$tr->transaction->payment->senderCard->owner." Оплата ".number_format($tr->transaction->payment->amount/100)." сум, За вычетом комиссии ".$tr->transaction->percentage." % + 1,5 %, (дата: " .$tr->transaction->payment->date. ") "." ID{V" . str_pad($tr->transaction->payment->id, 12, '0', STR_PAD_LEFT) . "V}",
                             ],
                             'amount' => $tr->amount,
                         ]);
