@@ -49,6 +49,7 @@ class GetAccountBalanceCommand extends Command
             $getAccInfo = AbsService::getAccountDetails([
                 'account'=>$account->number
             ]);
+            
             $account->update([
                 'name' => $getAccInfo['data']['responseBody']['nameAcc'],
                 'inn' => $getAccInfo['data']['responseBody']['inn'],
