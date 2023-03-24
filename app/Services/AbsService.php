@@ -63,4 +63,13 @@ class AbsService
             ]
         ]);
     }
+
+    public static function operDay(){
+        return AbsGateway::fire('POST', 'api/v1/bank', [
+            "jsonrpc" => "2.0",
+            "id" => rand(10000,99999),
+            "method"=>"iabs.reference.get.oper.day",
+            "params" => []
+        ]);
+    }
 }
