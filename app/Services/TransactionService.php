@@ -22,6 +22,7 @@ class TransactionService
         foreach ($payments as $payment) {
             DB::transaction(function () use ($payment, $accountItUnisoft, $accountMko) {
                 $merchantPercentage = 100 - ($accountItUnisoft->percentage + $accountMko->percentage);
+                // Merchant
                 Transaction::create([
                     'sender_card' => $payment->client->card->token,
                     'receiver_card' => $payment->merchant->account->card->token,
