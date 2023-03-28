@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Gateway\MerchantGateway;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Account;
 use App\Models\Pages\Brand;
@@ -148,6 +149,8 @@ class MerchantController extends Controller
                         ]);
                     }
                 }
+                $d = MerchantGateway::send($merchant->id);
+                dd($d);
                 return $merchant;
             });
             return redirect()->route('merchantShow', $merchant->id);
