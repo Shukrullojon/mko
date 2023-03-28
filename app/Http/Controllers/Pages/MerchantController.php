@@ -149,8 +149,7 @@ class MerchantController extends Controller
                         ]);
                     }
                 }
-                $d = MerchantGateway::send($merchant->id);
-                dd($d);
+                MerchantGateway::send($merchant->id);
                 return $merchant;
             });
             return redirect()->route('merchantShow', $merchant->id);
