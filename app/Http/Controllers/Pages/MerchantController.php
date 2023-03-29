@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Gateway\MerchantGateway;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Account;
 use App\Models\Pages\Brand;
@@ -150,6 +151,8 @@ class MerchantController extends Controller
                 }
                 return $merchant;
             });
+
+            MerchantGateway::send($merchant->id);
             return redirect()->route('merchantShow', $merchant->id);
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
