@@ -28,4 +28,16 @@ class PaymentController extends Controller
             'payment' => $payment
         ]);
     }
+
+    public function cancel($id){
+        $payment = Payment::find($id);
+
+        //
+
+        // 1. payment cancel status
+        // 2. transactions debit money vs cancel status
+        // 3. client return money
+        // 4. mko ucoin return money
+
+    }
 }
