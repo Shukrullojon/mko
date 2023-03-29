@@ -149,9 +149,10 @@ class MerchantController extends Controller
                         ]);
                     }
                 }
-                MerchantGateway::send($merchant->id);
                 return $merchant;
             });
+
+            MerchantGateway::send($merchant->id);
             return redirect()->route('merchantShow', $merchant->id);
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());

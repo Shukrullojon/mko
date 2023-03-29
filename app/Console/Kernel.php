@@ -35,8 +35,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule){
         $schedule->command('transaction')->everyMinute();
         $schedule->command("paymentsent")->everyMinute();
-        $schedule->command("paymentucoin")->everyFiveMinutes();
-        $schedule->command("getaccounthistory")->everyFiveMinutes();
+        $schedule->command("paymentucoin")->everyMinute();
+        $schedule->command("getaccounthistory")->everyMinute();
         $schedule->command("getaccountbalance")->dailyAt('01:00');
     }
 
