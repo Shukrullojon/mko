@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Exports\ReportExport;
-use App\Exports\WalletReportExport;
+use App\Exports\ExportTransaction;
+use App\Exports\ExportWallet;
 use App\Http\Controllers\Controller;
+use App\Models\Pages\CardTransaction;
 use App\Models\Pages\History;
 use App\Models\Pages\Payment;
 use Illuminate\Http\Request;
@@ -37,26 +38,37 @@ class ReportController extends Controller
 
     public function wallet(Request $request)
     {
-        $filter = '';
-        $historiesQuery = History::query();
+        $uc_transactions = DB::table('card_transactions')
+            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.name, '// ', payments.name) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+            ->leftJoin('payments','card_transactions.payment_id','=','payments.id')
+            ->leftJoin('clients','payments.client_id','=','clients.id')
+            ->leftJoin('merchants','payments.merchant_id','=','merchants.id')
+            ->whereNotNull('card_transactions.payment_id');
+
         if ($request->has('fromDate') and $request->fromDate) {
-            $filter = 'filter';
-            $historiesQuery->where('date', '>=', $request->fromDate);
+            $uc_transactions->where('date', '>=', $request->fromDate);
         }
         if ($request->has('toDate') and $request->toDate) {
-            $filter = 'filter';
-            $historiesQuery->where('date', '<=', $request->toDate);
+            $uc_transactions->where('date', '<=', $request->toDate);
         }
-        if ($filter == 'filter') {
 
-            History::select(DB::raw("sum(debit) as debit"),
-                DB::raw("sum(credit) as credit")
-            );
+        $uc_transactions = DB::table('histories')
+            ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
+            ->where('histories.status','=',1)
+            ->union($uc_transactions)
+            ->orderBy('created_at', 'desc');
+
+
+        if ($request->has('fromDate') and $request->fromDate) {
+            $uc_transactions->where('date', '>=', $request->fromDate);
         }
-        $histories = $historiesQuery->paginate(20);
+        if ($request->has('toDate') and $request->toDate) {
+            $uc_transactions->where('date', '<=', $request->toDate);
+        }
+        $uc_transactions = $uc_transactions->paginate(20);
+//        dd($uc_transactions, $request->fromDate, $request->toDate);
         return view('pages.report.wallet', [
-            'histories' => $histories,
-            'filter' => $filter
+            'uc_transactions' => $uc_transactions
         ]);
     }
 
@@ -100,7 +112,7 @@ class ReportController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function export(Request $request)
+    public function exportTransaction(Request $request)
     {
         if ($request->has('fromDate') and $request->fromDate) {
             $fromDate = $request->fromDate;
@@ -109,7 +121,7 @@ class ReportController extends Controller
             $toDate = $request->toDate;
         }
 
-        return Excel::download(new ReportExport($request->fromDate, $request->toDate), 'report-of-transaction.xlsx');
+        return Excel::download(new ExportTransaction($request->fromDate, $request->toDate), 'report-of-transaction.xlsx');
     }
 
     public function exportWallet(Request $request)
@@ -121,7 +133,7 @@ class ReportController extends Controller
             $toDate = $request->toDate;
         }
 
-        return Excel::download(new WalletReportExport($request->fromDate, $request->toDate), 'Wallet.xlsx');
+        return Excel::download(new ExportWallet($request->fromDate, $request->toDate), 'report-of-wallet.xlsx');
     }
 
     /**

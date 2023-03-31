@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">@lang('cruds.report.transaction')</h3>
-                        <form action="{{ route('reportExport') }}">
+                        <form action="{{ route('exportTransaction') }}">
                             <button name="export" class="btn btn-success btn-sm float-right"> <i class="fa fa-file-excel"></i> @lang('global.datatables.excel')</btn>
                             <input type="hidden" class="form-control" name="fromDate" value="{{ request()->input('fromDate') }}">
                             <input type="hidden" class="form-control" name="toDate" value="{{ request()->input('toDate') }}">
