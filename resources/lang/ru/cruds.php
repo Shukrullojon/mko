@@ -53,6 +53,8 @@ return [
         'paylater_vat' => 'Пайлатер HДС 12%',
         'comission_itunisoft' => 'Kомиссия IT Unisoft',
         'itunisoft_vat' => 'IT Unisoft HДС 12%',
+        'incoming_balance' => 'Входящий остаток на ',
+        'outgoing_balance' => 'Исходящий остаток на ',
     ],
     'status' => [
         '1' => '✅',

@@ -55,7 +55,8 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/transaction', 'ReportController@transaction')->name('reportTransaction');
         Route::get('/wallet', 'ReportController@wallet')->name('reportWallet');
         Route::get('/show/{id}', 'ReportController@show')->name('reportShow');
-        Route::get('/export', 'ReportController@export')->name('reportExport');
+        Route::get('/export-transaction', 'ReportController@exportTransaction')->name('exportTransaction');
+        Route::get('/export-wallet', 'ReportController@exportWallet')->name('exportWallet');
     });
     // Clients
     Route::group(['prefix'=>'client', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
