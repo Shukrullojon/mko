@@ -20,6 +20,7 @@ class PaymentController extends Controller
 {
     public function confirm($params)
     {
+        
         $cardLater = Card::where('type', 2)->first();
         $card = Card::where('token', $params['params']['token'])->first();
         $client = Client::where('card_id', $card->id)->first();
@@ -217,7 +218,7 @@ class PaymentController extends Controller
         $payment = Payment::where('tr_id', $tr_id)->where('status', 0)->first();
         $sms = SmsLog::where('payment_tr_id', $tr_id)->where('status', 2)
             ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-20 minutes")))->latest()->first();
-        
+
         if ($payment and $sms){
             $card = Card::where('token', $payment->sender_card)->first();
             $merchant = Merchant::where('id', $payment->merchant_id)->first();
