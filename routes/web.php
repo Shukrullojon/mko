@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'],function (){
     Route::group(['prefix'=>'payment', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
         Route::get('/index', 'PaymentController@index')->name('paymentIndex');
         Route::get('/show/{id}', 'PaymentController@show')->name('paymentShow');
+        Route::get('/cancel/{id}', 'PaymentController@cancel')->name('paymentCancel');
     });
 
     //paylater
