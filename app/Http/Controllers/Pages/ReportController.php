@@ -39,7 +39,7 @@ class ReportController extends Controller
     public function wallet(Request $request)
     {
         $uc_transactions = DB::table('card_transactions')
-            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.name, '// ', payments.name) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.name, '// ') as info"), 'card_transactions.amount as debet', DB::raw('NULL as credit'), 'card_transactions.created_at')
             ->leftJoin('payments','card_transactions.payment_id','=','payments.id')
             ->leftJoin('clients','payments.client_id','=','clients.id')
             ->leftJoin('merchants','payments.merchant_id','=','merchants.id')
@@ -53,7 +53,7 @@ class ReportController extends Controller
         }
 
         $uc_transactions = DB::table('histories')
-            ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
+            ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), DB::raw('NULL as debet'), 'histories.credit', 'histories.created_at')
             ->where('histories.status','=',1)
             ->union($uc_transactions)
             ->orderBy('created_at', 'desc');
@@ -65,8 +65,8 @@ class ReportController extends Controller
         if ($request->has('toDate') and $request->toDate) {
             $uc_transactions->where('date', '<=', $request->toDate);
         }
-        $uc_transactions = $uc_transactions->paginate(20);
-//        dd($uc_transactions, $request->fromDate, $request->toDate);
+        $uc_transactions = $uc_transactions->paginate(10);
+
         return view('pages.report.wallet', [
             'uc_transactions' => $uc_transactions
         ]);

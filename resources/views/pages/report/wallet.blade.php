@@ -79,8 +79,8 @@
                                     <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
                                     <td>{{ $uc_transaction->numberTrans }}</td>
                                     <td>{{ $uc_transaction->info }}</td>
-                                    <td>{{ $uc_transaction->debet }}</td>
-                                    <td>{{ $uc_transaction->credit }}</td>
+                                    <td>{{ $uc_transaction->debet ?? 0 }}</td>
+                                    <td>{{ $uc_transaction->credit ?? 0 }}</td>
                                     <td></td>
                                     <td></td>
                                 </tr>
@@ -89,7 +89,7 @@
                             <br>
                         </table>
                         <br>
-                        {{ $uc_transactions->links() }}
+                        {{ $uc_transactions->appends($_GET)->links() }}
 
                     </div>
                     <!-- /.card-body -->
