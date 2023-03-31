@@ -74,7 +74,7 @@
                     style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*')) ? 'block':'none'}};">
                     @can('report.transaction')
                         <li class="nav-item">
-                            <a href="{{ route('exportTransaction') }}"
+                            <a href="{{ route('reportTransaction') }}"
                                class="nav-link {{ Request::is('report/transaction*') ? "active":'' }}">
                                 <i class="fas fa-file-archive"></i>
                                 <p>@lang('cruds.report.transaction')</p>
@@ -83,7 +83,7 @@
                     @endcan
                     @can('report.wallet')
                         <li class="nav-item">
-                            <a href="{{ route('exportWallet') }}"
+                            <a href="{{ route('reportWallet') }}"
                                class="nav-link {{ Request::is('report/wallet*') ? "active":'' }}">
                                 <i class="fas fa-file-archive"></i>
                                 <p>@lang('cruds.report.wallet')</p>
