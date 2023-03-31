@@ -24,11 +24,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">@lang('cruds.report.wallet')</h3>
-{{--                        <form action="{{ route('reportExport') }}">--}}
-{{--                            <button name="export" class="btn btn-success btn-sm float-right"> <i class="fa fa-file-excel"></i> @lang('global.datatables.excel')</btn>--}}
-{{--                            <input type="hidden" class="form-control" name="fromDate" value="{{ request()->input('fromDate') }}">--}}
-{{--                            <input type="hidden" class="form-control" name="toDate" value="{{ request()->input('toDate') }}">--}}
-{{--                        </form>--}}
+                        <form action="{{ route('exportWallet') }}">
+                            <button name="export" class="btn btn-success btn-sm float-right"> <i class="fa fa-file-excel"></i> @lang('global.datatables.excel')</btn>
+                            <input type="hidden" class="form-control" name="fromDate" value="{{ request()->input('fromDate') }}">
+                            <input type="hidden" class="form-control" name="toDate" value="{{ request()->input('toDate') }}">
+                        </form>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -54,10 +54,11 @@
                                         <input type="date" class="form-control" name="fromDate"
                                                value="{{ request()->input('fromDate') }}">
                                     </th>
-                                    <th colspan="2">
+                                    <th>
                                         <input type="date" class="form-control" name="toDate"
                                                value="{{ request()->input('toDate') }}">
                                     </th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th style="white-space: nowrap">
@@ -72,29 +73,23 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($histories as $history)
+                            @foreach($uc_transactions as $uc_transaction)
                                 <tr>
-                                    <td style="min-width: 50px">{{ $history->date }}</td>
-                                    <td style="min-width: 50px">{{ $history->date }}</td>
-                                    <td>{{ $history->numberTrans }}</td>
-                                    <td>
-{{--                                        {{ $history->client->first_name.'' .$history->middle_name.' '.$history->last_name }}/<br>--}}
-{{--                                        {{ $history->merchant->name }}/<br>--}}
-                                        {{ $history->id }}
-                                    </td>
-                                    <td>{{ $history->debit }}</td>
-                                    <td>{{ $history->credit }}</td>
-                                    <td>
-
-                                    </td>
-                                    {{--                                    <td><a href="{{ route('reportShow', $history->id) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a></td>--}}
+                                    <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
+                                    <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
+                                    <td>{{ $uc_transaction->numberTrans }}</td>
+                                    <td>{{ $uc_transaction->info }}</td>
+                                    <td>{{ $uc_transaction->debet }}</td>
+                                    <td>{{ $uc_transaction->credit }}</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             @endforeach
                             </tbody>
                             <br>
                         </table>
                         <br>
-                        {{ $histories->links() }}
+                        {{ $uc_transactions->links() }}
 
                     </div>
                     <!-- /.card-body -->

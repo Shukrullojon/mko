@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 
-class ReportExport implements FromView
+class ExportTransaction implements FromView
 {
 
     public function __construct($fromDate, $toDate)
@@ -33,12 +33,12 @@ class ReportExport implements FromView
             $paymentsQuery->where('date', '<=', $this->toDate);
         }if(!$this->fromDate and !$this->toDate) {
             $payments = $paymentsQuery->orderBy('date', 'DESC')->take(10)->get();
-            return view('pages.report.exports.reportExport', [
+            return view('pages.report.exports.export-transaction', [
                 'payments' => $payments,
             ]);
         }
         $payments = $paymentsQuery->orderBy('date', 'DESC')->get();
-        return view('pages.report.exports.reportExport', [
+        return view('pages.report.exports.export-transaction', [
             'payments' => $payments,
         ]);
     }

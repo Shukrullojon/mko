@@ -28,4 +28,10 @@ class Payment extends Model
     public function transactions(){
         return $this->hasMany(Transaction::class,'payment_id','id');
     }
+    public function card_transaction(){
+        return $this->hasOne(CardTransaction::class);
+    }
+    public function card_active_transaction(){
+        return $this->hasOne(CardTransaction::class)->where('status', 1);
+    }
 }
