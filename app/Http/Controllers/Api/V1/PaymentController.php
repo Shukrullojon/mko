@@ -20,14 +20,7 @@ class PaymentController extends Controller
 {
     public function confirm($params)
     {
-        return [
-            'error' => [
-                'code' => 500,
-                'message' => [
-                    'uz' => "Tranzaksiyani amalga oshirib bo'lmaydi?",
-                ],
-            ],
-        ];
+
         $cardLater = Card::where('type', 2)->first();
         $card = Card::where('token', $params['params']['token'])->first();
         $client = Client::where('card_id', $card->id)->first();
