@@ -51,6 +51,10 @@ return [
         'paylater_vat' => 'PAYLATER QQS 12%',
         'comission_itunisoft' => 'IT Unisoft hissasi',
         'itunisoft_vat' => 'IT UNISOFT QQS 12%',
+
+        'partner' => 'Partnyor',
+        'partner_title' => 'Partnyor bo\'yicha hisobot',
+        'comission_merchant' => 'Merchant hissasi',
     ],
     'status' => [
         '1' => '✅',

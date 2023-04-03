@@ -59,11 +59,12 @@
 
         @canany([
     'report.wallet',
-    'report.transaction'
+    'report.transaction',
+    'report.partner'
 ])
             <li class="nav-item has-treeview">
                 <a href="#"
-                   class="nav-link {{ (Request::is('report/transaction*') || Request::is('report/wallet*')) ? 'active':''}}">
+                   class="nav-link {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*')) ? 'active':''}}">
                     <i class="fas fa-file-archive"></i>
                     <p>
                         @lang('cruds.report.title')
@@ -71,7 +72,7 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview"
-                    style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*')) ? 'block':'none'}};">
+                    style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*')) ? 'block':'none'}};">
                     @can('report.transaction')
                         <li class="nav-item">
                             <a href="{{ route('reportTransaction') }}"
@@ -87,6 +88,15 @@
                                class="nav-link {{ Request::is('report/wallet*') ? "active":'' }}">
                                 <i class="fas fa-file-archive"></i>
                                 <p>@lang('cruds.report.wallet')</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('report.partner')
+                        <li class="nav-item">
+                            <a href="{{ route('reportPartner') }}"
+                               class="nav-link {{ Request::is('report/partner*') ? "active":'' }}">
+                                <i class="fas fa-file-archive"></i>
+                                <p>@lang('cruds.report.partner')</p>
                             </a>
                         </li>
                     @endcan

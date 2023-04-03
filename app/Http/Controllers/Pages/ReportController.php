@@ -35,6 +35,24 @@ class ReportController extends Controller
             'payments' => $payments,
         ]);
     }
+    /* - - */
+    public function partner(Request $request)
+    {
+        $paymentsQuery = Payment::query();
+        if ($request->has('merchant') and $request->merchant) {
+            $paymentsQuery->where('merchant_id', $request->merchant);
+        }
+        if ($request->has('fromDate') and $request->fromDate) {
+            $paymentsQuery->where('date', '>=', $request->fromDate);
+        }
+        if ($request->has('toDate') and $request->toDate) {
+            $paymentsQuery->where('date', '<=', $request->toDate);
+        }
+        $payments = $paymentsQuery->with('merchant:id,name,filial', 'client:id,first_name,middle_name,last_name')->paginate(10);
+        return view('pages.report.partner', [
+            'payments' => $payments,
+        ]);
+    }
 
     public function wallet(Request $request)
     {
@@ -50,6 +68,7 @@ class ReportController extends Controller
         }
         if ($request->has('toDate') and $request->toDate) {
             $uc_transactions->where('date', '<=', $request->toDate);
+
         }
 
         $uc_transactions = DB::table('histories')
@@ -65,7 +84,7 @@ class ReportController extends Controller
         if ($request->has('toDate') and $request->toDate) {
             $uc_transactions->where('date', '<=', $request->toDate);
         }
-        $uc_transactions = $uc_transactions->paginate(20);
+        $uc_transactions = $uc_transactions->paginate(10);
 //        dd($uc_transactions, $request->fromDate, $request->toDate);
         return view('pages.report.wallet', [
             'uc_transactions' => $uc_transactions

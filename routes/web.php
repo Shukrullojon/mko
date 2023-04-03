@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'],function (){
         Route::delete('/delete/{id}', 'MerchantController@destroy')->name('merchantDestroy');
         Route::post('/removeMerchant', 'MerchantController@removeMerchant')->name('removeMerchant');
         Route::get('/download/{key}','MerchantController@download')->name("downloadQrCode");
+        Route::get('/export','MerchantController@exportMerchant')->name("exportMerchant");
     });
     //brands
     Route::group(['prefix'=>'brand', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
@@ -55,6 +56,7 @@ Route::group(['middleware' => 'auth'],function (){
     Route::group(['prefix'=>'report', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
         Route::get('/transaction', 'ReportController@transaction')->name('reportTransaction');
         Route::get('/wallet', 'ReportController@wallet')->name('reportWallet');
+        Route::get('/partner', 'ReportController@partner')->name('reportPartner');
         Route::get('/show/{id}', 'ReportController@show')->name('reportShow');
         Route::get('/export-transaction', 'ReportController@exportTransaction')->name('exportTransaction');
         Route::get('/export-wallet', 'ReportController@exportWallet')->name('exportWallet');
