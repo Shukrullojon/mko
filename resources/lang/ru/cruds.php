@@ -33,8 +33,8 @@ return [
     ],
     'report' => [
         'title' => 'Oтчёты',
-        'transaction' => 'Oтчет по транзакциям',
-        'wallet' => 'Выписка с электронного кошелька',
+        'transaction' => 'Tранзакция',
+        'wallet' => 'Электронный кошелек',
         'posting_date' => 'Дата проводки',
         'operation_day_dates' => 'Дата операционного дня',
         'transaction_number' => 'Номер транзакции',
@@ -55,6 +55,10 @@ return [
         'itunisoft_vat' => 'IT Unisoft HДС 12%',
         'incoming_balance' => 'Входящий остаток на ',
         'outgoing_balance' => 'Исходящий остаток на ',
+
+        'partner' => 'По партнеру',
+        'partner_title' => 'Отчет о партнере',
+        'comission_merchant' => 'Kомиссия мерчанта',
     ],
     'status' => [
         '1' => '✅',

@@ -14,14 +14,7 @@ class TransactionController extends Controller
 {
     public function send($params)
     {
-        return [
-            'error' => [
-                'code' => 500,
-                'message' => [
-                    'uz' => "Tranzaksiyani amalga oshirib bo'lmaydi?",
-                ],
-            ],
-        ];
+        
         try {
             $oper = AbsService::operDay();
             if (isset($oper['status']) and $oper['status'] and isset($oper['data']['code']) and $oper['data']['code'] == 0){

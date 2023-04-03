@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Exports\ExportMerchant;
 use App\Gateway\MerchantGateway;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Account;
@@ -14,6 +15,7 @@ use App\Models\Pages\MerchantTerminal;
 use App\Models\Pages\Payment;
 use App\Services\AbsService;
 use App\Services\Luhn;
+use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -310,5 +312,8 @@ class MerchantController extends Controller
     public function download($key){
         QrCode::format('png')->size(250)->generate($key, public_path('images/'.$key.'.png') );
         return response()->download(public_path('images\\'.$key.'.png'));
+    }
+    public function exportMerchant() {
+        return Excel::download(new ExportMerchant(), 'Мерчанты.xlsx');
     }
 }

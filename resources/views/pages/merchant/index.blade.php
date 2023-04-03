@@ -26,12 +26,17 @@
                     <div class="card-header">
                         <h3 class="card-title">@lang('cruds.merchant.merchants')</h3>
                         <div class="btn-group" style="float: right">
-                            @can('merchant.add')
+                        @can('merchant.add')
                                 <a href="{{ route('merchantAdd') }}" class="btn btn-success btn-sm float-right">
                                     <span class="fas fa-plus-circle"></span>
                                     @lang('global.add')
                                 </a>
                             @endcan
+                        </div>
+                        <div>
+                            <form action="{{ route('exportMerchant') }}">
+                                <button name="export" class="btn btn-success btn-sm float-right" style="margin-right: 15px"> <i class="fa fa-file-excel"></i> @lang('global.datatables.excel')</button>
+                            </form>
                         </div>
                     </div>
                     <!-- /.card-header -->
