@@ -38,6 +38,7 @@ class ReportController extends Controller
     /* - - */
     public function partner(Request $request)
     {
+        dd("11");
         $paymentsQuery = Payment::query();
         if ($request->has('merchant') and $request->merchant) {
             $paymentsQuery->where('merchant_id', $request->merchant);
