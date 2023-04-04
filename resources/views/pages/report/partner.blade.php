@@ -76,7 +76,7 @@
                             <tbody>
                             @foreach($payments as $payment)
                                 <tr>
-                                    <td>{{ $payment->merchant->name }}</td>
+                                    <td>{{ $payment->merchant->filial }}</td>
                                     <td style="min-width: 50px">{{ $payment->date }}</td>
                                     <td>{{ $payment->client->first_name. ' '.$payment->client->middle_name. ' '.$payment->client->last_name }}</td>
                                     <td>{{ number_format($payment->amount/100, 2, '.', '') }}</td>

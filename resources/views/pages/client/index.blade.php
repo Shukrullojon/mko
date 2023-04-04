@@ -26,6 +26,11 @@
                     <div class="card-header">
                         <h3 class="card-title">@lang('cruds.client.clients')</h3>
                     </div>
+                    <div>
+                        <form action="{{ route('exportClient') }}">
+                            <button name="export" class="btn btn-success btn-sm float-right" style="margin-right: 15px"> <i class="fa fa-file-excel"></i> @lang('global.datatables.excel')</button>
+                        </form>
+                    </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <!-- Data table -->
