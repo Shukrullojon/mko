@@ -34,10 +34,14 @@
                                 <th class="text-center">@lang('cruds.report.merchant_name')</th>
                                 <th class="text-center">@lang('cruds.report.posting_date')</th>
                                 <th class="text-center">@lang('cruds.report.fio')</th>
-                                <th class="text-center">@lang('cruds.report.transaction_amount')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.comission_merchant')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.comission_paylater')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.comission_itunisoft')<br><sub>(tiyin)</sub></th>
+                                <th class="text-center">@lang('cruds.report.transaction_amount')<br><sub>(tiyin)</sub>
+                                </th>
+                                <th class="text-center">@lang('cruds.report.comission_merchant')<br><sub>(tiyin)</sub>
+                                </th>
+                                <th class="text-center">@lang('cruds.report.comission_paylater')<br><sub>(tiyin)</sub>
+                                </th>
+                                <th class="text-center">@lang('cruds.report.comission_itunisoft')<br><sub>(tiyin)</sub>
+                                </th>
                                 <th class="text-center">@lang('global.action')</th>
                             </tr>
                             <tr>
@@ -46,7 +50,11 @@
                                         <select name="merchant" id="" class="form-control">
                                             <option value="" selected disabled></option>
                                             @foreach(\App\Models\Pages\Merchant::all() as $m)
-                                                <option value="{{ $m->id }}">{{ $m->name }}</option>
+                                                <option value="{{ $m->id }}"
+                                                        @if(request()->input('merchant') == $m->id)
+                                                        selected
+                                                        @endif
+                                                >{{ $m->filial }}</option>
                                             @endforeach
                                         </select>
                                     </th>
@@ -76,7 +84,7 @@
                             <tbody>
                             @foreach($payments as $payment)
                                 <tr>
-                                    <td>{{ $payment->merchant->name }}</td>
+                                    <td>{{ $payment->merchant->filial }}</td>
                                     <td style="min-width: 50px">{{ $payment->date }}</td>
                                     <td>{{ $payment->client->first_name. ' '.$payment->client->middle_name. ' '.$payment->client->last_name }}</td>
                                     <td>{{ number_format($payment->amount/100, 2, '.', '') }}</td>

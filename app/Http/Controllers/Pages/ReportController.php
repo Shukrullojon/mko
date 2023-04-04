@@ -38,7 +38,6 @@ class ReportController extends Controller
     /* - - */
     public function partner(Request $request)
     {
-        dd("11");
         $paymentsQuery = Payment::query();
         if ($request->has('merchant') and $request->merchant) {
             $paymentsQuery->where('merchant_id', $request->merchant);
@@ -86,11 +85,6 @@ class ReportController extends Controller
             $uc_transactions->where('date', '<=', $request->toDate);
         }
         $uc_transactions = $uc_transactions->paginate(10);
-<<<<<<< HEAD
-
-=======
-//        dd($uc_transactions, $request->fromDate, $request->toDate);
->>>>>>> e9f341b1746d8b1c9013fb7503e25ea1acbb54a5
         return view('pages.report.wallet', [
             'uc_transactions' => $uc_transactions
         ]);

@@ -79,13 +79,8 @@
                                     <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
                                     <td>{{ $uc_transaction->numberTrans }}</td>
                                     <td>{{ $uc_transaction->info }}</td>
-<<<<<<< HEAD
-                                    <td>{{ $uc_transaction->debet ?? 0 }}</td>
-                                    <td>{{ $uc_transaction->credit ?? 0 }}</td>
-=======
                                     <td>{{ ($uc_transaction->debet != 0) ? number_format($uc_transaction->debet/100, 2, '.', '') : '' }}</td>
                                     <td>{{ ($uc_transaction->credit != 0) ? number_format($uc_transaction->credit/100, 2, '.', '') : '' }}</td>
->>>>>>> e9f341b1746d8b1c9013fb7503e25ea1acbb54a5
                                     <td></td>
                                     <td></td>
                                 </tr>
