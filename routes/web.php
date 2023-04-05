@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth'],function (){
     Route::group(['prefix'=>'client', 'namespace'=>'\App\Http\Controllers\Pages'], function(){
         Route::get('/index', 'ClientController@index')->name('clientIndex');
         Route::get('/show/{id}', 'ClientController@show')->name('clientShow');
+        Route::get('/export','ClientController@exportClient')->name("exportClient");
     });
 
     // User
