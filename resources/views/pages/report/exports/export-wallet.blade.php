@@ -1,11 +1,11 @@
 <table class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
     <tr>
-        <th style="font-weight: bold; text-align: center">@lang('cruds.report.date_issue')</th>
+        <th style="font-weight: bold; text-align: center">@lang('cruds.report.posting_date')</th>
         <th style="font-weight: bold; text-align: center">@lang('cruds.report.operation_day_dates')</th>
         <th style="font-weight: bold; text-align: center">@lang('cruds.report.transaction_number')</th>
         <th style="font-weight: bold; text-align: center">
-            @lang('cruds.report.transaction_amount')/<br>
+            @lang('cruds.report.sender_name')/<br>
             @lang('cruds.report.recipient')/<br>
             @lang('cruds.report.purpose_text')
         </th>
