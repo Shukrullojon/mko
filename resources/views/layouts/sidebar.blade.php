@@ -60,11 +60,12 @@
         @canany([
     'report.wallet',
     'report.transaction',
-    'report.partner'
+    'report.partner',
+    'report.brand',
 ])
             <li class="nav-item has-treeview">
                 <a href="#"
-                   class="nav-link {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*')) ? 'active':''}}">
+                   class="nav-link {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*') || Request::is('report/brand*')) ? 'active':''}}">
                     <i class="fas fa-file-archive"></i>
                     <p>
                         @lang('cruds.report.title')
@@ -72,7 +73,7 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview"
-                    style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*')) ? 'block':'none'}};">
+                    style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*') || Request::is('report/brand*')) ? 'block':'none'}};">
                     @can('report.transaction')
                         <li class="nav-item">
                             <a href="{{ route('reportTransaction') }}"
@@ -100,9 +101,18 @@
                             </a>
                         </li>
                     @endcan
+                    @can('report.brand')
+                        <li class="nav-item">
+                            <a href="{{ route('reportBrand') }}"
+                               class="nav-link {{ Request::is('report/brand*') ? "active":'' }}">
+                                <i class="fas fa-file-archive"></i>
+                                <p>@lang('cruds.report.brand.by_brand')</p>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
-            @endcanany
+        @endcanany
 
         @can('paylater.index')
             <li class="nav-item">

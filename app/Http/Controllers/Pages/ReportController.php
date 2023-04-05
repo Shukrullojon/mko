@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Pages\CardTransaction;
 use App\Models\Pages\History;
 use App\Models\Pages\Payment;
+use App\Models\Pages\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -88,6 +89,15 @@ class ReportController extends Controller
 //        dd($uc_transactions, $request->fromDate, $request->toDate);
         return view('pages.report.wallet', [
             'uc_transactions' => $uc_transactions
+        ]);
+    }
+
+    /* - - */
+    public function brand() {
+        $transactions = Transaction::select(DB::raw("sum(amount) as amount"))->where('type', 0)->where('is_sent', 1)->first();
+        dd($transactions);
+        return view('pages.report.brand', [
+            'brands' => $transactions
         ]);
     }
 
