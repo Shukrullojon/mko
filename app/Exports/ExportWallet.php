@@ -92,7 +92,6 @@ class ExportWallet implements FromView
                 'toDate' => $this->fromDate
             ]);
         }
-        dd($this->fromDate, $this->toDate, $uc_transactions);
 
         $uc_transactions = $uc_transactions->get();
 //        dd($uc_transactions, $this->fromDate, $this->toDate);

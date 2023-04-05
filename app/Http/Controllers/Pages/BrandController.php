@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Pages;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Brand;
 use App\Models\Pages\Merchant;
+use App\Models\Pages\Transaction;
 use App\Services\MobileService;
 use App\Services\TransactionService;
 use Database\Seeders\BrandSeeder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 

@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'],function (){
         Route::get('/transaction', 'ReportController@transaction')->name('reportTransaction');
         Route::get('/wallet', 'ReportController@wallet')->name('reportWallet');
         Route::get('/partner', 'ReportController@partner')->name('reportPartner');
+        Route::get('/brand', 'ReportController@brand')->name('reportBrand');
         Route::get('/show/{id}', 'ReportController@show')->name('reportShow');
         Route::get('/export-transaction', 'ReportController@exportTransaction')->name('exportTransaction');
         Route::get('/export-wallet', 'ReportController@exportWallet')->name('exportWallet');
