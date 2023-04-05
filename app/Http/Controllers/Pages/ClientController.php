@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Exports\ExportClient;
 use App\Http\Controllers\Controller;
 use App\Models\Pages\Client;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientController extends Controller
 {
@@ -27,5 +29,9 @@ class ClientController extends Controller
         return view('pages.client.show',[
             'client' => $client
         ]);
+    }
+
+    public function exportClient() {
+        return Excel::download(new ExportClient(), 'Kлиенты.xlsx');
     }
 }

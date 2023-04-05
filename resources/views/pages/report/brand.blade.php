@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>@lang('cruds.report.partner_title')</h1>
+                    <h1>@lang('cruds.report.brand_title')</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">@lang('global.home')</a></li>
-                        <li class="breadcrumb-item active">@lang('cruds.report.partner_title')</li>
+                        <li class="breadcrumb-item active">@lang('cruds.report.brand_title')</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">@lang('cruds.report.partner_title')</h3>
+                        <h3 class="card-title">@lang('cruds.report.brand_title')</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -31,12 +31,10 @@
                         <table class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th class="text-center">@lang('cruds.report.merchant_name')</th>
-                                <th class="text-center">@lang('cruds.report.posting_date')</th>
-                                <th class="text-center">@lang('cruds.report.fio')</th>
-                                <th class="text-center">@lang('cruds.report.transaction_amount')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.comission_merchant')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.comission_paylater')<br><sub>(tiyin)</sub></th>
+                                <th class="text-center">@lang('cruds.brand.brand_name')</th>
+                                <th class="text-center">@lang('cruds.report.brand.by_brand')</th>
+                                <th class="text-center">@lang('cruds.report.brand.sum')<br><sub>(tiyin)</sub></th>
+                                <th class="text-center">@lang('cruds.report.brand.commission')<br><sub>(tiyin)</sub></th>
                                 <th class="text-center">@lang('cruds.report.comission_itunisoft')<br><sub>(tiyin)</sub></th>
                                 <th class="text-center">@lang('global.action')</th>
                             </tr>
@@ -74,15 +72,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($payments as $payment)
+                            @foreach($brands as $b)
                                 <tr>
-                                    <td>{{ $payment->merchant->filial }}</td>
-                                    <td style="min-width: 50px">{{ $payment->date }}</td>
-                                    <td>{{ $payment->client->first_name. ' '.$payment->client->middle_name. ' '.$payment->client->last_name }}</td>
-                                    <td>{{ number_format($payment->amount/100, 2, '.', '') }}</td>
-                                    <td>{{ number_format($payment->amount*0.77/100, 2, '.', '') }}</td>
-                                    <td>{{ number_format($payment->amount*0.23/100, 2, '.', '') }}</td>
-                                    <td>{{ number_format($payment->amount*0.02/100, 2, '.', '') }}</td>
+                                    <td>{{ $b-> }}</td>
+                                    <td style="min-width: 50px">{{ $b->date }}</td>
+                                    <td>{{ $b->client->first_name. ' '.$b->client->middle_name. ' '.$b->client->last_name }}</td>
+                                    <td>{{ number_format($b->amount/100, 2, '.', '') }}</td>
                                     <td></td>
                                 </tr>
                             @endforeach
@@ -90,7 +85,7 @@
                             <br>
                         </table>
                         <br>
-                        {{ $payments->appends($_GET)->links() }}
+                        {{ $brands->appends($_GET)->links() }}
 
                     </div>
                     <!-- /.card-body -->
