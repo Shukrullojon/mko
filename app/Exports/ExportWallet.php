@@ -77,6 +77,7 @@ class ExportWallet implements FromView
             /* - - */
             return view('pages.report.exports.export-wallet', [
                 'uc_transactions' => $uc_transactions->get()
+                ]);
         }
 
         $uc_transactions = $uc_transactions->get();
