@@ -161,7 +161,7 @@ class ReportController extends Controller
             $toDate = $request->toDate;
         }
 
-        return Excel::download(new ExportWallet($request->fromDate, $request->toDate), 'report-of-wallet.xlsx');
+        return Excel::download(new ExportWallet($request->fromDate, $request->toDate), date('d.m.Y').'_report-wallet.xlsx');
     }
 
     /**

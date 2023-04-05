@@ -27,19 +27,18 @@ class ExportWallet implements FromView
     public function view(): View
     {
         $uc_transactions = DB::table('card_transactions')
-            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.name, '// ', payments.name) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.filial) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
             ->leftJoin('payments','card_transactions.payment_id','=','payments.id')
             ->leftJoin('clients','payments.client_id','=','clients.id')
             ->leftJoin('merchants','payments.merchant_id','=','merchants.id')
             ->whereNotNull('card_transactions.payment_id');
-
+//        dd($uc_transactions->get());
         if ($this->fromDate) {
             $uc_transactions->where('date', '>=', $this->fromDate);
         }
         if ($this->toDate) {
             $uc_transactions->where('date', '<=', $this->toDate);
         }
-
         $uc_transactions = DB::table('histories')
             ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
             ->where('histories.status','=',1)
@@ -54,22 +53,18 @@ class ExportWallet implements FromView
             $uc_transactions->where('date', '<=', $this->toDate);
         }
         if (!$this->fromDate and !$this->toDate) {
-            $this->fromDate = date('d-m-Y');
-            $this->toDate = date('d-m-Y');
+            $payment = Payment::latest()->first();
+            $this->fromDate = $payment['date'];
+            $this->toDate = $payment['date'];
             /* -- */
             $uc_transactions = DB::table('card_transactions')
-                ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.name, '// ', payments.name) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+                ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.filial) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
                 ->leftJoin('payments','card_transactions.payment_id','=','payments.id')
                 ->leftJoin('clients','payments.client_id','=','clients.id')
                 ->leftJoin('merchants','payments.merchant_id','=','merchants.id')
                 ->whereNotNull('card_transactions.payment_id');
 
-            if ($this->fromDate) {
-                $uc_transactions->where('date', '>=', $this->fromDate);
-            }
-            if ($this->toDate) {
-                $uc_transactions->where('date', '<=', $this->toDate);
-            }
+            $uc_transactions->whereBetween('date', [$this->fromDate, $this->toDate]);
 
             $uc_transactions = DB::table('histories')
                 ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
@@ -78,27 +73,16 @@ class ExportWallet implements FromView
                 ->orderBy('created_at', 'desc');
 
 
-            if ($this->fromDate) {
-                $uc_transactions->where('date', '>=', $this->fromDate);
-            }
-            if ($this->toDate) {
-                $uc_transactions->where('date', '<=', $this->toDate);
-            }
-            /* -- */
-
+            $uc_transactions->whereBetween('date', [$this->fromDate, $this->toDate]);
+            /* - - */
             return view('pages.report.exports.export-wallet', [
-               'uc_transactions' => $uc_transactions->get(),
-                'fromDate' => $this->fromDate,
-                'toDate' => $this->fromDate
+               'uc_transactions' => $uc_transactions->get()
             ]);
         }
 
         $uc_transactions = $uc_transactions->get();
-//        dd($uc_transactions, $this->fromDate, $this->toDate);
         return view('pages.report.exports.export-wallet', [
             'uc_transactions' => $uc_transactions,
-            'fromDate' => $this->fromDate??date('d-m-Y'),
-            'toDate' => $this->fromDate??date('d-m-Y'),
         ]);
 
     }
