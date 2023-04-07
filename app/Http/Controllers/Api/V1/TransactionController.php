@@ -17,7 +17,24 @@ class TransactionController extends Controller
         try {
             $oper = AbsService::operDay();
             if (isset($oper['status']) and $oper['status'] and isset($oper['data']['code']) and $oper['data']['code'] == 0){
-                $transaction = Transaction::where('id', $params['params']['transaction_id'])->where('type', 0)->where('is_sent', 0)->where('status', 1)->first();
+                $transaction = Transaction::where('id', $params['params']['transaction_id'])
+                    ->where('type', 0)
+                    ->where('is_sent', 0)
+                    ->where('status', 1)
+                    ->where('created_at','<', date("Y-m-d H:i:s",strtotime("-1 day")))
+                    ->first();
+                if (empty($transaction)){
+                    return [
+                        "error" => [
+                            "code" => 503,
+                            "message" => [
+                                'uz' => "To'lovni bir kundan keyin o'tqaza olasiz!!!",
+                                'ru' => "To'lovni bir kundan keyin o'tqaza olasiz!!!",
+                                'en' => "To'lovni bir kundan keyin o'tqaza olasiz!!!",
+                            ],
+                        ],
+                    ];
+                }
                 $account = Account::where('type', 2)->first();
                 $bAccount = Account::where('type', 5)->first();
 
