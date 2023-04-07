@@ -72,20 +72,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($brands as $b)
+                            @foreach($transactions as $t)
                                 <tr>
-                                    <td>{{ $b-> }}</td>
-                                    <td style="min-width: 50px">{{ $b->date }}</td>
-                                    <td>{{ $b->client->first_name. ' '.$b->client->middle_name. ' '.$b->client->last_name }}</td>
-                                    <td>{{ number_format($b->amount/100, 2, '.', '') }}</td>
-                                    <td></td>
+                                    <td>{{ $t->payment->merchant->filial }}</td>
+                                    <td>{{ $t->amount }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                             <br>
                         </table>
                         <br>
-                        {{ $brands->appends($_GET)->links() }}
+{{--                        {{ $transactions->links() }}--}}
 
                     </div>
                     <!-- /.card-body -->

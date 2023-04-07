@@ -36,6 +36,7 @@ class ReportController extends Controller
             'payments' => $payments,
         ]);
     }
+
     /* - - */
     public function partner(Request $request)
     {
@@ -59,9 +60,9 @@ class ReportController extends Controller
     {
         $uc_transactions = DB::table('card_transactions')
             ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.name, '// ', payments.name) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
-            ->leftJoin('payments','card_transactions.payment_id','=','payments.id')
-            ->leftJoin('clients','payments.client_id','=','clients.id')
-            ->leftJoin('merchants','payments.merchant_id','=','merchants.id')
+            ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
+            ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
+            ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
             ->whereNotNull('card_transactions.payment_id');
 
         if ($request->has('fromDate') and $request->fromDate) {
@@ -74,7 +75,7 @@ class ReportController extends Controller
 
         $uc_transactions = DB::table('histories')
             ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
-            ->where('histories.status','=',1)
+            ->where('histories.status', '=', 1)
             ->union($uc_transactions)
             ->orderBy('created_at', 'desc');
 
@@ -93,11 +94,16 @@ class ReportController extends Controller
     }
 
     /* - - */
-    public function brand() {
-        $transactions = Transaction::select(DB::raw("sum(amount) as amount"))->where('type', 0)->where('is_sent', 1)->first();
-        dd($transactions);
+    public function brand()
+    {
+        $transQuery = Transaction::query();
+        $transQuery = $transQuery->where('type', 0)->where('is_sent', 1);
+        $transactions = $transQuery->with(['payment' => function ($query) {
+            $query->with('merchant');
+        }])->groupBy('receiver_card')->paginate(20);
+//        dd($transactions);
         return view('pages.report.brand', [
-            'brands' => $transactions
+            'transactions' => $transactions
         ]);
     }
 
