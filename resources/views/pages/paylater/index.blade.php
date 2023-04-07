@@ -62,7 +62,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($transaction->is_sent != 1)
+                                        @if($transaction->is_sent != 1 and $transaction->is_sent != -2)
                                             <a href="{{ route("laterSent",$transaction->id) }}" onclick="return confirm('Вы уверены?')" class="btn btn-success">Sent</a>
                                         @endif
                                     </td>
