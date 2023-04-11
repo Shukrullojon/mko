@@ -40,6 +40,7 @@
                                 <th>@lang('cruds.report.transaction_number')</th>
                                 <th>@lang('cruds.report.transaction_amount')</th>
                                 <th>@lang('cruds.report.merchant_name')</th>
+                                <th>@lang('cruds.report.merchant_inn')</th>
                                 <th>@lang('cruds.report.fio')</th>
                                 <th>@lang('cruds.report.client_id')</th>
                                 <th>@lang('cruds.report.comission_paylater')</th>
@@ -80,6 +81,7 @@
                                     <td>{{ $payment->tr_id }}</td>
                                     <td>{{ number_format($payment->amount/100, 2, '.', '') }}</td>
                                     <td>{{ $payment->merchant->filial }}</td>
+                                    <td>{{ $payment->merchant->account->inn }}</td>
                                     <td>{{ $payment->client->first_name.' '.$payment->client->middle_name.' '.$payment->client->last_name }}</td>
                                     <td>{{ $payment->client->id }}</td>
                                     <td>

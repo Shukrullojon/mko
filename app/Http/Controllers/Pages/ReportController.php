@@ -29,8 +29,10 @@ class ReportController extends Controller
         if ($request->has('toDate') and $request->toDate) {
             $paymentsQuery->where('date', '<=', $request->toDate);
         }
-        $payments = $paymentsQuery->with('merchant:id,name,filial',
-            'client:id,first_name,middle_name,last_name',
+        $payments = $paymentsQuery->with('merchant',
+            function ($query) {
+            $query->select('*')->with('account');
+            })->with('client:id,first_name,middle_name,last_name',
             'transactions')->paginate(10);
         return view('pages.report.transaction', [
             'payments' => $payments,
@@ -156,7 +158,7 @@ class ReportController extends Controller
             $toDate = $request->toDate;
         }
 
-        return Excel::download(new ExportTransaction($request->fromDate, $request->toDate), 'report-of-transaction.xlsx');
+        return Excel::download(new ExportTransaction($request->fromDate, $request->toDate), date('d.m.Y').'_report-transaction.xlsx');
     }
 
     public function exportWallet(Request $request)
@@ -168,7 +170,7 @@ class ReportController extends Controller
             $toDate = $request->toDate;
         }
 
-        return Excel::download(new ExportWallet($request->fromDate, $request->toDate), 'report-of-wallet.xlsx');
+        return Excel::download(new ExportWallet($request->fromDate, $request->toDate), date('d.m.Y')'_report-wallet.xlsx');
     }
 
     /**

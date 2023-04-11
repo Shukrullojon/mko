@@ -47,6 +47,7 @@ return [
         'date_issue' => 'Дата выдачи',
         'transaction_amount' => 'Сумма транзаксии ',
         'merchant_name' => 'Наименование мерчанта',
+        'merchant_inn' => 'INN мерчанта',
         'fio' => 'ФИО клиента',
         'client_id' => 'Ид клиента ',
         'comission_paylater' => 'Kомиссия пайлатер',
