@@ -35,6 +35,7 @@
                             <tr>
                                 <th>Client</th>
                                 <th>Amount</th>
+                                <th>Date</th>
                                 <th>IS SENT</th>
                                 <th></th>
                             </tr>
@@ -51,6 +52,9 @@
                                     </td>
                                     <td>
                                         {{ number_format($transaction->amount/100) }} UZS
+                                    </td>
+                                    <td>
+                                        {{ $transaction->payment->date ?? "" }}
                                     </td>
                                     <td>
                                         @if($transaction->is_sent == 1)
