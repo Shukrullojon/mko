@@ -61,11 +61,11 @@
     'report.wallet',
     'report.transaction',
     'report.partner',
-    'report.brand',
+    'report.calculate_partner',
 ])
             <li class="nav-item has-treeview">
                 <a href="#"
-                   class="nav-link {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*') || Request::is('report/brand*')) ? 'active':''}}">
+                   class="nav-link {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*') || Request::is('report/calculate-partner*')) ? 'active':''}}">
                     <i class="fas fa-file-archive"></i>
                     <p>
                         @lang('cruds.report.title')
@@ -73,7 +73,7 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview"
-                    style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*') || Request::is('report/brand*')) ? 'block':'none'}};">
+                    style="display: {{ (Request::is('report/transaction*') || Request::is('report/wallet*') || Request::is('report/partner*') || Request::is('report/calculate-partner*')) ? 'block':'none'}};">
                     @can('report.transaction')
                         <li class="nav-item">
                             <a href="{{ route('reportTransaction') }}"
@@ -97,16 +97,16 @@
                             <a href="{{ route('reportPartner') }}"
                                class="nav-link {{ Request::is('report/partner*') ? "active":'' }}">
                                 <i class="fas fa-file-archive"></i>
-                                <p>@lang('cruds.report.partner')</p>
+                                <p>@lang('cruds.report.partner.partner')</p>
                             </a>
                         </li>
                     @endcan
-                    @can('report.brand')
+                    @can('report.calculate_partner')
                         <li class="nav-item">
-                            <a href="{{ route('reportBrand') }}"
-                               class="nav-link {{ Request::is('report/brand*') ? "active":'' }}">
+                            <a href="{{ route('report.calculate-partner') }}"
+                               class="nav-link {{ Request::is('report/calculate-partner*') ? "active":'' }}">
                                 <i class="fas fa-file-archive"></i>
-                                <p>@lang('cruds.report.brand.by_brand')</p>
+                                <p>@lang('cruds.report.partner.calculate_partner')</p>
                             </a>
                         </li>
                     @endcan
