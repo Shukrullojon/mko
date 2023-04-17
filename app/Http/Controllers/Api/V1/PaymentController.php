@@ -13,6 +13,7 @@ use App\Models\Pages\Payment;
 use App\Services\CardService;
 use App\Services\MerchantService;
 use App\Services\SendUniredSms;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Pages\SmsLog;
 
@@ -219,7 +220,18 @@ class PaymentController extends Controller
         $payment = Payment::where('tr_id', $tr_id)->where('status', 0)->first();
         $sms = SmsLog::where('payment_tr_id', $tr_id)
             ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-5 minutes")))->latest()->first();
-
+        if (!Hash::check($sms->message, $params['params']['code'])) {
+            return [
+                'error' => [
+                    'code' => 500,
+                    'message' => [
+                        'uz' => 'Kod noto\'g\'ri',
+                        'ru' => 'Код неверный',
+                        'en' => 'The code is incorrect',
+                    ]
+                ]
+            ];
+        }
         if ($payment and $sms){
             $card = Card::where('token', $payment->sender_card)->first();
             $merchant = Merchant::where('id', $payment->merchant_id)->first();
