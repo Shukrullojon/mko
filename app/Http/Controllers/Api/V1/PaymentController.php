@@ -18,6 +18,7 @@ use App\Models\Pages\SmsLog;
 
 class PaymentController extends Controller
 {
+
     public function confirm($params)
     {
 
