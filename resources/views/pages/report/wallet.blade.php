@@ -25,7 +25,7 @@
                     <div class="card-header">
                         <h3 class="card-title">@lang('cruds.report.wallet')</h3>
                         <form action="{{ route('exportWallet') }}">
-                            <button name="export" class="btn btn-success btn-sm float-right"> <i class="fa fa-file-excel"></i> @lang('global.datatables.excel')</btn>
+                            <button name="export" class="btn btn-success btn-sm float-right"> <i class="fa fa-file-excel"></i> @lang('global.datatables.excel')</button>
                             <input type="hidden" class="form-control" name="fromDate" value="{{ request()->input('fromDate') }}">
                             <input type="hidden" class="form-control" name="toDate" value="{{ request()->input('toDate') }}">
                         </form>
@@ -39,11 +39,9 @@
                                 <th>@lang('cruds.report.posting_date')</th>
                                 <th>@lang('cruds.report.operation_day_dates')</th>
                                 <th>@lang('cruds.report.transaction_number')</th>
-                                <th>
-                                    @lang('cruds.report.sender_name')/<br>
-                                    @lang('cruds.report.recipient')/<br>
-                                    @lang('cruds.report.purpose_text')/<br>
-                                </th>
+                                <th>@lang('cruds.report.sender_name')</th>
+                                <th>@lang('cruds.report.recipient')</th>
+                                <th>@lang('cruds.report.purpose_text')</th>
                                 <th>@lang('cruds.report.debit')<br><sub>(tiyin)</sub></th>
                                 <th>@lang('cruds.report.credit')<br><sub>(tiyin)</sub></th>
                                 <th>@lang('global.action')</th>
@@ -58,6 +56,8 @@
                                         <input type="date" class="form-control" name="toDate"
                                                value="{{ request()->input('toDate') }}">
                                     </th>
+                                    <th></th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -78,7 +78,9 @@
                                     <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
                                     <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
                                     <td>{{ $uc_transaction->numberTrans }}</td>
-                                    <td>{{ $uc_transaction->info }}</td>
+                                    <td>{{ $uc_transaction->sender_name }}</td>
+                                    <td>{{ $uc_transaction->recipient }}</td>
+                                    <td>{{ $uc_transaction->purpose_text }}</td>
                                     <td>{{ ($uc_transaction->debet != 0) ? number_format($uc_transaction->debet/100, 2, '.', '') : '' }}</td>
                                     <td>{{ ($uc_transaction->credit != 0) ? number_format($uc_transaction->credit/100, 2, '.', '') : '' }}</td>
                                     <td></td>

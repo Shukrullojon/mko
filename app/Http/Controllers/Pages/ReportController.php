@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Exports\ExportCalculatePartner;
 use App\Exports\ExportTransaction;
 use App\Exports\ExportWallet;
 use App\Http\Controllers\Controller;
@@ -11,14 +12,16 @@ use App\Models\Pages\Payment;
 use App\Models\Pages\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use function Whoops\Exception\Formatter;
 
 class ReportController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function transaction(Request $request)
     {
@@ -31,7 +34,7 @@ class ReportController extends Controller
         }
         $payments = $paymentsQuery->with('merchant',
             function ($query) {
-            $query->select('*')->with('account');
+                $query->select('*')->with('account');
             })->with('client:id,first_name,middle_name,last_name',
             'transactions')->paginate(10);
         return view('pages.report.transaction', [
@@ -39,7 +42,10 @@ class ReportController extends Controller
         ]);
     }
 
-    /* - - */
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function partner(Request $request)
     {
         $paymentsQuery = Payment::query();
@@ -61,7 +67,7 @@ class ReportController extends Controller
     public function wallet(Request $request)
     {
         $uc_transactions = DB::table('card_transactions')
-            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name, ' ', clients.middle_name, ' ', clients.last_name, '// ', merchants.name, '// ', payments.name) as info"), "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"), 'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
             ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
             ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
             ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
@@ -76,7 +82,7 @@ class ReportController extends Controller
         }
 
         $uc_transactions = DB::table('histories')
-            ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
+            ->select('histories.date', 'histories.numberTrans', 'histories.dtAcc as sender_name', 'histories.dtAccName as recipient', 'histories.purpose as purpose_text', 'histories.debit as debet', 'histories.credit', 'histories.created_at')
             ->where('histories.status', '=', 1)
             ->union($uc_transactions)
             ->orderBy('created_at', 'desc');
@@ -95,16 +101,32 @@ class ReportController extends Controller
         ]);
     }
 
-    /* - - */
-    public function brand()
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function calculate_partner(Request $request)
     {
-        $transQuery = Transaction::query();
-        $transQuery = $transQuery->where('type', 0)->where('is_sent', 1);
-        $transactions = $transQuery->with(['payment' => function ($query) {
-            $query->with('merchant');
-        }])->groupBy('receiver_card')->paginate(20);
-//        dd($transactions);
-        return view('pages.report.brand', [
+        $transactions = DB::table('transactions')
+            ->select('transactions.updated_at', 'transactions.amount')
+//                DB::raw("SUM(transactions.amount)*0.985 as paid_to_merchant"),
+//                DB::raw("SUM(transactions.amount)*0.015 as commission_bank"))
+            ->leftJoin('payments', 'transactions.payment_id', '=', 'payments.id')
+            ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
+            ->leftJoin('brands', 'merchants.brand_id', '=', 'brands.id')
+            ->where('transactions.is_sent', 1)
+            ->where('transactions.type', 0)->paginate(20);
+        if ($request->has($request->fromDate) and $request->fromDate) {
+            $transactions = $transactions->where('transactions.updated_at', '>=', strtotime("$request->fromDate"));
+        }
+        if ($request->has($request->toDate) and $request->toDate) {
+            $transactions = $transactions->where('transactions.updated_at', '<=', "$request->toDate%");
+        }
+        dd($transactions, $request->fromDate, $request->toDate);
+
+        $transactions = $transactions->groupBy('transactions.receiver_card')
+            ->paginate(20);
+
+        return view('pages.report.calculate-partner', [
             'transactions' => $transactions
         ]);
     }
@@ -134,7 +156,7 @@ class ReportController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -147,7 +169,7 @@ class ReportController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function exportTransaction(Request $request)
     {
@@ -158,7 +180,7 @@ class ReportController extends Controller
             $toDate = $request->toDate;
         }
 
-        return Excel::download(new ExportTransaction($request->fromDate, $request->toDate), date('d.m.Y').'_report-transaction.xlsx');
+        return Excel::download(new ExportTransaction($fromDate ?? null, $toDate ?? null), date('d.m.Y') . '_report-transaction.xlsx');
     }
 
     public function exportWallet(Request $request)
@@ -170,7 +192,19 @@ class ReportController extends Controller
             $toDate = $request->toDate;
         }
 
-        return Excel::download(new ExportWallet($request->fromDate, $request->toDate), date('d.m.Y')'_report-wallet.xlsx');
+        return Excel::download(new ExportWallet($fromDate ?? null, $toDate ?? null), date('d.m.Y') . '_report-wallet.xlsx');
+    }
+
+    public function exportCalculatePartner(Request $request)
+    {
+        $val = Validator::make($request->all(), [
+            'fromDate' => 'required',
+            'toDate' => 'required'
+        ]);
+        if ($val->fails()) {
+            return back();
+        }
+        return Excel::download(new ExportCalculatePartner($request->fromDate, $request->toDate), date('d.m.Y') . '_calculate-partner.xlsx');
     }
 
     /**

@@ -57,11 +57,16 @@ return [
         'incoming_balance' => 'Входящий остаток на ',
         'outgoing_balance' => 'Исходящий остаток на ',
 
-        'partner' => 'По партнеру',
-        'brand' => [
-            'by_brand' => 'По бренду',
+        'partner' => [
+            'partner' => 'По партнеру',
+            'calculate_partner' => 'Расчет с партнером',
             'sum' => 'Cумма',
             'percentage' => 'Процент',
+            'brand_purpose' => 'Purpose',
+            'payment_sum' => 'Итого',
+            'commission_merchant' => 'Kомиссия мерчанта',
+            'paid_to_merchant' => 'Cумма, уплаченная мерчанта',
+            'commission_bank' => 'Kомиссия Банка',
         ],
         'partner_title' => 'Отчет о партнере',
         'comission_merchant' => 'Kомиссия мерчанта',
