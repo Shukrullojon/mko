@@ -27,7 +27,7 @@ class ExportWallet implements FromView
     public function view(): View
     {
         $uc_transactions = DB::table('card_transactions')
-            ->select('payments.date as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
+            ->select('card_transactions.created_at as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
                 'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
             ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
             ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
@@ -35,10 +35,10 @@ class ExportWallet implements FromView
             ->whereNotNull('card_transactions.payment_id');
 
         if ($this->fromDate) {
-            $uc_transactions->whereDate('card_transactions.updated_at', '>=', $this->fromDate);
+            $uc_transactions->whereDate('date', '>=', $this->fromDate);
         }
         if ($this->toDate) {
-            $uc_transactions->whereDate('card_transactions.updated_at', '<=', $this->toDate);
+            $uc_transactions->whereDate('date', '<=', $this->toDate);
         }
 
         $uc_transactions = DB::table('histories')
@@ -49,10 +49,10 @@ class ExportWallet implements FromView
             ->orderBy('created_at', 'desc');
 
         if ($this->fromDate) {
-            $uc_transactions->whereDate('histories.date', '>=', $this->fromDate);
+            $uc_transactions->whereDate('date', '>=', $this->fromDate);
         }
         if ($this->toDate) {
-            $uc_transactions->whereDate('histories.date', '<=', $this->toDate);
+            $uc_transactions->whereDate('date', '<=', $this->toDate);
         }
         if (!$this->fromDate and !$this->toDate) {
             $payment = Payment::latest()->first();
@@ -60,7 +60,7 @@ class ExportWallet implements FromView
             $this->toDate = $payment['date'];
             /* -- */
             $uc_transactions = DB::table('card_transactions')
-                ->select('payments.date as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
+                ->select('card_transactions.created_at as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
                     'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
                 ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
                 ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')

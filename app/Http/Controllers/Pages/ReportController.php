@@ -67,7 +67,7 @@ class ReportController extends Controller
     public function wallet(Request $request)
     {
         $uc_transactions = DB::table('card_transactions')
-            ->select('payments.date as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
+            ->select('card_transactions.created_at as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
                 'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
             ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
             ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
@@ -75,10 +75,10 @@ class ReportController extends Controller
             ->whereNotNull('card_transactions.payment_id');
 
         if ($request->has('fromDate') and $request->fromDate) {
-            $uc_transactions->whereDate('card_transactions.updated_at', '>=', $request->fromDate);
+            $uc_transactions->whereDate('card_transactions.created_at', '>=', $request->fromDate);
         }
         if ($request->has('toDate') and $request->toDate) {
-            $uc_transactions->whereDate('card_transactions.updated_at', '<=', $request->toDate);
+            $uc_transactions->whereDate('card_transactions.created_at', '<=', $request->toDate);
         }
 
         $uc_transactions = DB::table('histories')
