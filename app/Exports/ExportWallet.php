@@ -28,7 +28,7 @@ class ExportWallet implements FromView
     {
         $uc_transactions = DB::table('card_transactions')
             ->select('card_transactions.created_at as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
-                'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+                'merchants.filial as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
             ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
             ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
             ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
@@ -61,7 +61,7 @@ class ExportWallet implements FromView
             /* -- */
             $uc_transactions = DB::table('card_transactions')
                 ->select('card_transactions.created_at as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
-                    'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+                    'merchants.filial as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
                 ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
                 ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
                 ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
