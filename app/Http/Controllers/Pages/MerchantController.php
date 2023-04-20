@@ -48,7 +48,7 @@ class MerchantController extends Controller
             if ($request->filled('merchant_address'))
                 $merchants = $merchants->where('address', 'LIKE', '%' . $request->merchant_address . '%');
 
-            $merchants = $merchants->orderBy('id', 'DESC')->paginate(20);
+            $merchants = $merchants->with('brand:id,name')->orderBy('id', 'DESC')->paginate(20);
 
             return view('pages.merchant.index', [
                 'merchants' => $merchants,

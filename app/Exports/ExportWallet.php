@@ -27,30 +27,32 @@ class ExportWallet implements FromView
     public function view(): View
     {
         $uc_transactions = DB::table('card_transactions')
-            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"), 'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
-            ->leftJoin('payments','card_transactions.payment_id','=','payments.id')
-            ->leftJoin('clients','payments.client_id','=','clients.id')
-            ->leftJoin('merchants','payments.merchant_id','=','merchants.id')
+            ->select('payments.date as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
+                'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+            ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
+            ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
+            ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
             ->whereNotNull('card_transactions.payment_id');
-//        dd($uc_transactions->get());
+
         if ($this->fromDate) {
-            $uc_transactions->where('date', '>=', $this->fromDate);
+            $uc_transactions->whereDate('card_transactions.updated_at', '>=', $this->fromDate);
         }
         if ($this->toDate) {
-            $uc_transactions->where('date', '<=', $this->toDate);
+            $uc_transactions->whereDate('card_transactions.updated_at', '<=', $this->toDate);
         }
+
         $uc_transactions = DB::table('histories')
-            ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
-            ->where('histories.status','=',1)
+            ->select('histories.date as date', 'histories.numberTrans', DB::raw("'Paylater' as sender_name"), DB::raw("'Ucoin card' as recipient"),
+                'histories.purpose as purpose_text', 'histories.debit as debet', 'histories.credit', 'histories.created_at')
+            ->where('histories.status', '=', 1)
             ->union($uc_transactions)
             ->orderBy('created_at', 'desc');
 
-
         if ($this->fromDate) {
-            $uc_transactions->where('date', '>=', $this->fromDate);
+            $uc_transactions->whereDate('histories.date', '>=', $this->fromDate);
         }
         if ($this->toDate) {
-            $uc_transactions->where('date', '<=', $this->toDate);
+            $uc_transactions->whereDate('histories.date', '<=', $this->toDate);
         }
         if (!$this->fromDate and !$this->toDate) {
             $payment = Payment::latest()->first();
@@ -58,17 +60,19 @@ class ExportWallet implements FromView
             $this->toDate = $payment['date'];
             /* -- */
             $uc_transactions = DB::table('card_transactions')
-                ->select('histories.date', 'histories.numberTrans', 'histories.dtAcc as sender_name', 'histories.dtAccName as recipient', 'histories.purpose as purpose_text', 'histories.debit as debet', 'histories.credit', 'histories.created_at')
-                ->leftJoin('payments','card_transactions.payment_id','=','payments.id')
-                ->leftJoin('clients','payments.client_id','=','clients.id')
-                ->leftJoin('merchants','payments.merchant_id','=','merchants.id')
+                ->select('payments.date as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
+                    'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+                ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
+                ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
+                ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
                 ->whereNotNull('card_transactions.payment_id');
 
             $uc_transactions->whereBetween('date', [$this->fromDate, $this->toDate]);
 
             $uc_transactions = DB::table('histories')
-                ->select('histories.date', 'histories.numberTrans', DB::raw("CONCAT('PAYLATER// ', 'UCOIN// ', histories.purpose) as info"), 'histories.debit as debet', 'histories.credit', 'histories.created_at')
-                ->where('histories.status','=',1)
+                ->select('histories.date as date', 'histories.numberTrans', DB::raw("'Paylater' as sender_name"), DB::raw("'Ucoin card' as recipient"),
+                    'histories.purpose as purpose_text', 'histories.debit as debet', 'histories.credit', 'histories.created_at')
+                ->where('histories.status', '=', 1)
                 ->union($uc_transactions)
                 ->orderBy('created_at', 'desc');
 
