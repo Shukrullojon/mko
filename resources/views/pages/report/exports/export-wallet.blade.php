@@ -16,8 +16,8 @@
     <tbody>
     @foreach($uc_transactions as $uc_transaction)
         <tr>
-            <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
-            <td style="min-width: 50px">{{ $uc_transaction->date }}</td>
+            <td style="min-width: 50px">{{ date('Y-m-d', strtotime($uc_transaction->date)) }}</td>
+            <td style="min-width: 50px">{{ date('Y-m-d', strtotime($uc_transaction->date)) }}</td>
             <td>{{ $uc_transaction->numberTrans }}</td>
             <td>{{ $uc_transaction->sender_name }}</td>
             <td>{{ $uc_transaction->recipient }}</td>

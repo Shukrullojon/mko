@@ -32,6 +32,7 @@ class ExportWallet implements FromView
             ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
             ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
             ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
+            ->where('payments.status', '!=', -2)
             ->whereNotNull('card_transactions.payment_id');
 
         if ($this->fromDate) {
@@ -65,6 +66,7 @@ class ExportWallet implements FromView
                 ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
                 ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
                 ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
+                ->where('payments.status', '!=', -2)
                 ->whereNotNull('card_transactions.payment_id');
 
             $uc_transactions->whereBetween('date', [$this->fromDate, $this->toDate]);
