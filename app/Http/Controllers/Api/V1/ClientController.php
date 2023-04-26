@@ -32,8 +32,9 @@ class ClientController extends Controller
             }*/
 
             $client = Client::where('passport', $params['params']['passport'])
-                ->where('pnfl', $params['params']['pnfl'])
+                //->where('pnfl', $params['params']['pnfl'])
                 ->first();
+
             if (empty($client)) {
                 try {
                     $luhn = new Luhn();
@@ -88,19 +89,19 @@ class ClientController extends Controller
                         /*$tr->update([
                             'status' => 2
                         ]);*/
-                        /*$card->update([
-                            'status' => 1,
-                            'balance' => $params['params']['limit'],
-                        ]);*/
-                        return [
-                            'number' => $card->number,
-                            'expire' => $card->expire,
-                            'phone' => $card->phone,
-                            'balance' => (int)$card->balance,
-                            'owner' => $card->owner,
-                            'token' => $card->token,
-                            'status' => 1,
-                        ];
+                    /*$card->update([
+                        'status' => 1,
+                        'balance' => $params['params']['limit'],
+                    ]);*/
+                    return [
+                        'number' => $card->number,
+                        'expire' => $card->expire,
+                        'phone' => $card->phone,
+                        'balance' => (int)$card->balance,
+                        'owner' => $card->owner,
+                        'token' => $card->token,
+                        'status' => 1,
+                    ];
 
                     /*if ($debit) {
                         $tr->update([
@@ -132,6 +133,9 @@ class ClientController extends Controller
                     ];
                 }
             } else {
+                $client->update([
+                    'client_code' => '1234',
+                ]);
                 return [
                     'number' => $client->card->number,
                     'expire' => $client->card->expire,
@@ -142,12 +146,13 @@ class ClientController extends Controller
                     'status' => $client->card->status,
                 ];
             }
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return $this->errorException($exception);
         }
     }
 
-    public function errorException($exception){
+    public function errorException($exception)
+    {
         return [
             'error' => [
                 'code' => 500,
