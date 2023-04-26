@@ -43,7 +43,7 @@ class ExportCalculatePartner implements FromView
         }
 
         if ($this->toDate) {
-            $transactions = $transactions->where('transactions.updated_at', '<=', $this->toDate);
+            $transactions = $transactions->whereDate('transactions.updated_at', '<=', $this->toDate);
         }
 
         $transactions = $transactions->groupBy('transactions.receiver_card')->get();
