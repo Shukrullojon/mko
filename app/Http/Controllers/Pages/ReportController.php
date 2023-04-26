@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use function PHPUnit\Framework\lessThanOrEqual;
 use function Whoops\Exception\Formatter;
 
 class ReportController extends Controller
@@ -67,35 +68,36 @@ class ReportController extends Controller
     public function wallet(Request $request)
     {
         $uc_transactions = DB::table('card_transactions')
-            ->select('payments.date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"), 'merchants.name as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
+            ->select('card_transactions.created_at as date', 'payments.tr_id', DB::raw("CONCAT(clients.first_name,' ',clients.middle_name,' ',clients.last_name) as sender_name"),
+                'merchants.filial as recipient', 'payments.name as purpose_text', "payments.amount as debet", 'card_transactions.credit as credit', 'card_transactions.created_at')
             ->leftJoin('payments', 'card_transactions.payment_id', '=', 'payments.id')
             ->leftJoin('clients', 'payments.client_id', '=', 'clients.id')
             ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
+            ->where('payments.status', '!=', -2)
             ->whereNotNull('card_transactions.payment_id');
 
         if ($request->has('fromDate') and $request->fromDate) {
-            $uc_transactions->where('date', '>=', $request->fromDate);
+            $uc_transactions->whereDate('card_transactions.created_at', '>=', $request->fromDate);
         }
         if ($request->has('toDate') and $request->toDate) {
-            $uc_transactions->where('date', '<=', $request->toDate);
-
+            $uc_transactions->whereDate('card_transactions.created_at', '<=', $request->toDate);
         }
 
         $uc_transactions = DB::table('histories')
-            ->select('histories.date', 'histories.numberTrans', 'histories.dtAcc as sender_name', 'histories.dtAccName as recipient', 'histories.purpose as purpose_text', 'histories.debit as debet', 'histories.credit', 'histories.created_at')
+            ->select('histories.date as date', 'histories.numberTrans', DB::raw("'Paylater' as sender_name"), DB::raw("'Ucoin card' as recipient"),
+                'histories.purpose as purpose_text', 'histories.debit as debet', 'histories.credit', 'histories.created_at')
             ->where('histories.status', '=', 1)
             ->union($uc_transactions)
             ->orderBy('created_at', 'desc');
 
-
         if ($request->has('fromDate') and $request->fromDate) {
-            $uc_transactions->where('date', '>=', $request->fromDate);
+            $uc_transactions->whereDate('histories.date', '>=', $request->fromDate);
         }
         if ($request->has('toDate') and $request->toDate) {
-            $uc_transactions->where('date', '<=', $request->toDate);
+            $uc_transactions->whereDate('histories.date', '<=', $request->toDate);
         }
+
         $uc_transactions = $uc_transactions->paginate(10);
-//        dd($uc_transactions, $request->fromDate, $request->toDate);
         return view('pages.report.wallet', [
             'uc_transactions' => $uc_transactions
         ]);
@@ -107,25 +109,24 @@ class ReportController extends Controller
     public function calculate_partner(Request $request)
     {
         $transactions = DB::table('transactions')
-            ->select('transactions.updated_at', 'transactions.amount')
-//                DB::raw("SUM(transactions.amount)*0.985 as paid_to_merchant"),
-//                DB::raw("SUM(transactions.amount)*0.015 as commission_bank"))
+            ->select('merchants.filial as merchant_name', 'transactions.updated_at as date', 'brands.purpose as brand_purpose', 'transactions.receiver_card',
+                DB::raw("SUM(payments.amount)/100 as payment_sum"),
+                DB::raw("SUM(transactions.amount)/100 as commission_merchant"),
+                DB::raw("SUM(transactions.amount)*0.985/100 as paid_to_merchant"),
+                DB::raw("SUM(transactions.amount)*0.015/100 as commission_bank"))
             ->leftJoin('payments', 'transactions.payment_id', '=', 'payments.id')
             ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
             ->leftJoin('brands', 'merchants.brand_id', '=', 'brands.id')
             ->where('transactions.is_sent', 1)
-            ->where('transactions.type', 0)->paginate(20);
-        if ($request->has($request->fromDate) and $request->fromDate) {
-            $transactions = $transactions->where('transactions.updated_at', '>=', strtotime("$request->fromDate"));
+            ->where('transactions.type', 0);
+        if ($request->has('fromDate') and $request->fromDate) {
+            $transactions->whereDate('transactions.updated_at', '>=', $request->fromDate);
         }
-        if ($request->has($request->toDate) and $request->toDate) {
-            $transactions = $transactions->where('transactions.updated_at', '<=', "$request->toDate%");
+        if ($request->has('toDate') and $request->toDate) {
+            $transactions->whereDate('transactions.updated_at', '<=', $request->toDate);
         }
-        dd($transactions, $request->fromDate, $request->toDate);
 
-        $transactions = $transactions->groupBy('transactions.receiver_card')
-            ->paginate(20);
-
+        $transactions = $transactions->groupBy('receiver_card')->paginate(20);
         return view('pages.report.calculate-partner', [
             'transactions' => $transactions
         ]);
@@ -185,14 +186,15 @@ class ReportController extends Controller
 
     public function exportWallet(Request $request)
     {
-        if ($request->has('fromDate') and $request->fromDate) {
-            $fromDate = $request->fromDate;
-        }
-        if ($request->has('toDate') and $request->toDate) {
-            $toDate = $request->toDate;
+        $val = Validator::make($request->all(), [
+            'fromDate' => 'required',
+            'toDate' => 'required'
+        ]);
+        if ($val->fails()) {
+            return back();
         }
 
-        return Excel::download(new ExportWallet($fromDate ?? null, $toDate ?? null), date('d.m.Y') . '_report-wallet.xlsx');
+        return Excel::download(new ExportWallet($request->fromDate, $request->toDate), date('d.m.Y') . '_report-wallet.xlsx');
     }
 
     public function exportCalculatePartner(Request $request)

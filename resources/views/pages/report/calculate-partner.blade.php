@@ -36,12 +36,13 @@
                         <table class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
+                                <th class="text-center">@lang('cruds.report.posting_date')</th>
                                 <th class="text-center">@lang('cruds.report.merchant_name')</th>
                                 <th class="text-center">@lang('cruds.report.partner.brand_purpose')</th>
-                                <th class="text-center">@lang('cruds.report.partner.payment_sum')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.partner.commission_merchant')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.partner.paid_to_merchant')<br><sub>(tiyin)</sub></th>
-                                <th class="text-center">@lang('cruds.report.partner.commission_bank')<br><sub>(tiyin)</sub></th>
+                                <th class="text-center">@lang('cruds.report.partner.payment_sum')<br><sub>(uzs)</sub></th>
+                                <th class="text-center">@lang('cruds.report.partner.commission_merchant')<br><sub>(uzs)</sub></th>
+                                <th class="text-center">@lang('cruds.report.partner.paid_to_merchant')<br><sub>(uzs)</sub></th>
+                                <th class="text-center">@lang('cruds.report.partner.commission_bank')<br><sub>(uzs)</sub></th>
                                 <th class="text-center">@lang('global.action')</th>
                             </tr>
                             <tr>
@@ -54,6 +55,7 @@
                                         <input type="date" class="form-control" name="toDate" id="toDate"
                                                value="{{ request()->input('toDate') }}">
                                     </th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -72,12 +74,13 @@
                             <tbody>
                             @foreach($transactions as $t)
                                 <tr>
+                                    <td>{{ date('Y-m-d', strtotime($t->date)) }}</td>
                                     <td>{{ $t->merchant_name }}</td>
                                     <td>{{ $t->brand_purpose }}</td>
-                                    <td>{{ number_format($t->payment_sum/100, 2, '.', '') }}</td>
-                                    <td>{{ number_format($t->commission_merchant/100, 2, '.', '') }}</td>
-                                    <td>{{ number_format($t->paid_to_merchant/100, 2, '.', '') }}</td>
-                                    <td>{{ number_format($t->commission_bank/100, 2, '.', '') }}</td>
+                                    <td>{{ number_format($t->payment_sum) }}</td>
+                                    <td>{{ number_format($t->commission_merchant) }}</td>
+                                    <td>{{ number_format($t->paid_to_merchant) }}</td>
+                                    <td>{{ number_format($t->commission_bank) }}</td>
                                     <td></td>
                                 </tr>
                             @endforeach
