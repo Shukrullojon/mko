@@ -109,7 +109,7 @@ class ReportController extends Controller
     public function calculate_partner(Request $request)
     {
         $transactions = DB::table('transactions')
-            ->select('merchants.filial as merchant_name', 'transactions.updated_at as date', 'brands.purpose as brand_purpose', 'transactions.receiver_card',
+            ->select('merchants.filial as merchant_name', 'transaction_accounts.updated_at as date', 'brands.purpose as brand_purpose', 'transactions.receiver_card',
                 DB::raw("SUM(payments.amount)/100 as payment_sum"),
                 DB::raw("SUM(transactions.amount)/100 as commission_merchant"),
                 DB::raw("SUM(transactions.amount)*0.985/100 as paid_to_merchant"),
@@ -117,13 +117,15 @@ class ReportController extends Controller
             ->leftJoin('payments', 'transactions.payment_id', '=', 'payments.id')
             ->leftJoin('merchants', 'payments.merchant_id', '=', 'merchants.id')
             ->leftJoin('brands', 'merchants.brand_id', '=', 'brands.id')
+            ->leftJoin('transaction_accounts', 'transaction_accounts.transaction_id', '=', 'transactions.id')
             ->where('transactions.is_sent', 1)
-            ->where('transactions.type', 0);
+            ->where('transactions.type', 0)
+            ->where('transaction_accounts.status', 1);
         if ($request->has('fromDate') and $request->fromDate) {
-            $transactions->whereDate('transactions.updated_at', '>=', $request->fromDate);
+            $transactions->whereDate('transaction_accounts.updated_at', '>=', $request->fromDate);
         }
         if ($request->has('toDate') and $request->toDate) {
-            $transactions->whereDate('transactions.updated_at', '<=', $request->toDate);
+            $transactions->whereDate('transaction_accounts.updated_at', '<=', $request->toDate);
         }
 
         $transactions = $transactions->groupBy('receiver_card')->paginate(20);
