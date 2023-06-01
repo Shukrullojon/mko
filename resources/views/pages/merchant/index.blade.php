@@ -108,7 +108,7 @@
                                 $num = (request()->page) ? request()->page*20+1  : 1;
                             @endphp
                             @foreach($merchants as $merchant)
-                                <tr>@dd($merchant->brand)
+                                <tr>
                                     <td>{{ $merchant->brand->name ?? ""}}</td>
                                     <td>{{ $merchant->filial }}</td>
                                     <td>{{ $merchant->address }}</td>

@@ -29,46 +29,47 @@ class Client extends Model
     {
         parent::boot();
 
-        self::created(function ($model) {
-            DB::connection('mysql_clon')->table('ucoin_clients')->insert([
-                'client_id' => $model->id,
-                'application_id' => $model->application_id,
-                'client_code' => $model->client_code,
-                'uccard_id' => $model->uccard_id,
-                'limit' => $model->limit,
-                'limit_status' => $model->limit_status,
-                'used_limit' => $model->used_limit,
-                'date_expiry' => $model->date_expiry,
-                'pnfl' => $model->pnfl,
-                'passport' => $model->passport,
-                'first_name' => $model->first_name,
-                'middle_name' => $model->middle_name,
-                'last_name' => $model->last_name,
-                'status' => $model->status,
-                'is_sent' => $model->is_sent,
-                'is_sent_code' => $model->is_sent_code,
-            ]);
-        });
+//        self::created(function ($model) {
+//            $uccard = DB::connection('mysql_clon')->table('ucoin_cards')->where('card_id', $model->card_id)->first();
+//            DB::connection('mysql_clon')->table('ucoin_clients')->insert([
+//                'client_id' => $model->id,
+//                'application_id' => $model->application_id,
+//                'client_code' => $model->client_code,
+//                'uccard_id' => $uccard->id,
+//                'limit' => $model->limit,
+//                'limit_status' => $model->limit_status,
+//                'used_limit' => $model->used_limit,
+//                'date_expiry' => $model->date_expiry,
+//                'pnfl' => $model->pnfl,
+//                'passport' => $model->passport,
+//                'first_name' => $model->first_name,
+//                'middle_name' => $model->middle_name,
+//                'last_name' => $model->last_name,
+//                'status' => $model->status,
+//                'is_sent' => $model->is_sent,
+//                'is_sent_code' => $model->is_sent_code,
+//            ]);
+//        });
 
-        self::updated(function ($model) {
-            DB::connection('mysql_clon')->table('ucoin_clients')->where('client_id',$model->id)->update([
-                'client_id' => $model->id,
-                'application_id' => $model->application_id,
-                'client_code' => $model->client_code,
-                'uccard_id' => $model->uccard_id,
-                'limit' => $model->limit,
-                'limit_status' => $model->limit_status,
-                'used_limit' => $model->used_limit,
-                'date_expiry' => $model->date_expiry,
-                'pnfl' => $model->pnfl,
-                'passport' => $model->passport,
-                'first_name' => $model->first_name,
-                'middle_name' => $model->middle_name,
-                'last_name' => $model->last_name,
-                'status' => $model->status,
-                'is_sent' => $model->is_sent,
-                'is_sent_code' => $model->is_sent_code,
-            ]);
-        });
+//        self::updated(function ($model) {
+//            DB::connection('mysql_clon')->table('ucoin_clients')->where('client_id',$model->id)->update([
+//                'client_id' => $model->id,
+//                'application_id' => $model->application_id,
+//                'client_code' => $model->client_code,
+//                'uccard_id' => $model->uccard_id,
+//                'limit' => $model->limit,
+//                'limit_status' => $model->limit_status,
+//                'used_limit' => $model->used_limit,
+//                'date_expiry' => $model->date_expiry,
+//                'pnfl' => $model->pnfl,
+//                'passport' => $model->passport,
+//                'first_name' => $model->first_name,
+//                'middle_name' => $model->middle_name,
+//                'last_name' => $model->last_name,
+//                'status' => $model->status,
+//                'is_sent' => $model->is_sent,
+//                'is_sent_code' => $model->is_sent_code,
+//            ]);
+//        });
     }
 }
